@@ -11,6 +11,7 @@ transactions on both sides.
 
 - **Live site:** https://useselo.xyz
 - **Live API:** https://api.useselo.xyz (paid route `POST /v1/release-test`, 1.00 USDC)
+- **Launch thread:** https://x.com/useselo_/status/2105303461697090026
 - **Proof on chain:** Selo was paid in round
   [65454635](https://allo.info/tx/JXU2INATXUJHE7WZGGWN25BPM6L2YEL6Q7LU5W3HICI4B5CX4JAQ), then paid
   the target in round [65454637](https://allo.info/tx/ATF5HLYBBY4G5GYPNLCUMC5FXH22WIXI2QG3YP7M4WYPA5EHQTYQ)
