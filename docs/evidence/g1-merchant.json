@@ -1,0 +1,20 @@
+{
+  "capturedAt": "2026-09-30T13:56:36.506Z",
+  "domain": "api.useselo.xyz",
+  "payTo": "N37HMJCB4BAITC2ZU7C4XW7PUMCO4T3TUASHQEL6A4EWMLOTTHOB7IOOKY",
+  "facilitator": "https://facilitator.goplausible.xyz",
+  "ok": true,
+  "result": [
+    {
+      "id": "TjM3SE1KQ0I0QkFJVEMyWlU3QzRYVzdQ",
+      "addresses": {
+        "avm": "N37HMJCB4BAITC2ZU7C4XW7PUMCO4T3TUASHQEL6A4EWMLOTTHOB7IOOKY"
+      },
+      "resourceCount": 1,
+      "totalSettlements": 10,
+      "networks": ["algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8="],
+      "firstSeen": "2026-09-27T20:48:21.469Z",
+      "lastSeen": "2026-09-30T13:55:16.989Z"
+    }
+  ]
+}

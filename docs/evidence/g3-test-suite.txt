@@ -1,0 +1,871 @@
+
+> selo@ test <repo>
+> vitest run --reporter=verbose
+
+
+ RUN  v5.0.1 <repo>
+
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > A10 (pure): private and local addresses are classified blocked 1ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 0.0.0.0/8 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 10.0.0.0/8 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 100.64.0.0/10 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 127.0.0.0/8 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 169.254.0.0/16 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 172.16.0.0/12 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 192.0.0.0/24 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 192.0.2.0/24 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 192.88.99.0/24 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 192.168.0.0/16 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 198.18.0.0/15 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 198.51.100.0/24 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks 203.0.113.0/24 from first to last and allows just outside 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 10.0.0.0/8 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 100.64.0.0/10 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 169.254.0.0/16 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 172.16.0.0/12 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 192.0.0.0/24 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 192.88.99.0/24 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 192.168.0.0/16 2ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 198.18.0.0/15 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 198.51.100.0/24 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 203.0.113.0/24 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > allows the address just below 224.0.0.0/4 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > blocks multicast and reserved space including broadcast 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > classifies ordinary public addresses as public 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv4 > rejects malformed IPv4 strings as invalid 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv6 > blocks the listed IPv6 ranges in compressed and expanded forms 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv6 > allows global unicast just outside the blocked ranges 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv6 > blocks space outside global unicast such as 100:0:0:1:: 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv6 > classifies IPv4-mapped, compatible, NAT64 and 6to4 by the embedded IPv4 0ms
+ ✓ |core| tests/target-url.test.ts > classifyAddress IPv6 > blocks zone-scoped addresses and rejects malformed IPv6 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > example.com is ok 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > API.Example.COM. is ok 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > sub.example.co.uk is ok 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > LOCALHOST. is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > localhost is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > app.localhost is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > api.local is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > metadata.google.internal is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > METADATA.GOOGLE.INTERNAL. is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > router.home.arpa is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > nas.lan is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > intranet is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > intranet. is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname >  is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > . is blocked_name 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > 127.0.0.1 is ip_literal 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > 8.8.8.8 is ip_literal 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > [::1] is ip_literal 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > ::1 is ip_literal 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > [2606:4700::1111] is ip_literal 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > 1.2.3 is ip_literal 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > example.0x7f is ip_literal 0ms
+ ✓ |core| tests/target-url.test.ts > classifyHostname > foo.123 is ip_literal 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > covers exactly the authorized origin, path and method 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > does not cover another origin 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > does not cover a port-qualified origin 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > does not cover an http origin 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > does not cover a sub-path 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > does not cover a prefix path 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > does not cover a trailing slash 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > does not cover a different case path 0ms
+ ✓ |core| tests/target-url.test.ts > targetCovered > does not cover another method 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > throws on a duplicate check id 1ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > PASS when every check passes with evidence 1ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > A18: malformed response contract produces FAIL, not PASS 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > A19: infrastructure uncertainty produces INCONCLUSIVE, not FAIL or PASS 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > A20: a blocking PASS without evidence is never PASS 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > a proven FAIL beats a non-null abort reason 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > a blocking FAIL without evidence is INCONCLUSIVE, not FAIL 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > a missing check id is INCONCLUSIVE 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > a blocking INCONCLUSIVE check is INCONCLUSIVE 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > a blocking WARN with evidence yields PASS plus a warning 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > a non-blocking FAIL yields a warning only, not INCONCLUSIVE or FAIL 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > a non-blocking INCONCLUSIVE check yields a warning only 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > does not depend on input order 0ms
+ ✓ |core| tests/verdict.test.ts > reduceVerdict > shuffle determinism over every permutation of a 5-check set 3ms
+ ✓ |core| tests/money.test.ts > microsPerUnit > is one million 1ms
+ ✓ |core| tests/money.test.ts > parseMicros > parses 0 to 0 micros 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > parses 1 to 1000000 micros 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > parses 0.05 to 50000 micros 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > parses 0.000001 to 1 micros 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > parses 0.40 to 400000 micros 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > parses 12.5 to 12500000 micros 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > parses 9007199254.740991 to 9007199254740991 micros 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "01" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects ".5" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "1." 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "1.0000001" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "-1" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects " 1" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "1 " 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "1e3" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "1E3" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "1e-3" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "abc" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "0x10" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "1,5" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "+1" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "9007199254.740992" 0ms
+ ✓ |core| tests/money.test.ts > parseMicros > rejects "100000000000000000000" 0ms
+ ✓ |core| tests/money.test.ts > formatMicros > formats 50000 as 0.05 0ms
+ ✓ |core| tests/money.test.ts > formatMicros > formats 1000000 as 1.00 0ms
+ ✓ |core| tests/money.test.ts > formatMicros > formats 1 as 0.000001 0ms
+ ✓ |core| tests/money.test.ts > formatMicros > formats 125000 as 0.125 0ms
+ ✓ |core| tests/money.test.ts > formatMicros > formats 0 as 0.00 0ms
+ ✓ |core| tests/money.test.ts > formatMicros > formats -200000 as -0.20 0ms
+ ✓ |core| tests/money.test.ts > formatMicros > throws RangeError for non-safe-integer input 0ms
+ ✓ |core| tests/money.test.ts > formatMicros > round-trips parse after format over a range of values 1ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > parses 0 to 0 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > parses 50000 to 50000 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > parses 1 to 1 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > parses 9007199254740991 to 9007199254740991 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "01" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "-1" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects " 1" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "1 " 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "1.0" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "1e3" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "abc" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "0x10" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "+1" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "9007199254740992" 0ms
+ ✓ |core| tests/money.test.ts > parseAtomicUnits > rejects "100000000000000000000" 0ms
+ ✓ |core| tests/checks/challenge.test.ts > parseChallenge > accepts a real-shaped x402 v2 challenge 2ms
+ ✓ |core| tests/checks/challenge.test.ts > parseChallenge > passes through unknown extension keys instead of stripping them 0ms
+ ✓ |core| tests/checks/challenge.test.ts > parseChallenge > rejects a payload missing the required accepts array 0ms
+ ✓ |core| tests/checks/challenge.test.ts > parseChallenge > rejects a non-object value 0ms
+ ✓ |core| tests/checks/challenge.test.ts > selectRequirement > selects the matching exact-scheme requirement and parses its amount 0ms
+ ✓ |core| tests/checks/challenge.test.ts > selectRequirement > returns null when no accepts entry matches the policy network and asset 0ms
+ ✓ |core| tests/checks/challenge.test.ts > selectRequirement > coalesces an unparseable amount to zero rather than throwing 0ms
+ ✓ |core| tests/checks/challenge.test.ts > bazaarInfo > extracts extensions.bazaar.info from a parsed challenge 0ms
+ ✓ |core| tests/checks/challenge.test.ts > bazaarInfo > returns undefined when no bazaar extension is declared 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > a live method declaration that disagrees with the target method is FAIL LIVE_METHOD_MISMATCH 1ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > a catalog record that fails schema validation is FAIL CATALOG_RECORD_MALFORMED 2ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > a catalog record method that disagrees with the target is FAIL CATALOG_METHOD_MISMATCH 1ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > a catalog resourceUrl that disagrees with the target is FAIL CATALOG_URL_MISMATCH 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > no accepts entry matching network+asset+payTo is FAIL CATALOG_PAYMENT_MISMATCH 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > a matching entry with a different price is FAIL CATALOG_PRICE_MISMATCH naming both prices 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > catalog unavailable is INCONCLUSIVE CATALOG_UNAVAILABLE 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > catalog not_found is WARN NOT_CATALOGED 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > no description anywhere is WARN SPARSE_METADATA 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > no discovery info declared anywhere is WARN SPARSE_METADATA 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > no output example anywhere is WARN SPARSE_METADATA 0ms
+ ✓ |core| tests/checks/discovery.test.ts > evaluateDiscovery > consistent live and catalog data with metadata is PASS DISCOVERY_CONSISTENT 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > server error maps status >= 500 to TARGET_UNAVAILABLE 4ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > worse server error maps status >= 500 to TARGET_UNAVAILABLE 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > status 200 that is not 402 maps to NOT_PAYMENT_REQUIRED 1ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > status 401 that is not 402 maps to NOT_PAYMENT_REQUIRED 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > status 404 that is not 402 maps to NOT_PAYMENT_REQUIRED 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > a 402 with no decoded payload and no decode failure is CHALLENGE_MISSING 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > a decode failure is CHALLENGE_MALFORMED even when decoded is null 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > a decoded payload that fails schema validation is CHALLENGE_MALFORMED 1ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > an unsupported x402 version is INCONCLUSIVE 1ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > no accepts entry for the policy network and asset is NO_SUPPORTED_REQUIREMENT 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > an unparseable amount is PRICE_UNPARSEABLE 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > a zero amount is PRICE_UNPARSEABLE 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > an invalid payTo is PAY_TO_INVALID 0ms
+ ✓ |core| tests/checks/handshake.test.ts > evaluateHandshake > a fully valid handshake is PASS with the resolved requirement 0ms
+ ✓ |core| tests/checks/ground-truth.test.ts > own capture (POST, Bazaar extension, installed @x402 2.27.0) > parses end to end 4ms
+ ✓ |core| tests/checks/ground-truth.test.ts > own capture (POST, Bazaar extension, installed @x402 2.27.0) > selects the requirement with the amount and payTo from the capture 1ms
+ ✓ |core| tests/checks/ground-truth.test.ts > own capture (POST, Bazaar extension, installed @x402 2.27.0) > evaluates PASS HANDSHAKE_VALID with a permissive payTo validator 0ms
+ ✓ |core| tests/checks/ground-truth.test.ts > own capture (POST, Bazaar extension, installed @x402 2.27.0) > bazaarInfo returns the POST-shaped discovery info verbatim 0ms
+ ✓ |core| tests/checks/ground-truth.test.ts > live agentkeep capture (GET, vendor-heavy extra, live Mainnet merchant) > parses end to end 0ms
+ ✓ |core| tests/checks/ground-truth.test.ts > live agentkeep capture (GET, vendor-heavy extra, live Mainnet merchant) > selects the requirement with the amount, payTo and passthrough extra from the capture 0ms
+ ✓ |core| tests/checks/ground-truth.test.ts > live agentkeep capture (GET, vendor-heavy extra, live Mainnet merchant) > evaluates PASS HANDSHAKE_VALID with a permissive payTo validator 0ms
+ ✓ |core| tests/checks/ground-truth.test.ts > C5 discovery against the POST-shaped own capture's live info > a target called with GET while the live info declares POST is FAIL LIVE_METHOD_MISMATCH 0ms
+ ✓ |core| tests/checks/ground-truth.test.ts > C5 discovery against the POST-shaped own capture's live info > a POST target consistent with the live info and a matching catalog record is PASS DISCOVERY_CONSISTENT 1ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > defaults status to 200 when unspecified 1ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects an out-of-range or non-integer status 99 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects an out-of-range or non-integer status 600 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects an out-of-range or non-integer status 200.5 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > accepts a valid status 100 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > accepts a valid status 200 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > accepts a valid status 599 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > accepts a well-formed type/subtype content type 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects a malformed content type "application" 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects a malformed content type "application/" 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects a malformed content type "/json" 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects a malformed content type "not a type" 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > compiles a well-formed JSON schema 17ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects a JSON schema that is too large 4ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects a JSON schema that fails to compile under Ajv strict mode 7ms
+ ✓ |core| tests/checks/response-contract.test.ts > compileContract > rejects a JSON schema with an unresolvable remote $ref 6ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > observed null is INCONCLUSIVE NOT_RUN 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > a status mismatch is FAIL STATUS_MISMATCH 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > a content type mismatch is FAIL CONTENT_TYPE_MISMATCH 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > content type parameters are stripped before comparison 0ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > a schema present but a non-JSON body is FAIL BODY_NOT_JSON 4ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > a schema present but an empty body is FAIL BODY_NOT_JSON 2ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > A18: a response that violates the expected schema produces FAIL 5ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > truncates a very long schema mismatch summary to 200 characters of Ajv detail 13ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > a matching status, content type and schema is PASS CONTRACT_MATCHED 10ms
+ ✓ |core| tests/checks/response-contract.test.ts > evaluateResponseContract > a matching status with no expected content type or schema is PASS 0ms
+ ✓ |core| tests/spend-guard-simulation.test.ts > A16 (pure): no sequence of guarded reservations exceeds the job cap > randomised reserve/settle/release/unresolve with seed 1 19ms
+ ✓ |core| tests/spend-guard-simulation.test.ts > A16 (pure): no sequence of guarded reservations exceeds the job cap > randomised reserve/settle/release/unresolve with seed 7 15ms
+ ✓ |core| tests/spend-guard-simulation.test.ts > A16 (pure): no sequence of guarded reservations exceeds the job cap > randomised reserve/settle/release/unresolve with seed 42 16ms
+ ✓ |core| tests/spend-guard-simulation.test.ts > A16 (pure): no sequence of guarded reservations exceeds the job cap > randomised reserve/settle/release/unresolve with seed 2026 11ms
+ ✓ |core| tests/spend-guard-simulation.test.ts > three reservations against a two-reservation cap > three 0.05 reservations against a 0.10 cap: two allowed, the third denied 2ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > permits exactly the documented edges 1ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > names each transition exactly as specified 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > throws for illegal transitions 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > settle moves reserved into settled 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > release frees reserved capacity 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > markUnresolved moves reserved into unresolved 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > reconcileSettled moves unresolved into settled 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > reconcileReleased clears unresolved 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > throws on an illegal pair 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > throws on invalid amount 0 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > throws on invalid amount -1 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > throws on invalid amount 0.5 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > throws on invalid amount NaN 0ms
+ ✓ |core| tests/transitions-payment.test.ts > payment transitions > spendDelta > throws on invalid amount 9007199254740992 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > delivered 2xx with a txId is PAID_AND_DELIVERED 1ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > delivered 2xx with txId null is SETTLEMENT_UNCONFIRMED 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > delivered 2xx with txId "" is SETTLEMENT_UNCONFIRMED 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > delivered 5xx with a txId is PAID_BUT_NOT_DELIVERED 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > delivered 301 with a txId is PAID_BUT_NOT_DELIVERED 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > delivered 404 with a txId is PAID_BUT_NOT_DELIVERED 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > delivered non-2xx without a txId is SETTLEMENT_UNCONFIRMED 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > a rejected paid request is PAID_REQUEST_REJECTED 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > a rejected paid request never claims the payment settled 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > a payer-side rejection is PAYER_REJECTED and INCONCLUSIVE, not a target FAIL 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > a settlement tx id that differs from Selo's signed transaction is SETTLEMENT_TX_MISMATCH 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > an unfunded operating wallet is OPERATOR_WALLET_UNFUNDED, not a target problem 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > an unreadable operating wallet is NETWORK_UNAVAILABLE 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > timeout_unresolved is PAYMENT_UNRESOLVED 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > network_error is NETWORK_UNAVAILABLE 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > guard_denied is SPEND_GUARD_DENIED and names the reason in the summary 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > not_run is NOT_RUN 0ms
+ ✓ |core| tests/checks/paid-delivery.test.ts > evaluatePaidDelivery > passes the caller's evidence ids through unchanged 0ms
+ ✓ |core| tests/transitions-job.test.ts > job transitions > permits exactly the documented edges and nothing else 1ms
+ ✓ |core| tests/transitions-job.test.ts > job transitions > asserts silently for legal edges and throws for illegal ones 1ms
+ ✓ |core| tests/transitions-job.test.ts > job transitions > REPORT_WRITTEN has no outgoing edges 0ms
+ ✓ |core| tests/transitions-job.test.ts > job transitions > recognises verdict statuses and nothing else 0ms
+ ✓ |core| tests/transitions-job.test.ts > job transitions > only RUNNING can start downstream work 0ms
+ ✓ |core| tests/transitions-job.test.ts > job transitions > exposes the raw table 0ms
+ ✓ |core| tests/transitions-scenario.test.ts > scenario transitions > permits exactly the documented edges and nothing else 1ms
+ ✓ |core| tests/transitions-scenario.test.ts > scenario transitions > asserts silently for legal edges and throws for illegal ones 1ms
+ ✓ |core| tests/transitions-scenario.test.ts > scenario transitions > EVALUATED has no outgoing edges 0ms
+ ✓ |core| tests/transitions-scenario.test.ts > scenario transitions > exposes the raw table 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 402 is PASS_REPLAY_REJECTED 1ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 400 is PASS_REPLAY_REJECTED 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 409 is PASS_REPLAY_REJECTED 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 499 is PASS_REPLAY_REJECTED 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 408 is INCONCLUSIVE, not a replay rejection 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 429 is INCONCLUSIVE, not a replay rejection 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 2xx with the same txId is PASS_SAFE_RETRY 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 2xx with a different non-null txId is FAIL_DUPLICATE_SIDE_EFFECT 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 2xx with a null txId on GET is WARN_NO_IDEMPOTENCY_CONTRACT 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 2xx with a null txId on POST is FAIL_DUPLICATE_SIDE_EFFECT 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 500 is INCONCLUSIVE 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 503 is INCONCLUSIVE 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 301 is INCONCLUSIVE 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > response 304 is INCONCLUSIVE 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > a timeout is INCONCLUSIVE 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > a network_error is INCONCLUSIVE 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > not_run is INCONCLUSIVE 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > check.code always equals the outcome and evidence passes through unchanged 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > POST replay returning 2xx without a new settlement but the byte-identical stored result is PASS_SAFE_RETRY 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > POST replay returning 2xx without a settlement and a different body stays FAIL_DUPLICATE_SIDE_EFFECT 0ms
+ ✓ |core| tests/checks/retry-safety.test.ts > evaluateRetrySafety > GET replay with a different body and no settlement stays WARN_NO_IDEMPOTENCY_CONTRACT 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > allows a payment that passes every check 1ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with AUTHORIZATION_INVALID, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with AUTHORIZATION_INVALID, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with AUTHORIZATION_EXPIRED, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with JOB_NOT_RUNNING, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with ORIGIN_NOT_AUTHORIZED, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with NETWORK_NOT_ALLOWED, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with ASSET_NOT_ALLOWED, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with PAYMENT_UNRESOLVED, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with SCENARIO_BUDGET_EXCEEDED, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with JOB_BUDGET_EXCEEDED, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies with ABSOLUTE_CAP_EXCEEDED, every other check passing 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > allows spending exactly at the scenario, job, and absolute caps 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > denies one micro over the scenario, job, or absolute cap 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > throws before any check for an invalid amount 0 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > throws before any check for an invalid amount -1 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > throws before any check for an invalid amount 0.5 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > throws before any check for an invalid amount NaN 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > throws before any check for an invalid amount 9007199254740992 0ms
+ ✓ |core| tests/spend-guard.test.ts > evaluateSpend > exposes the checks in contract order for reports 0ms
+ ✓ |core| tests/spend-guard.test.ts > availableMicros > subtracts settled, reserved, and unresolved from the max 0ms
+ ✓ |core| tests/spend-guard.test.ts > availableMicros > throws when the books are corrupt 0ms
+ ✓ |core| tests/spend-guard-precedence.test.ts > evaluateSpend precedence > reports the first failing check in contract order when several fail 1ms
+ ✓ |core| tests/spend-guard-precedence.test.ts > evaluateSpend precedence > peels failures off one at a time in exactly the order of spendDenialReasons 0ms
+ ✓ |core| tests/retry-outcome.test.ts > retryOutcomeStatus > maps PASS_SAFE_RETRY to PASS 1ms
+ ✓ |core| tests/retry-outcome.test.ts > retryOutcomeStatus > maps PASS_REPLAY_REJECTED to PASS 0ms
+ ✓ |core| tests/retry-outcome.test.ts > retryOutcomeStatus > maps WARN_NO_IDEMPOTENCY_CONTRACT to WARN 0ms
+ ✓ |core| tests/retry-outcome.test.ts > retryOutcomeStatus > maps FAIL_DUPLICATE_SIDE_EFFECT to FAIL 0ms
+ ✓ |core| tests/retry-outcome.test.ts > retryOutcomeStatus > maps INCONCLUSIVE to INCONCLUSIVE 0ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > returns 201 with the well-known challenge and stores only the nonce hash 39ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects the blocked target http://api.example.com/v1/quote with 400 TARGET_NOT_HTTPS 4ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects the blocked target https://127.0.0.1/v1/quote with 400 TARGET_ADDRESS_BLOCKED 4ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects the blocked target https://localhost/v1/quote with 400 TARGET_ADDRESS_BLOCKED 4ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects the blocked target not a url with 400 TARGET_URL_INVALID 4ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects an invalid body { method: 'DELETE' } with 400 4ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects an invalid body { project: '' } with 400 4ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects an invalid body { …(1) } with 400 3ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects an invalid body { contact: 'ab' } with 400 3ms
+ ✓ |api| tests/authorizations.test.ts > creating an authorization challenge > rejects an invalid body { …(1) } with 400 5ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > verifies when the file carries the expected line and sets the TTL 9ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > is idempotent for an already verified, unexpired authorization 5ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > A09 (auth): an unverified target has no valid authorization 5ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > fails verification when the file is missing 4ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > fails verification when the file is larger than 4 KiB 4ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > expires a pending challenge past its hour and answers 409 CHALLENGE_EXPIRED 6ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > refuses a challenge whose hour runs out while the file is being fetched 6ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > answers 422 with the reason when the safe fetch blocks the target 4ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > answers 502 VERIFICATION_UNREACHABLE on { kind: 'timeout' } 5ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > answers 502 VERIFICATION_UNREACHABLE on { kind: 'network' } 4ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > answers 404 for the unknown id auth_00000000000000000000000000 4ms
+ ✓ |api| tests/authorizations.test.ts > verifying the well-known file > answers 404 for the unknown id not-an-id 4ms
+ ✓ |api| tests/authorizations.test.ts > reading an authorization > never returns the nonce or its hash 6ms
+ ✓ |api| tests/authorizations.test.ts > reading an authorization > reports and persists a verified authorization past its TTL as EXPIRED 6ms
+ ✓ |api| tests/authorizations.test.ts > reading an authorization > answers 404 for an unknown id 4ms
+ ✓ |api| tests/authorizations.test.ts > manual owner consent > records an explicit VERIFIED manual_owner_consent row with the note 5ms
+ ✓ |api| tests/authorizations.test.ts > manual owner consent > refuses consent without a note or for a blocked target ({ note: '' }) 3ms
+ ✓ |api| tests/authorizations.test.ts > manual owner consent > refuses consent without a note or for a blocked target ({ note: '   ' }) 4ms
+ ✓ |api| tests/authorizations.test.ts > manual owner consent > refuses consent without a note or for a blocked target ({ …(1) }) 4ms
+ ✓ |api| tests/authorizations.test.ts > manual owner consent > refuses consent without a note or for a blocked target ({ …(1) }) 3ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight eligible > returns 201 with price, estimate, Selo price and expiry, and persists what it saw 27ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight eligible > sends exactly one unpaid probe carrying the preflight id as Idempotency-Key 6ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight eligible > stores the optional request body and sends it with the probe 6ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight eligible > keeps only the allow-listed challenge keys 6ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight eligible > picks the Selo-network requirement among several accepts 6ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight catalog snapshot > stores the catalog record and its hash when the target is listed 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight catalog snapshot > stores no record when the target is not listed 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight catalog snapshot > looks up the exact target URL the caller supplied before the normalized href 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight catalog snapshot > falls back to the normalized href when the supplied URL is not listed 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight catalog snapshot > never blocks eligibility when the catalog is unavailable 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > rejects a non-402 target as NO_PAYMENT_CHALLENGE 6ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > maps a 5xx target to TARGET_UNREACHABLE 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > rejects a challenge on another network as NETWORK_NOT_SUPPORTED 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > rejects a challenge in another asset on the right network as ASSET_NOT_SUPPORTED 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > A11 (preflight): a target priced above the job budget is ineligible 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > accepts a target priced exactly at the job budget 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > maps a probe timeout to TARGET_UNREACHABLE 6ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > maps a probe network failure to TARGET_UNREACHABLE 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight rejections > maps a blocked probe to TARGET_ADDRESS_BLOCKED 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight authorization > rejects an unknown authorization with 403 AUTHORIZATION_MISSING and no probe 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight authorization > rejects an expired authorization with 403 AUTHORIZATION_EXPIRED and no probe 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight authorization > rejects a pending (unverified) authorization with 403 AUTHORIZATION_EXPIRED 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight authorization > rejects an authorization for another path with 403 AUTHORIZATION_MISSING 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight authorization > rejects an authorization for another method with 403 AUTHORIZATION_MISSING 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight input > rejects a non-https target with 400 TARGET_NOT_HTTPS and no row 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight input > rejects an unparseable target with 400 TARGET_URL_INVALID 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight input > rejects a malformed body with 400 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight input > rejects a request body larger than 16 KiB with 400 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight input > rejects a request body on a GET with 400 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight input > rejects a top-level null request body with 400 and sends nothing 4ms
+ ✓ |api| tests/preflight/preflight.test.ts > POST /v1/preflight input > accepts null nested inside a request body 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > GET /v1/preflight/:id > returns the stored eligible view 6ms
+ ✓ |api| tests/preflight/preflight.test.ts > GET /v1/preflight/:id > returns the stored ineligible view 5ms
+ ✓ |api| tests/preflight/preflight.test.ts > GET /v1/preflight/:id > answers 404 for an unknown preflight 4ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > holds an open reservation UNRESOLVED, concludes the job INCONCLUSIVE and writes its report 37ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > also concludes a job stranded in INBOUND_SETTLED 9ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > also concludes a job stranded in QUEUED 11ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > also concludes a job stranded in RUNNING_PREFLIGHT_RECHECK 11ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > also concludes a job stranded in ANALYZING 10ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > leaves a job younger than the wall clock alone 8ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > leaves finished jobs alone 5ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > marks a READY job whose settlement never completed FACILITATOR_UNAVAILABLE without touching money 5ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > leaves a READY job that may still be settling alone 5ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > does not create scenarios for a job that never planned any 8ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > reduces a job stranded in RUNNING with an evidence-backed blocking FAIL to FAIL 12ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > reduces a job stranded in ANALYZING with an evidence-backed blocking FAIL to FAIL 12ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > keeps a FAIL without evidence INCONCLUSIVE INTERNAL_ERROR 13ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > leaves a job inside the wall clock plus the grace margin alone 8ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > completes the report of a job that reached its verdict but crashed before writing it 11ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > does not write a report for a held unresolved inbound job 6ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > boot sweep of jobs stranded by a restart > is idempotent: a second sweep changes nothing and alerts nothing 13ms
+ ✓ |api| tests/orchestrator/boot-sweep.test.ts > scheduled re-sweep after boot > sweeps a job that was too young at boot once the wall clock and grace margin have passed 14ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > handshake outcomes > stops after a C1 FAIL: every other check is NOT_RUN and nothing is paid 34ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > handshake outcomes > makes a probe network error INCONCLUSIVE NETWORK_UNAVAILABLE without reserving 15ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > handshake outcomes > sends no request at all once the job wall clock has expired 13ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > paid delivery ledger outcomes > releases the reservation when signing fails and sends nothing paid 31ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > paid delivery ledger outcomes > holds a delivered response without a settlement tx id as UNRESOLVED and stops 34ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > paid delivery ledger outcomes > never settles a target tx id that another payment already holds 45ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > retry safety outcomes > passes a replay that returns the same settlement 24ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > retry safety outcomes > passes a replay answered with the byte-identical stored result and no new settlement 25ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > retry safety outcomes > warns on a GET replay answered with a different body and no settlement 24ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > retry safety outcomes > fails and alerts when the replay reports a second settlement 26ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > infrastructure and internal failures > makes an unavailable catalog INCONCLUSIVE FACILITATOR_UNAVAILABLE after a settled payment 24ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > infrastructure and internal failures > turns an unexpected exception into INCONCLUSIVE INTERNAL_ERROR with a written report 22ms
+ ✓ |api| tests/orchestrator/outcomes.test.ts > structured logs > writes one JSON object per line with the observability fields and no signature 25ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > C2 settlement tx id is checked against Selo's own signed transaction > holds a target-claimed tx id that differs from the signed one and stops spending 60ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > C2 settlement tx id is checked against Selo's own signed transaction > settles the target's tx id as before when it equals the signed transaction 30ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > C2 settlement tx id is checked against Selo's own signed transaction > settles the claimed tx id and records that it could not be checked when the expected id is unavailable 28ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > Selo's operating wallet is checked before anything is signed > USDC below the price: nothing signed, C2 OPERATOR_WALLET_UNFUNDED, job INTERNAL_ERROR 15ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > Selo's operating wallet is checked before anything is signed > not opted in to USDC: nothing signed, C2 OPERATOR_WALLET_UNFUNDED, job INTERNAL_ERROR 16ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > Selo's operating wallet is checked before anything is signed > ALGO below minimum balance: nothing signed, C2 OPERATOR_WALLET_UNFUNDED, job INTERNAL_ERROR 15ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > Selo's operating wallet is checked before anything is signed > an unreachable algod is NETWORK_UNAVAILABLE and nothing is signed 15ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > Selo's operating wallet is checked before anything is signed > a funded wallet is read once and the job pays as usual 25ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > a 402 after signing > with payer-side verify reason invalid_exact_avm_simulation_failed is INCONCLUSIVE PAYER_REJECTED and held UNRESOLVED 25ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > a 402 after signing > with payer-side verify reason invalid_exact_avm_invalid_signature is INCONCLUSIVE PAYER_REJECTED and held UNRESOLVED 23ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > a 402 after signing > with payer-side settle reason insufficient_funds is INCONCLUSIVE PAYER_REJECTED and held UNRESOLVED 22ms
+ ✓ |api| tests/orchestrator/payer-side.test.ts > a 402 after signing > with a genuine target-side reason stays FAIL PAID_REQUEST_REJECTED 23ms
+ ✓ |api| tests/schema.test.ts > schema constraints > I2: the budget invariant rejects settled + reserved + unresolved above max spend 17ms
+ ✓ |api| tests/schema.test.ts > schema constraints > I2: the budget invariant accepts spend exactly at max spend 7ms
+ ✓ |api| tests/schema.test.ts > schema constraints > I2: the absolute cap rejects a max spend above 5.00 USDC 5ms
+ ✓ |api| tests/schema.test.ts > schema constraints > I2: non-negative counters and a positive max spend are enforced ({ maxSpendMicros: 0 }) 5ms
+ ✓ |api| tests/schema.test.ts > schema constraints > I2: non-negative counters and a positive max spend are enforced ({ settledSpendMicros: -1 }) 5ms
+ ✓ |api| tests/schema.test.ts > schema constraints > I2: non-negative counters and a positive max spend are enforced ({ reservedSpendMicros: -1 }) 5ms
+ ✓ |api| tests/schema.test.ts > schema constraints > I2: non-negative counters and a positive max spend are enforced ({ unresolvedSpendMicros: -1 }) 7ms
+ ✓ |api| tests/schema.test.ts > schema constraints > rejects an eligible preflight without its payment requirements 5ms
+ ✓ |api| tests/schema.test.ts > schema constraints > I4: operation ids are unique per job 5ms
+ ✓ |api| tests/schema.test.ts > schema constraints > an incoming settlement tx id belongs to one job only 5ms
+ ✓ |api| tests/ledger/reserve.test.ts > reserveDownstream > reserves capacity and inserts a RESERVED payment in one step 22ms
+ ✓ |api| tests/ledger/reserve.test.ts > reserveDownstream > allows a reservation that fills the budget exactly and denies one micro more 8ms
+ ✓ |api| tests/ledger/reserve.test.ts > reserveDownstream > rejects a scenario that belongs to another job without reserving 9ms
+ ✓ |api| tests/ledger/reserve.test.ts > reserveDownstream > rejects a non-positive amount before touching the database 7ms
+ ✓ |api| tests/ledger/reserve.test.ts > denial reasons surface in guard order > authorization missing, unverified, then expired 9ms
+ ✓ |api| tests/ledger/reserve.test.ts > denial reasons surface in guard order > expired authorization wins over every later failure 7ms
+ ✓ |api| tests/ledger/reserve.test.ts > denial reasons surface in guard order > job not running, origin, network, asset in order 10ms
+ ✓ |api| tests/ledger/reserve.test.ts > denial reasons surface in guard order > an outstanding unresolved payment blocks before scenario and job budgets 9ms
+ ✓ |api| tests/ledger/reserve.test.ts > denial reasons surface in guard order > scenario max, then job budget, then absolute cap 6ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > settlement failures that may still land on chain > settle-error-500 holds the job INCONCLUSIVE, never deletes or runs it, and answers 502 47ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > settlement failures that may still land on chain > pending holds the job INCONCLUSIVE, never deletes or runs it, and answers 502 54ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > settlement failures that may still land on chain > pending-thrown holds the job INCONCLUSIVE, never deletes or runs it, and answers 502 53ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > settlement failures that may still land on chain > failed-with-tx holds the job INCONCLUSIVE, never deletes or runs it, and answers 502 32ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > settlement failures that may still land on chain > the alert carries the facilitator's error reason and message 31ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > settlement failures that may still land on chain > an unresolved tx already held by another job is alerted and the job is held without it 104ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > settlement failures that may still land on chain > a retry of an unresolved request is answered from the held job without settling again 57ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > definite settlement rejections > rejected deletes the READY job and answers 402 so the client may pay again 35ms
+ ✓ |api| tests/release/ambiguous-settlement.test.ts > definite settlement rejections > settle-error-400 deletes the READY job and answers 402 so the client may pay again 33ms
+ ✓ |api| tests/release/settlement.test.ts > settle before orchestrate > A12: inbound settles before the first downstream request 48ms
+ ✓ |api| tests/release/settlement.test.ts > settle before orchestrate > returns the report with the PAYMENT-RESPONSE settlement header 31ms
+ ✓ |api| tests/release/settlement.test.ts > settle before orchestrate > a rejected settlement never runs the job, removes it and answers 402 31ms
+ ✓ |api| tests/release/settlement.test.ts > settle before orchestrate > an indeterminate settlement (timeout) never runs the job and leaves it INCONCLUSIVE 30ms
+ ✓ |api| tests/release/settlement.test.ts > settle before orchestrate > an indeterminate settlement (unreachable) never runs the job and leaves it INCONCLUSIVE 31ms
+ ✓ |api| tests/release/settlement.test.ts > settle before orchestrate > a facilitator that cannot verify answers 502 without claiming a job or settling 8ms
+ ✓ |api| tests/release/settlement.test.ts > settle before orchestrate > a runner crash after settlement answers 500 with the job and the settlement header 31ms
+ ✓ |api| tests/release/settlement.test.ts > after the job is claimed > persists the expected response contract on the job 46ms
+ ✓ |api| tests/release/settlement.test.ts > after the job is claimed > a retry of a job that ended without a report gets a terminal answer, not in-progress 34ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects an invalid body with 400 and no charge 21ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects a body that is not a JSON object with 400 and no charge 5ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects an expected contract whose schema does not compile with 400 and no charge 14ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects a malformed Idempotency-Key with 400 and no charge 6ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects an unknown preflight with 404 and no charge 5ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects an ineligible preflight with 422 and no charge 5ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects an expired preflight with 409 and no charge 6ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects an authorization still VERIFIED in the database but past expires_at with 403 and no charge 7ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects a preflight whose authorization is not verified with 403 and no charge 5ms
+ ✓ |api| tests/release/pre-payment.test.ts > rejections before any payment interaction > rejects a target price above the job budget with 422 and no charge 6ms
+ ✓ |api| tests/ledger/transitions.test.ts > settleDownstream > moves the amount from reserved to settled and records tx, requested and settled times 23ms
+ ✓ |api| tests/ledger/transitions.test.ts > settleDownstream > a second settle of the same payment is not applied and changes nothing 10ms
+ ✓ |api| tests/ledger/transitions.test.ts > settleDownstream > concurrent settles of one payment apply exactly once 14ms
+ ✓ |api| tests/ledger/transitions.test.ts > settleDownstream with a transaction id already recorded > returns DUPLICATE_TX and leaves the payment and books unchanged 13ms
+ ✓ |api| tests/ledger/transitions.test.ts > releaseDownstream > returns reserved capacity and records the reason 11ms
+ ✓ |api| tests/ledger/transitions.test.ts > releaseDownstream > a release that was never requested keeps requested_at empty 8ms
+ ✓ |api| tests/ledger/transitions.test.ts > releaseDownstream > cannot release a settled payment 9ms
+ ✓ |api| tests/ledger/transitions.test.ts > markDownstreamUnresolved > moves reserved to unresolved, which keeps counting against the budget 10ms
+ ✓ |api| tests/ledger/transitions.test.ts > markDownstreamUnresolved > throws for an unknown payment id 5ms
+ ✓ |api| tests/e2e/failures.test.ts > release test failure model end to end > A09: unauthorized target cannot be paid (authorization revoked between preflight and run) 66ms
+ ✓ |api| tests/e2e/failures.test.ts > release test failure model end to end > A09: unauthorized target cannot be paid (authorization expired between preflight and run) 41ms
+ ✓ |api| tests/e2e/failures.test.ts > release test failure model end to end > A17: a timeout with ambiguous payment state stops further spending 1553ms
+ ✓ |api| tests/e2e/failures.test.ts > release test failure model end to end > A18: a response violating the expected schema produces FAIL 90ms
+ ✓ |api| tests/e2e/failures.test.ts > release test failure model end to end > A19: infrastructure uncertainty produces INCONCLUSIVE (probe network error) 40ms
+ ✓ |api| tests/e2e/failures.test.ts > release test failure model end to end > A19: infrastructure uncertainty produces INCONCLUSIVE (catalog unavailable) 52ms
+ ✓ |api| tests/e2e/failures.test.ts > release test failure model end to end > fails with PAID_REQUEST_REJECTED and holds the payment UNRESOLVED when the target rejects it 47ms
+ ✓ |api| tests/e2e/failures.test.ts > release test failure model end to end > denies a price raised above the budget after preflight: nothing signed, INCONCLUSIVE BUDGET_EXHAUSTED 49ms
+ ✓ |api| tests/e2e/release-flow.test.ts > paid release test end to end > A12: inbound settles before the first downstream request 87ms
+ ✓ |api| tests/e2e/release-flow.test.ts > paid release test end to end > A13: Selo pays one authorized target 54ms
+ ✓ |api| tests/e2e/release-flow.test.ts > paid release test end to end > A14: the downstream paid response is captured 52ms
+ ✓ |api| tests/e2e/release-flow.test.ts > paid release test end to end > A15: the downstream tx id is persisted 54ms
+ ✓ |api| tests/e2e/release-flow.test.ts > paid release test end to end > A20: every blocking PASS in the report has evidence rows that exist 50ms
+ ✓ |api| tests/e2e/release-flow.test.ts > paid release test end to end > A21: the duplicate paid request returns the same report and pays the target once 52ms
+ ✓ |api| tests/e2e/release-flow.test.ts > paid release test end to end > A22: logs, evidence, reports and the evidence packet contain no wallet secret 55ms
+ ✓ |api| tests/e2e/release-flow.test.ts > paid release test end to end > A23: the report token is unguessable and the report is noindex 57ms
+ ✓ |api| tests/orchestrator/run-job.test.ts > createJobRunner happy path > runs the five checks against a stock x402 seller and passes it 59ms
+ ✓ |api| tests/orchestrator/run-job.test.ts > createJobRunner happy path > keeps one scenario row per check with a stable operation id and recorded attempts 29ms
+ ✓ |api| tests/orchestrator/run-job.test.ts > createJobRunner happy path > pays once through the paid instance, replays with the C2 operation id and persists the tx ids 30ms
+ ✓ |api| tests/orchestrator/run-job.test.ts > createJobRunner happy path > answers result() with the same report once written and null before 31ms
+ ✓ |api| tests/orchestrator/run-job.test.ts > createJobRunner entry guard > refuses a job whose inbound payment has not settled and contacts no target 6ms
+ ✓ |api| tests/orchestrator/run-job.test.ts > createJobRunner entry guard > refuses an INBOUND_SETTLED row that carries no inbound settlement time 6ms
+ ✓ |api| tests/orchestrator/run-job.test.ts > createJobRunner entry guard > refuses to run the same job twice 24ms
+stderr | tests/release/challenge.test.ts > starting the inbound gate > refuses to start when the facilitator cannot list its supported kinds
+Failed to fetch supported kinds from facilitator: TypeError: fetch failed
+
+ ✓ |api| tests/release/challenge.test.ts > the unpaid release-test challenge > A01: an unpaid valid request returns 402 29ms
+ ✓ |api| tests/release/challenge.test.ts > the unpaid release-test challenge > A02: the 402 declares Algorand Mainnet, USDC 31566704 and the configured payTo 8ms
+ ✓ |api| tests/release/challenge.test.ts > the unpaid release-test challenge > A03: the 402 carries the x402-global-challenge tag 7ms
+ ✓ |api| tests/release/challenge.test.ts > the unpaid release-test challenge > A04: the 402 carries Bazaar discovery metadata 6ms
+ ✓ |api| tests/release/challenge.test.ts > merchant identity > the 402 declares Selo's merchant name and categories for the leaderboard 5ms
+ ✓ |api| tests/release/challenge.test.ts > starting the inbound gate > refuses to start when the facilitator cannot list its supported kinds 4ms
+ ✓ |api| tests/release/challenge.test.ts > starting the inbound gate > refuses to start when the facilitator does not support the configured network 4ms
+ ✓ |api| tests/evidence/record.test.ts > recordEvidence > stores the sanitized value with the sha256 of its canonical form 19ms
+ ✓ |api| tests/evidence/record.test.ts > recordEvidence > accepts job-level evidence without a scenario 7ms
+ ✓ |api| tests/evidence/record.test.ts > recordEvidence > rejects an empty value (null) before inserting 6ms
+ ✓ |api| tests/evidence/record.test.ts > recordEvidence > rejects an empty value (undefined) before inserting 5ms
+ ✓ |api| tests/evidence/record.test.ts > recordEvidence > declares every evidence kind 3ms
+ ✓ |api| tests/evidence/record.test.ts > recordEvidence > A22 (evidence): a mnemonic or payment signature placed in any field never reaches the evidence table 17ms
+ ✓ |api| tests/ledger/concurrency.test.ts > A16: total spend never exceeds the job cap under concurrent scenario attempts > A16: three parallel 0.05 reservations against a 0.10 job reserve exactly two 28ms
+ ✓ |api| tests/ledger/concurrency.test.ts > A16: total spend never exceeds the job cap under concurrent scenario attempts > A16: thirty parallel mixed-size reservations against 0.50 never overspend 27ms
+ ✓ |api| tests/ledger/concurrency.test.ts > A16: total spend never exceeds the job cap under concurrent scenario attempts > A16: randomised reserve/settle/release/unresolve interleaving with seed 1 59ms
+ ✓ |api| tests/ledger/concurrency.test.ts > A16: total spend never exceeds the job cap under concurrent scenario attempts > A16: randomised reserve/settle/release/unresolve interleaving with seed 7 38ms
+ ✓ |api| tests/ledger/concurrency.test.ts > A16: total spend never exceeds the job cap under concurrent scenario attempts > A16: randomised reserve/settle/release/unresolve interleaving with seed 42 51ms
+ ✓ |api| tests/ledger/concurrency.test.ts > A16: total spend never exceeds the job cap under concurrent scenario attempts > A16: randomised reserve/settle/release/unresolve interleaving with seed 2026 42ms
+ ✓ |api| tests/release/record-failure.test.ts > a database failure after the inbound payment settled > alerts with the tx first, never runs the job and answers 500 with PAYMENT-RESPONSE 49ms
+ ✓ |api| tests/release/record-failure.test.ts > a database failure after the inbound payment settled > a retry after a record failure gets a terminal answer, not the unresolved-settlement one 33ms
+ ✓ |api| tests/release/record-failure.test.ts > a database failure after the inbound payment settled > still answers with PAYMENT-RESPONSE when marking the job INCONCLUSIVE also fails 29ms
+ ✓ |api| tests/release/record-failure.test.ts > a database failure after the inbound payment settled > a runner crash keeps PAYMENT-RESPONSE even when marking the job INCONCLUSIVE fails 32ms
+ ✓ |api| tests/release/record-failure.test.ts > a database failure after the inbound payment settled > routes release alerts through the sanitizing logger so a secret in a cause never reaches stderr 46ms
+ ✓ |api| tests/reports/report.test.ts > buildReport > carries the report contents for a finished job 63ms
+ ✓ |api| tests/reports/report.test.ts > evidence packet > writes a private, sanitized evidence.json for the job 29ms
+ ✓ |api| tests/reports/report.test.ts > evidence packet write failure > still completes the paid job from the database and alerts 27ms
+ ✓ |api| tests/reports/report.test.ts > GET /v1/reports/:token > returns the report for its token with private, noindex headers and stores only the hash 29ms
+ ✓ |api| tests/reports/report.test.ts > GET /v1/reports/:token > answers an unknown or malformed token with the same generic 404 49ms
+ ✓ |api| tests/release/idempotency.test.ts > duplicate release requests > A21: duplicate logical release request does not create duplicate jobs 52ms
+ ✓ |api| tests/release/idempotency.test.ts > duplicate release requests > A21: the same Idempotency-Key with two different payments settles once 33ms
+ ✓ |api| tests/release/idempotency.test.ts > duplicate release requests > A21: a replayed payment whose settlement tx already belongs to a job never runs twice 58ms
+ ✓ |api| tests/release/idempotency.test.ts > duplicate release requests > a different payment for a new logical request creates its own job 57ms
+ ✓ |api| tests/orchestrator/guards.test.ts > verdict after an internal error > keeps a proven FAIL when a later step throws 68ms
+ ✓ |api| tests/orchestrator/guards.test.ts > authorization before the C3 replay > does not replay when the authorization lapsed after the paid call 29ms
+ ✓ |api| tests/orchestrator/guards.test.ts > signing under the job wall clock > abandons a signature that outlives the clock and releases the reservation 328ms
+ ✓ |api| tests/health.test.ts > health > reports ok after reaching the database 16ms
+ ✓ |api| tests/health.test.ts > health > answers unknown routes with a JSON 404 4ms
+ ✓ |api| tests/http/body-limit.test.ts > JSON request body limit > answers a body over 64 KiB with a JSON 413 before any handler reads it 38ms
+ ✓ |api| tests/http/body-limit.test.ts > JSON request body limit > lets a body of exactly 64 KiB through to validation 9ms
+ ✓ |api| tests/ledger/lost-race.test.ts > a reservation that passes the guard but loses the conditional update > reports JOB_NOT_RUNNING when the job stops between guard and update 38ms
+ ✓ |api| tests/ledger/lost-race.test.ts > a reservation that passes the guard but loses the conditional update > reports PAYMENT_UNRESOLVED when a payment turns unresolved between guard and update 22ms
+ ✓ |api| tests/preflight/a10-private-target.test.ts > A10 private targets > A10: a private-network target is rejected before any request 21ms
+ ✓ |api| tests/preflight/a10-private-target.test.ts > A10 private targets > A10: the production probe fetch refuses a private address with no request sent 4ms
+ ✓ |api| tests/release/body-limit.test.ts > paid route body limit > answers a body over 64 KiB with 413 before verifying any payment 16ms
+ ✓ |api| tests/release/body-limit.test.ts > paid route body limit > still validates a small body normally 5ms
+ ✓ |api| tests/orchestrator/open-payment.test.ts > an exception while a payment is open > marks the open payment UNRESOLVED, stops spending and still writes the report 55ms
+ ✓ |api| tests/orchestrator/not-payable.test.ts > a live requirement the x402 client cannot take > releases the reservation, signs nothing and reports REQUIREMENT_NOT_PAYABLE 41ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > types a whole-request timeout after dispatch as timeout 313ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > types a DNS resolution that outlives the timeout as a pre-dispatch timeout 103ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > types a caller signal that aborts with a TimeoutError as timeout 155ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > types a caller TimeoutError during DNS as a pre-dispatch timeout 103ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > propagates any other caller abort reason unchanged 56ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > propagates a caller abort during DNS resolution unchanged 1ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > types a refused connection as network, conservatively marked after dispatch 3ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > types a DNS failure as a pre-dispatch network failure and keeps the cause 0ms
+ ✓ |api| tests/net/safe-fetch-failures.test.ts > safe fetch: timeouts, aborts and network failures (local HTTPS fixture; skipped when openssl is absent) > types an empty DNS answer as a pre-dispatch network failure 0ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > signs exactly the guarded accept and nothing else 12ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > throws RequirementMismatch without signing when the challenge does not offer the requirement 1ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > returns delivered with the settlement txId and the replay header 11ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > returns delivered for a 500 that still carries a settlement txId 5ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > flags a malformed settlement header on a delivered response 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > drops a body over maxBodyBytes and says so 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > returns rejected when the target answers 402 without a settlement 5ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > treats a 402 with an undecodable settlement header as ambiguous 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > returns ambiguous when the paid request outlives timeoutMs 36ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > classifies a blocked failure after dispatch as ambiguous 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > classifies a network failure after dispatch as ambiguous 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > classifies a timeout failure after dispatch as ambiguous 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > classifies a unexpected failure after dispatch as ambiguous 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > returns blocked only when the block provably happened before dispatch 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > returns network_error_before_send for a network failure before dispatch 4ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > returns network_error_before_send for a timeout failure before dispatch 3ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > returns signing_failed and sends nothing when the scheme cannot sign 0ms
+ ✓ |api| tests/payments/downstream-pay.test.ts > downstream pay > never follows a redirect with a signed payment 4ms
+ ✓ |api| tests/net/safe-fetch-redirect-policy.test.ts > safe fetch: redirect policy and secret headers (local HTTPS fixture; skipped when openssl is absent) > returns the redirect unfollowed when a paid request asks for manual redirects 15ms
+ ✓ |api| tests/net/safe-fetch-redirect-policy.test.ts > safe fetch: redirect policy and secret headers (local HTTPS fixture; skipped when openssl is absent) > throws a typed after-dispatch block when redirects are an error 3ms
+ ✓ |api| tests/net/safe-fetch-redirect-policy.test.ts > safe fetch: redirect policy and secret headers (local HTTPS fixture; skipped when openssl is absent) > never forwards payment or credential headers past a followed /302 4ms
+ ✓ |api| tests/net/safe-fetch-redirect-policy.test.ts > safe fetch: redirect policy and secret headers (local HTTPS fixture; skipped when openssl is absent) > never forwards payment or credential headers past a followed /303 4ms
+ ✓ |api| tests/net/safe-fetch-redirect-policy.test.ts > safe fetch: redirect policy and secret headers (local HTTPS fixture; skipped when openssl is absent) > never forwards payment or credential headers past a followed /307 3ms
+ ✓ |api| tests/net/safe-fetch-redirect-policy.test.ts > safe fetch: redirect policy and secret headers (local HTTPS fixture; skipped when openssl is absent) > never forwards payment or credential headers past a followed /308 3ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > follows up to three redirects, re-vetting each hop 21ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > blocks the fourth redirect 7ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > blocks a redirect whose hop now resolves to a private address 2ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > blocks the redirect from /to-other-origin as ORIGIN_NOT_ALLOWED, marked after dispatch 2ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > blocks the redirect from /to-http as TARGET_NOT_HTTPS, marked after dispatch 1ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > blocks the redirect from /to-ip as TARGET_ADDRESS_BLOCKED, marked after dispatch 2ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > switches a POST to a bodiless GET after /301 5ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > switches a POST to a bodiless GET after /302 3ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > switches a POST to a bodiless GET after /303 3ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > preserves the method and body after /307 3ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > preserves the method and body after /308 3ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > accepts a Request object as the x402 fetch wrapper passes it 4ms
+ ✓ |api| tests/net/safe-fetch-redirects.test.ts > safe fetch: redirects (local HTTPS fixture; skipped when openssl is absent) > returns a redirect without a location as the final response 1ms
+ ✓ |api| tests/payments/downstream-pay-evidence.test.ts > downstream pay: expected on-chain txid > derives the txid of the signed transfer at paymentIndex on a delivered payment 12ms
+ ✓ |api| tests/payments/downstream-pay-evidence.test.ts > downstream pay: expected on-chain txid > carries the expected txid and the settle errorReason on a rejected payment 9ms
+ ✓ |api| tests/payments/downstream-pay-evidence.test.ts > downstream pay: expected on-chain txid > carries the expected txid on an ambiguous payment 27ms
+ ✓ |api| tests/payments/downstream-pay-evidence.test.ts > downstream pay: expected on-chain txid > flags a payload that is not an AVM payment group instead of guessing a txid 5ms
+ ✓ |api| tests/payments/downstream-pay-evidence.test.ts > downstream pay: request body and body reads > sends the JSON body with the signed header and keeps its exact bytes for replay 4ms
+ ✓ |api| tests/payments/downstream-pay-evidence.test.ts > downstream pay: request body and body reads > types a body that cannot be read, outside the deadline, as a network failure 4ms
+ ✓ |api| tests/payments/downstream-pay-evidence.test.ts > downstream pay: request body and body reads > types a body that outlives the deadline as a timeout 35ms
+ ✓ |api| tests/payments/a22-client.test.ts > A22 (client): no mnemonic or signed payment value appears in any result, error message or serialised object > keeps signed headers, signed group bytes and every mnemonic word out of all outcomes 97ms
+ ✓ |api| tests/payments/downstream-replay.test.ts > downstream replay > re-sends the identical signed header without signing again 13ms
+ ✓ |api| tests/payments/downstream-replay.test.ts > downstream replay > types replay transport failures 42ms
+ ✓ |api| tests/payments/downstream-replay.test.ts > downstream replay of a POST > re-sends the byte-identical body captured at payment time 5ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > sends the same Idempotency-Key on the paid request of every rerun 19ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > records the idempotency key so a rerun can reuse it 4ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > pays a Testnet 402 exactly once and records the inbound settlement 5ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > refuses Mainnet without approval before building a signer or paying 0ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > refuses Mainnet self-payment even with approval 0ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > refuses a payer that is Selo's operating wallet 0ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > pays Mainnet once when approved and the payer is not payTo 4ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > refuses an approved Mainnet payment when the 402 payTo is not the expected one 1ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > refuses an approved Mainnet payment with no expected payTo 0ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > sends both requests with redirect manual 5ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > refuses an unpaid redirect without signing or following it 0ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > stops on a paid redirect and does not follow it 4ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > maps a signing failure to a refusal that says nothing was sent 0ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > does not retry when the paid request is rejected 3ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > reports an unknown outcome and stops when the paid request fails in transit 4ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > refuses when the unpaid request is not a 402 0ms
+ ✓ |api| tests/tools/pay-flow.test.ts > runPayment > refuses a 402 that offers more than one Algorand USDC requirement 0ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > fetches through the vetted address while TLS still validates the hostname 15ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > types a certificate that does not match the hostname as network 3ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > A10: private-network target cannot be fetched 1ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > blocks when any resolved record is private even if another is public 0ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > blocks an unparseable resolver answer 0ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > blocks http://selo-test.example/ok before any connection as TARGET_NOT_HTTPS 0ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > blocks https://other.example/ok before any connection as ORIGIN_NOT_ALLOWED 0ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > blocks https://127.0.0.1/ok before any connection as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > blocks https://selo-test.example:8443/ok before any connection as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/safe-fetch.test.ts > safe fetch: address vetting and pinning (local HTTPS fixture; skipped when openssl is absent) > blocks not a url before any connection as TARGET_URL_INVALID 0ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > decodes the 402 challenge and sends the operation id as Idempotency-Key 3ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > reports a 402 without a PAYMENT-REQUIRED header as nothing decoded 1ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > reports an undecodable PAYMENT-REQUIRED header as decodeFailed 0ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > maps a safe-fetch block to blocked 0ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > maps a safe-fetch timeout to timeout 0ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > maps a safe-fetch network failure to network_error with its message 0ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > times out a target that never answers 29ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > lets an unexpected error propagate as a Selo bug 0ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > sends a JSON body with its content type when one is given 1ms
+ ✓ |api| tests/payments/downstream-probe.test.ts > downstream probe > types a response body that fails to discard as network_error 0ms
+ ✓ |api| tests/payments/payment-identity.test.ts > payment identity > derives a valid, stable payment id from the operation id 1ms
+ ✓ |api| tests/payments/payment-identity.test.ts > payment identity > pads a short operation id and clips a long one into the allowed range 0ms
+ ✓ |api| tests/payments/payment-identity.test.ts > payment identity > sets the id only when the challenge declares the extension, without mutating it 0ms
+ ✓ |api| tests/payments/payment-identity.test.ts > payment identity > carries the payment id in the signed payment and reuses it on replay 12ms
+ ✓ |api| tests/payments/payment-identity.test.ts > payment identity > sends no payment id when the target does not ask for one 9ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > pages through the discovery list and finds the record by resource url and method 11ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > requires the method to match as well as the resource url 0ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > caches the full list for the ttl and refetches after it 1ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > stops paging on an empty page even if the total claims more 0ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > reports unavailable on an HTTP error and does not cache the failure 0ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > reports unavailable on a timeout 0ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > passes a per-page timeout signal to the fetch 0ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > reports unavailable on a body that is not JSON 0ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > reports unavailable on JSON that is not the discovery envelope 0ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > skips catalog items that do not carry a resource url and method 0ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > gives up as unavailable after 20 pages from a server that never shortens its pages 6ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > reports unavailable when the server ignores the requested offset 1ms
+ ✓ |api| tests/catalog/catalog.test.ts > bazaar catalog client > with fake timers > bounds the whole load with a 20 s deadline 1ms
+ ✓ |api| tests/net/safe-fetch-production.test.ts > production safe fetch > accepts only the allowed origin and timeout, and still blocks before any DNS 2ms
+ ✓ |api| tests/net/safe-fetch-production.test.ts > production safe fetch > keeps the seam-taking engine out of every production module but the safe fetch itself 4ms
+ ✓ |api| tests/evidence/sanitize.test.ts > sanitize > hashes secret-named keys at any depth and redacts non-string secrets 7ms
+ ✓ |api| tests/evidence/sanitize.test.ts > sanitize > truncates long strings and reports how much was cut 0ms
+ ✓ |api| tests/evidence/sanitize.test.ts > sanitize > hashes the full secret even when it is longer than the truncation limit 0ms
+ ✓ |api| tests/evidence/sanitize.test.ts > sanitize > stops at depth 12 0ms
+ ✓ |api| tests/evidence/sanitize.test.ts > sanitize > hashes a mnemonic or a signed transaction found in any field 10ms
+ ✓ |api| tests/evidence/sanitize.test.ts > sanitize > hashes a base64 payment header value that carries a signed payload 0ms
+ ✓ |api| tests/evidence/sanitize.test.ts > sanitize > keeps ordinary identifiers and prose untouched 0ms
+ ✓ |api| tests/evidence/sanitize.test.ts > sanitize > serialises dates and bigints and drops undefined fields 1ms
+ ✓ |api| tests/evidence/sanitize.test.ts > canonicalJson > is stable across key order at every depth 0ms
+ ✓ |api| tests/evidence/sanitize.test.ts > canonicalJson > hashes as lowercase hex sha256 0ms
+ ✓ |api| tests/evidence/mnemonic.test.ts > mnemonic detection by value > uses a real 25 word Algorand mnemonic 1ms
+ ✓ |api| tests/evidence/mnemonic.test.ts > mnemonic detection by value > hashes a lowercase space separated mnemonic under an innocent key 16ms
+ ✓ |api| tests/evidence/mnemonic.test.ts > mnemonic detection by value > hashes an uppercase comma separated mnemonic inside a log line 0ms
+ ✓ |api| tests/evidence/mnemonic.test.ts > mnemonic detection by value > hashes a mnemonic with one mistyped word 0ms
+ ✓ |api| tests/evidence/mnemonic.test.ts > mnemonic detection by value > hashes a mnemonic embedded in long lowercase prose 0ms
+ ✓ |api| tests/evidence/mnemonic.test.ts > mnemonic detection by value > derives the full 2048 word Algorand list from algosdk 0ms
+ ✓ |api| tests/evidence/mnemonic.test.ts > mnemonic detection by value > keeps 29 words of lowercase prose that is not a wordlist run 0ms
+ ✓ |api| tests/payments/wallet.test.ts > operating wallet > derives the operating address from the mnemonic without touching the network 3ms
+ ✓ |api| tests/payments/wallet.test.ts > operating wallet > builds the exact AVM client scheme signing as that address 11ms
+ ✓ |api| tests/payments/wallet.test.ts > operating wallet > A22 (client): the scheme serialises without the mnemonic or the secret key 2ms
+ ✓ |api| tests/payments/wallet.test.ts > operating wallet > A22 (client): an invalid mnemonic fails with a message that carries none of its words 1ms
+ ✓ |api| tests/tools/files.test.ts > addEnvKeyIfAbsent > creates the file with the key and mode 0600 2ms
+ ✓ |api| tests/tools/files.test.ts > addEnvKeyIfAbsent > appends to an existing file, keeps its lines and tightens the mode to 0600 1ms
+ ✓ |api| tests/tools/files.test.ts > addEnvKeyIfAbsent > tightens a read-only 0444 file to 0600 before appending 1ms
+ ✓ |api| tests/tools/files.test.ts > addEnvKeyIfAbsent > never overwrites a key that is already there, in any spelling 1ms
+ ✓ |api| tests/tools/files.test.ts > addEnvKeyIfAbsent > treats a longer key with the same prefix or a commented line as absent 1ms
+ ✓ |api| tests/tools/files.test.ts > addEnvKeyIfAbsent > rejects a value or key that could inject another line 1ms
+ ✓ |api| tests/tools/files.test.ts > writeEvidence > writes sanitized pretty JSON with capturedAt first 7ms
+ ✓ |api| tests/tools/files.test.ts > writeEvidence > refuses a file name that escapes the directory 0ms
+ ✓ |api| tests/identity/identity.test.ts > merchant identity metadata > serves a homepage whose OpenGraph tags name Selo 9ms
+ ✓ |api| tests/identity/identity.test.ts > merchant identity metadata > serves llms.txt that names Selo and its paid route 0ms
+ ✓ |api| tests/identity/identity.test.ts > merchant identity metadata > serves an agent card that names Selo and its release-test skill 1ms
+ ✓ |api| tests/identity/identity.test.ts > merchant identity metadata > joins a base path without dropping it 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under authorization at any depth 7ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under Authorization at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under Proxy-Authorization at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under cookie at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under Set-Cookie at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under X-PAYMENT at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under x_payment at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under PAYMENT-SIGNATURE at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under sk at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under sig at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under access_token at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under refreshToken at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under id_token at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under api-key at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under apiKey at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under Bearer at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under mnemonic at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under walletMnemonic at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under clientSecret at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under SECRET_VALUE at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under privateKey at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under private_key at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under password at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under dbPassword at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under passphrase at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under keyPassphrase at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under signature at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > hashes a string and redacts an object under paymentSignature at any depth 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > keeps real evidence whose key only resembles a secret 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > sanitizes inside an authorization snapshot object instead of dropping it 0ms
+ ✓ |api| tests/evidence/sanitize-keys.test.ts > sanitize secret key tiers > redacts non-object, non-string values under authorization 0ms
+ ✓ |api| tests/net/limited-body.test.ts > readLimitedText > returns the text when the body fits the cap 8ms
+ ✓ |api| tests/net/limited-body.test.ts > readLimitedText > returns an empty text for a response without a body 0ms
+ ✓ |api| tests/net/limited-body.test.ts > readLimitedText > stops with too_large once the streamed body exceeds the cap 0ms
+ ✓ |api| tests/net/limited-body.test.ts > readLimitedText > rejects a declared content-length over the cap before reading 0ms
+ ✓ |api| tests/net/limited-body.test.ts > readLimitedText > decodes UTF-8 split across chunks 0ms
+ ✓ |api| tests/net/limited-body.test.ts > readLimitedText > types a stream failure as network and keeps the cause 0ms
+ ✓ |api| tests/net/limited-body.test.ts > readLimitedText > types a timeout abort during the read as timeout 0ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readChallenge > decodes a PAYMENT-REQUIRED header with the official decoder 8ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readChallenge > reports a missing header as nothing decoded, not a failure 0ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readChallenge > types an undecodable header as decodeFailed and keeps the message 0ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readChallenge > types base64 that is not JSON as decodeFailed 0ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readSettlementTxId > reads the transaction of a successful settlement 1ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readSettlementTxId > returns no txId and no flag when the header is absent 0ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readSettlementTxId > returns no txId but keeps the errorReason of a settlement that reports failure 0ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readSettlementTxId > flags a present but undecodable header 0ms
+ ✓ |api| tests/payments/challenge-io.test.ts > readSettlementTxId > flags a decodable header that is not a settle response 0ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > fetchDomainResources > pages the whole catalog by offset and selects the domain 3ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > fetchDomainResources > reports an HTTP error as a failure with the status 0ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > fetchDomainResources > reports a body that is not the documented shape 0ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > fetchDomainResources > reports invalid JSON and network errors instead of throwing 0ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > page cap > fails after 20 non-empty pages instead of reading an endless listing 1ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > fetchMerchantsFor > selects the payTo merchant from the paged list 1ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > fetchChallengeRows > reads every source for the Mainnet merchants leaderboard 1ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > fetchChallengeRows > pages a leaderboard that caps the page size below its total 1ms
+ ✓ |api| tests/tools/facilitator-client.test.ts > fetchChallengeRows > names the failing source 0ms
+ ✓ |api| tests/orchestrator/env.test.ts > operator configuration > derives the operating address and applies the defaults 5ms
+ ✓ |api| tests/orchestrator/env.test.ts > operator configuration > refuses to start without a mnemonic or with a report secret under 32 characters 1ms
+ ✓ |api| tests/orchestrator/env.test.ts > operator configuration > refuses a mnemonic that does not yield a valid address and never echoes it 0ms
+ ✓ |api| tests/orchestrator/env.test.ts > operator configuration > is declared in .env.example with the secrets left blank 2ms
+ ✓ |api| tests/payments/sanitize-headers.test.ts > sanitizeHeaders > A22 (client): replaces every secret header with the SHA-256 of its value 7ms
+ ✓ |api| tests/payments/sanitize-headers.test.ts > sanitizeHeaders > matches secret header names case-insensitively 0ms
+ ✓ |api| tests/tools/account-chain.test.ts > envKeyFor > maps each role to its own mnemonic key 1ms
+ ✓ |api| tests/tools/account-chain.test.ts > optInGate > allows Testnet and refuses Mainnet without approval 0ms
+ ✓ |api| tests/tools/account-chain.test.ts > buildOptInTxn > builds a 0-amount self transfer of the USDC asset 5ms
+ ✓ |api| tests/tools/account-chain.test.ts > holdingSummary > reports balances and the opt-in state of the USDC asset 0ms
+ ✓ |api| tests/tools/account-chain.test.ts > holdingSummary > reports an account that has not opted in 0ms
+ ✓ |api| tests/release/env.test.ts > inbound payment configuration > accepts a valid payTo and defaults the facilitator to GoPlausible 2ms
+ ✓ |api| tests/release/env.test.ts > inbound payment configuration > refuses to load without a payTo address 1ms
+ ✓ |api| tests/release/env.test.ts > inbound payment configuration > refuses a payTo that is not an Algorand address 0ms
+ ✓ |api| tests/release/env.test.ts > inbound payment configuration > refuses a Mainnet configuration whose public URL is not public HTTPS 0ms
+ ✓ |api| tests/release/env.test.ts > inbound payment configuration > refuses a facilitator URL that is not https 0ms
+ ✓ |api| tests/release/env.test.ts > payTo versus the operating wallet > warns when inbound revenue goes to a different address than the paying wallet 0ms
+ ✓ |api| tests/release/env.test.ts > payTo versus the operating wallet > stays silent when payTo is the operating wallet 0ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > allows a Testnet payment to a different address 1ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > refuses a Mainnet payment without explicit approval 0ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > allows a Mainnet payment only with approval and a payer distinct from payTo 0ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > refuses an approved Mainnet payment without an expected payTo 0ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > refuses when the 402 payTo differs from the expected payTo, on any network 2ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > refuses self-payment on Mainnet even with approval 0ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > refuses self-payment on Testnet too 0ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > refuses a payer that is one of Selo's own wallets 0ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > refuses a network that is not Algorand Mainnet or Testnet 0ms
+ ✓ |api| tests/tools/payment-decision.test.ts > paymentDecision > refuses a price above the 5.00 USDC ceiling or a non-positive price 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkChallenge (A01-A04) > passes a tagged Mainnet USDC challenge to payTo with Bazaar metadata 2ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkChallenge (A01-A04) > A03 fails when resource.tags lacks the challenge tag 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkChallenge (A01-A04) > A03 fails when the accepted requirement carries no challenge tag 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkChallenge (A01-A04) > A02 fails on Testnet, the wrong asset or a different payTo 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkChallenge (A01-A04) > A04 fails without a Bazaar extension carrying input and output info 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkChallenge (A01-A04) > fails every check with the reason when the probe is not a decodable 402 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkBazaar (A07) > passes when the domain has a catalog record 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkBazaar (A07) > fails with a reason when there is no record or the catalog is unreachable 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkMerchant > passes when a merchant exists for payTo and fails otherwise 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkLeaderboard (A08) > passes with a row under x402-global-challenge 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkLeaderboard (A08) > fails when volume appears only under direct or dev 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkLeaderboard (A08) > names the sources when payTo appears only under bazaar 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkLeaderboard (A08) > fails when the challenge row is blocked 0ms
+ ✓ |api| tests/tools/g1-checks.test.ts > checkLeaderboard (A08) > fails with no row anywhere or when a source is unreachable 0ms
+ ✓ |api| tests/env-example.test.ts > .env.example > loads through loadEnv exactly as tsx --env-file would read it 2ms
+ ✓ |api| tests/env-example.test.ts > .env.example > keeps the example on Testnet and within the spend caps 0ms
+ ✓ |api| tests/tools/g1-probe.test.ts > probeRelease > sends one unpaid, valid release body and decodes the 402 2ms
+ ✓ |api| tests/tools/g1-probe.test.ts > probeRelease > does not follow a redirect and reports it 0ms
+ ✓ |api| tests/tools/g1-probe.test.ts > probeRelease > reports a network failure instead of throwing 0ms
+ ✓ |api| tests/reports/reports-dir.test.ts > ensureReportsDir > creates a missing directory privately and accepts it 1ms
+ ✓ |api| tests/reports/reports-dir.test.ts > ensureReportsDir > refuses a path that cannot be created because a file is in the way 1ms
+ ✓ |api| tests/reports/reports-dir.test.ts > ensureReportsDir > refuses a directory it cannot write into 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > accepts an https URL, drops the fragment and keeps the query 1ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects not a url as TARGET_URL_INVALID 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects  as TARGET_URL_INVALID 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https:// as TARGET_URL_INVALID 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://user:secret@api.example.com/v1 as TARGET_URL_INVALID 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://user@api.example.com/v1 as TARGET_URL_INVALID 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects http://api.example.com/v1 as TARGET_NOT_HTTPS 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects ftp://api.example.com/v1 as TARGET_NOT_HTTPS 1ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects file:///etc/passwd as TARGET_NOT_HTTPS 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://api.example.com:8443/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://api.example.com:80/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://127.0.0.1/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://8.8.8.8/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://2130706433/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://0x7f.1/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://[::1]/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://[::ffff:169.254.169.254]/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://localhost/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://LOCALHOST./v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://api.local/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://metadata.google.internal/computeMetadata/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/net/target.test.ts > parseTarget > rejects https://intranet/v1 as TARGET_ADDRESS_BLOCKED 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > facilitator schemas > parse the live discovery, merchant and leaderboard shapes 1ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > facilitator schemas > keep the blocked marker of a leaderboard row 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > facilitator schemas > reject a page whose items are not an array 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > resourcesForDomain > selects every catalog record whose URL host is the domain 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > resourcesForDomain > does not match a host that merely contains the domain 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > merchantsFor > selects the merchant whose AVM address is payTo 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > merchantsFor > ignores EVM addresses and unknown payTo 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > leaderboardRowsFor > selects the rows whose address is payTo 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > nextOffset > advances by the items received until the total is reached 0ms
+ ✓ |api| tests/tools/facilitator-selectors.test.ts > nextOffset > stops on an empty page so a lying total cannot loop forever 0ms
+ ✓ |api| tests/scripts/consent-env.test.ts > consent:grant environment > loads with only the database URL and defaults the authorization TTL 1ms
+ ✓ |api| tests/scripts/consent-env.test.ts > consent:grant environment > does not require the server's payTo, public URL or operator secrets 0ms
+ ✓ |api| tests/scripts/consent-env.test.ts > consent:grant environment > still refuses a missing database URL or a bad TTL 1ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > maps the settle errorReason invalid_exact_avm_simulation_failed to the payer 1ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > maps the settle errorReason invalid_exact_avm_payment_not_signed to the payer 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > maps the settle errorReason invalid_exact_avm_invalid_signature to the payer 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > maps the settle errorReason insufficient_funds to the payer 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > reads the reason from the 402 challenge's error when there is no settle response 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > recognises the free-text payer-side reason "transaction rejected: overspend" 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > recognises the free-text payer-side reason "account not opted in to asset" 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > recognises the free-text payer-side reason "below min balance" 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > keeps the target-side reason invalid_exact_avm_receiver_mismatch a genuine rejection 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > keeps the target-side reason invalid_exact_avm_amount_mismatch a genuine rejection 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > keeps the target-side reason invalid_exact_avm_payload_transaction a genuine rejection 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > keeps the target-side reason transaction_already_in_ledger a genuine rejection 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > does not treat the unrelated text "adopting a new facilitator" as payer-side 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > does not treat the unrelated text "optional field missing" as payer-side 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > does not treat the unrelated text "option not supported" as payer-side 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > does not treat the unrelated text "endpoint is opting out" as payer-side 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > still recognises the whole-word opt-in phrase "account not opted in to asset" 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > still recognises the whole-word opt-in phrase "asset opt-in required" 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > still recognises the whole-word opt-in phrase "optin missing" 0ms
+ ✓ |api| tests/payments/payer-rejection.test.ts > payerSideReason > returns null when neither the header nor the challenge gives a reason 0ms
+ ✓ |api| tests/reports/token.test.ts > reportToken > is a 43-character base64url HMAC that is stable for one job and secret 1ms
+ ✓ |api| tests/reports/token.test.ts > reportToken > changes with the job and with the secret 0ms
+ ✓ |api| tests/reports/token.test.ts > reportToken > rejects anything that is not a 43-character base64url string 0ms
+ ✓ |api| tests/reports/token.test.ts > reportToken > builds an absolute report URL under the public API base, keeping the base path 0ms
+ ✓ |api| tests/reports/token.test.ts > reportToken > never produces the unrouted /r/ shape 0ms
+ ✓ |api| tests/release/discovery-example.test.ts > Bazaar output example > lists all five checks in report order 1ms
+ ✓ |api| tests/release/discovery-example.test.ts > Bazaar output example > carries a verdict the deterministic reducer derives from its own checks 0ms
+ ✓ |api| tests/release/discovery-example.test.ts > Bazaar output example > would not be a PASS if a check were missing or lacked evidence 0ms
+ ✓ |api| tests/release/discovery-example.test.ts > Bazaar output example > uses the absolute API report URL shape 0ms
+ ✓ |api| tests/release/discovery-example.test.ts > Bazaar output example > marks every id and transaction as illustrative 0ms
+ ✓ |api| tests/tools/pay-idempotency.test.ts > payIdempotencyKey > derives the same accepted key from the preflight and payer on every run 1ms
+ ✓ |api| tests/tools/pay-idempotency.test.ts > payIdempotencyKey > differs by preflight and by payer 0ms
+ ✓ |api| tests/tools/pay-idempotency.test.ts > payIdempotencyKey > uses an explicit key verbatim when it is valid 0ms
+ ✓ |api| tests/tools/pay-idempotency.test.ts > payIdempotencyKey > rejects an explicit key Selo would refuse 0ms
+ ✓ |api| tests/tools/g2-evidence.test.ts > g2EvidenceResponse > replaces the private report URL with the SHA-256 of its token 1ms
+ ✓ |api| tests/tools/g2-evidence.test.ts > g2EvidenceResponse > leaves a response without a report URL untouched 0ms
+ ✓ |api| tests/payments/networks.test.ts > seloNetworks > uses the long genesis-hash CAIP-2 form the facilitator accepts 1ms
+ ✓ |api| tests/payments/networks.test.ts > seloNetworks > names the USDC asset and algod endpoint for each network 0ms
+
+ Test Files  85 passed (85)
+      Tests  855 passed (855)
+   Start at  10:43:58
+   Duration  23.00s (import 54%, tests 41%, transform 4%, worker 1%)
+

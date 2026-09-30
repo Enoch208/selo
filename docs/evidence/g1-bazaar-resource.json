@@ -1,0 +1,109 @@
+{
+  "capturedAt": "2026-09-30T13:56:36.506Z",
+  "domain": "api.useselo.xyz",
+  "payTo": "N37HMJCB4BAITC2ZU7C4XW7PUMCO4T3TUASHQEL6A4EWMLOTTHOB7IOOKY",
+  "facilitator": "https://facilitator.goplausible.xyz",
+  "ok": true,
+  "result": [
+    {
+      "id": "UE9TVDpodHRwczovL2FwaS51c2VzZWxvLnh5ei92MS9yZWxlYXNlLXRlc3Q",
+      "resourceUrl": "https://api.useselo.xyz/v1/release-test",
+      "method": "POST",
+      "description": "Run an authorized x402 release test. Selo settles the request, pays the target endpoint, verifies payment and response behavior, and returns an evidence-backed PASS, FAIL, or INCONCLUSIVE report.",
+      "merchantId": "TjM3SE1KQ0I0QkFJVEMyWlU3QzRYVzdQ",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
+          "amount": "1000000",
+          "asset": "31566704",
+          "payTo": "N37HMJCB4BAITC2ZU7C4XW7PUMCO4T3TUASHQEL6A4EWMLOTTHOB7IOOKY",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "name": "USDC",
+            "decimals": 6,
+            "tag": "x402-global-challenge",
+            "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA"
+          }
+        }
+      ],
+      "discoveryInfo": {
+        "input": {
+          "type": "http",
+          "bodyType": "json",
+          "body": {
+            "preflightId": "pfl_01J8Z3K6W2Q9V4N7T5R8M3X1CY",
+            "profile": "quick",
+            "expected": {
+              "status": 200,
+              "contentType": "application/json"
+            }
+          },
+          "method": "POST"
+        },
+        "output": {
+          "type": "json",
+          "example": {
+            "jobId": "job_EXAMPLE_JOB_ID",
+            "verdict": "PASS",
+            "target": "https://api.example.com/v1/quote",
+            "checks": [
+              {
+                "id": "handshake",
+                "status": "PASS",
+                "code": "HANDSHAKE_VALID",
+                "blocking": true,
+                "summary": "Example: the unpaid request returned a valid x402 v2 challenge.",
+                "evidence": ["evd_EXAMPLE_HANDSHAKE"]
+              },
+              {
+                "id": "paid_delivery",
+                "status": "PASS",
+                "code": "PAID_AND_DELIVERED",
+                "blocking": true,
+                "summary": "Example: the downstream payment settled and the target returned 200.",
+                "evidence": ["evd_EXAMPLE_PAID_RESPONSE", "evd_EXAMPLE_DOWNSTREAM_PAYMENT"]
+              },
+              {
+                "id": "response_contract",
+                "status": "PASS",
+                "code": "CONTRACT_MATCHED",
+                "blocking": true,
+                "summary": "Example: the paid response matched status 200 and content type application/json.",
+                "evidence": ["evd_EXAMPLE_PAID_RESPONSE"]
+              },
+              {
+                "id": "discovery_contract",
+                "status": "PASS",
+                "code": "DISCOVERY_CONSISTENT",
+                "blocking": true,
+                "summary": "Example: the live challenge and the catalog record agree.",
+                "evidence": ["evd_EXAMPLE_DISCOVERY"]
+              },
+              {
+                "id": "retry_safety",
+                "status": "PASS",
+                "code": "PASS_REPLAY_REJECTED",
+                "blocking": true,
+                "summary": "Example: replaying the identical signed payment was rejected with status 402.",
+                "evidence": ["evd_EXAMPLE_REPLAY"]
+              }
+            ],
+            "warnings": [],
+            "inconclusiveReason": null,
+            "money": {
+              "seloInboundTxId": "EXAMPLE_INBOUND_TXID",
+              "downstreamSpendUsdc": "0.01",
+              "downstreamTxIds": ["EXAMPLE_DOWNSTREAM_TXID"]
+            },
+            "reportUrl": "https://selo.example/v1/reports/EXAMPLE_REPORT_TOKEN"
+          }
+        }
+      },
+      "settleCount": 2,
+      "firstSeen": "2026-09-27T20:48:21.479Z",
+      "lastSeen": "2026-09-30T12:48:29.084Z",
+      "mimeType": "application/json"
+    }
+  ]
+}

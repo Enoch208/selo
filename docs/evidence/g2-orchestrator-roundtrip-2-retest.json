@@ -1,0 +1,73 @@
+{
+  "capturedAt": "2026-09-30T12:48:36.218Z",
+  "outcome": "completed",
+  "url": "https://api.useselo.xyz/v1/release-test",
+  "idempotencyKey": "pay-selo-a4f0daded1ce502d518ae099bb54c237eee6b12373148d6b",
+  "network": "algorand-mainnet",
+  "payer": "NH4I4FCPGGAUYKN7Q6VAQ2Z3LN3Q5HMXSK4PHLBHWAJ5NYEG3JMKYEM5YQ",
+  "payTo": "N37HMJCB4BAITC2ZU7C4XW7PUMCO4T3TUASHQEL6A4EWMLOTTHOB7IOOKY",
+  "price": "1.00",
+  "tag": "x402-global-challenge",
+  "unpaidRequestedAt": "2026-09-30T12:48:21.320Z",
+  "paidRequestedAt": "2026-09-30T12:48:23.946Z",
+  "expectedInboundTxId": "M7UBNUG4M6XAQBT7NBUFVDMCRGIK4IGYDUGLLATB5ADAS3RLMDTQ",
+  "respondedAt": "2026-09-30T12:48:36.217Z",
+  "status": 200,
+  "inboundTxId": "M7UBNUG4M6XAQBT7NBUFVDMCRGIK4IGYDUGLLATB5ADAS3RLMDTQ",
+  "settlementError": null,
+  "response": {
+    "jobId": "job_ZP2BC5G5PD398EHYYNW90XX02W",
+    "verdict": "PASS",
+    "target": "https://ora-gate-mainnet.vercel.app/api/ora-gate/message/ora_agent",
+    "checks": [
+      {
+        "id": "handshake",
+        "status": "PASS",
+        "code": "HANDSHAKE_VALID",
+        "blocking": true,
+        "summary": "Target issued a valid x402 v2 challenge with a supported requirement for network algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8= and asset 31566704.",
+        "evidence": ["evd_6CG2G8TF6VWGSZQF9J4Y70VJYC"]
+      },
+      {
+        "id": "paid_delivery",
+        "status": "PASS",
+        "code": "PAID_AND_DELIVERED",
+        "blocking": true,
+        "summary": "Downstream payment settled and target returned 200 with transaction S2NOVVRDZUPTY7AA3BZ3NDISYPNXNDMXEKX442SVNR7RXQCP3W7Q.",
+        "evidence": ["evd_A7DQSDSZCY16JRHA6YQH8WMTB4", "evd_ZPYQN361K10ENJ7WF3KNKH6M0C"]
+      },
+      {
+        "id": "response_contract",
+        "status": "PASS",
+        "code": "CONTRACT_MATCHED",
+        "blocking": true,
+        "summary": "Observed response matched the expected status 200.",
+        "evidence": ["evd_A7DQSDSZCY16JRHA6YQH8WMTB4", "evd_9CH6AFGJ0W6V75AVRC1D9MTEER"]
+      },
+      {
+        "id": "discovery_contract",
+        "status": "PASS",
+        "code": "DISCOVERY_CONSISTENT",
+        "blocking": true,
+        "summary": "Live challenge and catalog record agree on method, URL, payment terms and carry usable metadata.",
+        "evidence": ["evd_X90DDZ3N5T6G801K3CD0Z2ZB3G"]
+      },
+      {
+        "id": "retry_safety",
+        "status": "PASS",
+        "code": "PASS_SAFE_RETRY",
+        "blocking": true,
+        "summary": "Replay returned 200 with a body byte-identical to the original paid response and no new settlement, so the target returned its stored result.",
+        "evidence": ["evd_M4QZXV3JZK3WH6T1EPY5A0RPYM"]
+      }
+    ],
+    "warnings": [],
+    "inconclusiveReason": null,
+    "money": {
+      "seloInboundTxId": "M7UBNUG4M6XAQBT7NBUFVDMCRGIK4IGYDUGLLATB5ADAS3RLMDTQ",
+      "downstreamSpendUsdc": "0.01",
+      "downstreamTxIds": ["S2NOVVRDZUPTY7AA3BZ3NDISYPNXNDMXEKX442SVNR7RXQCP3W7Q"]
+    },
+    "reportTokenSha256": "sha256:f92fbb85bb63ffc24bbea8c753a3e4765238408960c10fed3491b1f0c8b5f062"
+  }
+}

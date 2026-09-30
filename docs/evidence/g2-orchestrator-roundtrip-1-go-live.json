@@ -1,0 +1,128 @@
+{
+  "note": "First Mainnet release job (go-live). Report fetched from the private report route; the report token is omitted.",
+  "report": {
+    "jobId": "job_GY5X6P4A3FSVXDEQ2VXP4EWAGR",
+    "project": "ORA Gate",
+    "target": {
+      "url": "https://ora-gate-mainnet.vercel.app/api/ora-gate/message/ora_agent",
+      "method": "POST"
+    },
+    "testedAt": "2026-09-27T20:48:21.508Z",
+    "completedAt": "2026-09-27T20:48:27.943Z",
+    "seloVersion": "unknown",
+    "verdict": "FAIL",
+    "inconclusiveReason": null,
+    "checks": [
+      {
+        "id": "handshake",
+        "status": "PASS",
+        "code": "HANDSHAKE_VALID",
+        "blocking": true,
+        "summary": "Target issued a valid x402 v2 challenge with a supported requirement for network algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8= and asset 31566704.",
+        "evidence": ["evd_VFZAQWN3H89V67FRYR34TKQVM4"]
+      },
+      {
+        "id": "paid_delivery",
+        "status": "PASS",
+        "code": "PAID_AND_DELIVERED",
+        "blocking": true,
+        "summary": "Downstream payment settled and target returned 200 with transaction ATF5HLYBBY4G5GYPNLCUMC5FXH22WIXI2QG3YP7M4WYPA5EHQTYQ.",
+        "evidence": ["evd_T3QBM6YG6KFH19RY5RS4J6X49W", "evd_XJASPWGAN09SS83AQG44713RBW"]
+      },
+      {
+        "id": "response_contract",
+        "status": "PASS",
+        "code": "CONTRACT_MATCHED",
+        "blocking": true,
+        "summary": "Observed response matched the expected status 200.",
+        "evidence": ["evd_T3QBM6YG6KFH19RY5RS4J6X49W", "evd_4RJJY31JR6VQ122RG9FYSC8JGM"]
+      },
+      {
+        "id": "discovery_contract",
+        "status": "WARN",
+        "code": "NOT_CATALOGED",
+        "blocking": true,
+        "summary": "The target is not yet listed in the Bazaar catalog.",
+        "evidence": ["evd_6MJXC66AR5N76FXDBFFMGPHSC8"]
+      },
+      {
+        "id": "retry_safety",
+        "status": "FAIL",
+        "code": "FAIL_DUPLICATE_SIDE_EFFECT",
+        "blocking": true,
+        "summary": "Replay of this POST request returned 200 without a transaction id, so a duplicate side effect could not be ruled out.",
+        "evidence": ["evd_TR88NX75ACZPTGEVRK1TZBPNGC"]
+      }
+    ],
+    "warnings": ["discovery_contract: The target is not yet listed in the Bazaar catalog."],
+    "failureCodes": ["FAIL_DUPLICATE_SIDE_EFFECT"],
+    "targetChallengeSha256": "0951058252e29eeadba81890915a194fe11e9ac8d84a5d6effbf309b580e3077",
+    "expected": {
+      "status": 200
+    },
+    "observedResponse": {
+      "status": 200,
+      "contentType": "application/json",
+      "bodySha256": "ec037a37fabeb4291a521f0f795de65a060f2fca81790910fa2ca1bf9e699b8e",
+      "bodyBytes": 240,
+      "txId": "ATF5HLYBBY4G5GYPNLCUMC5FXH22WIXI2QG3YP7M4WYPA5EHQTYQ",
+      "requestedAt": "2026-09-27T20:48:22.213Z"
+    },
+    "money": {
+      "inboundTxId": "JXU2INATXUJHE7WZGGWN25BPM6L2YEL6Q7LU5W3HICI4B5CX4JAQ",
+      "downstreamSpendUsdc": "0.01",
+      "unresolvedSpendUsdc": "0.00",
+      "downstreamTxIds": ["ATF5HLYBBY4G5GYPNLCUMC5FXH22WIXI2QG3YP7M4WYPA5EHQTYQ"],
+      "payments": [
+        {
+          "status": "SETTLED",
+          "amountUsdc": "0.01",
+          "txId": "ATF5HLYBBY4G5GYPNLCUMC5FXH22WIXI2QG3YP7M4WYPA5EHQTYQ",
+          "expectedTxId": "ATF5HLYBBY4G5GYPNLCUMC5FXH22WIXI2QG3YP7M4WYPA5EHQTYQ"
+        }
+      ]
+    },
+    "scenarios": [
+      {
+        "check": "handshake",
+        "operationId": "job_GY5X6P4A3FSVXDEQ2VXP4EWAGR:handshake",
+        "status": "EVALUATED",
+        "attempts": 1,
+        "durationMs": 352,
+        "failureCode": null
+      },
+      {
+        "check": "paid_delivery",
+        "operationId": "job_GY5X6P4A3FSVXDEQ2VXP4EWAGR:paid_delivery",
+        "status": "EVALUATED",
+        "attempts": 1,
+        "durationMs": 5005,
+        "failureCode": null
+      },
+      {
+        "check": "response_contract",
+        "operationId": "job_GY5X6P4A3FSVXDEQ2VXP4EWAGR:response_contract",
+        "status": "EVALUATED",
+        "attempts": 0,
+        "durationMs": 0,
+        "failureCode": null
+      },
+      {
+        "check": "discovery_contract",
+        "operationId": "job_GY5X6P4A3FSVXDEQ2VXP4EWAGR:discovery_contract",
+        "status": "EVALUATED",
+        "attempts": 1,
+        "durationMs": 517,
+        "failureCode": "NOT_CATALOGED"
+      },
+      {
+        "check": "retry_safety",
+        "operationId": "job_GY5X6P4A3FSVXDEQ2VXP4EWAGR:retry_safety",
+        "status": "EVALUATED",
+        "attempts": 1,
+        "durationMs": 289,
+        "failureCode": "FAIL_DUPLICATE_SIDE_EFFECT"
+      }
+    ]
+  }
+}

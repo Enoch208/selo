@@ -1,0 +1,234 @@
+{
+  "capturedAt": "2026-09-30T13:56:36.506Z",
+  "url": "https://api.useselo.xyz/v1/release-test",
+  "ok": true,
+  "result": {
+    "status": 402,
+    "decoded": {
+      "x402Version": 2,
+      "error": "Payment required",
+      "resource": {
+        "url": "https://api.useselo.xyz/v1/release-test",
+        "description": "Run an authorized x402 release test. Selo settles the request, pays the target endpoint, verifies payment and response behavior, and returns an evidence-backed PASS, FAIL, or INCONCLUSIVE report.",
+        "mimeType": "application/json",
+        "serviceName": "Selo",
+        "tags": ["x402-global-challenge"],
+        "iconUrl": "https://useselo.xyz/brand/selo-logo-512.png"
+      },
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
+          "amount": "1000000",
+          "asset": "31566704",
+          "payTo": "N37HMJCB4BAITC2ZU7C4XW7PUMCO4T3TUASHQEL6A4EWMLOTTHOB7IOOKY",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "name": "USDC",
+            "decimals": 6,
+            "tag": "x402-global-challenge",
+            "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA"
+          }
+        }
+      ],
+      "extensions": {
+        "bazaar": {
+          "info": {
+            "input": {
+              "type": "http",
+              "bodyType": "json",
+              "body": {
+                "preflightId": "pfl_01J8Z3K6W2Q9V4N7T5R8M3X1CY",
+                "profile": "quick",
+                "expected": {
+                  "status": 200,
+                  "contentType": "application/json"
+                }
+              },
+              "method": "POST"
+            },
+            "output": {
+              "type": "json",
+              "example": {
+                "jobId": "job_EXAMPLE_JOB_ID",
+                "verdict": "PASS",
+                "target": "https://api.example.com/v1/quote",
+                "checks": [
+                  {
+                    "id": "handshake",
+                    "status": "PASS",
+                    "code": "HANDSHAKE_VALID",
+                    "blocking": true,
+                    "summary": "Example: the unpaid request returned a valid x402 v2 challenge.",
+                    "evidence": ["evd_EXAMPLE_HANDSHAKE"]
+                  },
+                  {
+                    "id": "paid_delivery",
+                    "status": "PASS",
+                    "code": "PAID_AND_DELIVERED",
+                    "blocking": true,
+                    "summary": "Example: the downstream payment settled and the target returned 200.",
+                    "evidence": ["evd_EXAMPLE_PAID_RESPONSE", "evd_EXAMPLE_DOWNSTREAM_PAYMENT"]
+                  },
+                  {
+                    "id": "response_contract",
+                    "status": "PASS",
+                    "code": "CONTRACT_MATCHED",
+                    "blocking": true,
+                    "summary": "Example: the paid response matched status 200 and content type application/json.",
+                    "evidence": ["evd_EXAMPLE_PAID_RESPONSE"]
+                  },
+                  {
+                    "id": "discovery_contract",
+                    "status": "PASS",
+                    "code": "DISCOVERY_CONSISTENT",
+                    "blocking": true,
+                    "summary": "Example: the live challenge and the catalog record agree.",
+                    "evidence": ["evd_EXAMPLE_DISCOVERY"]
+                  },
+                  {
+                    "id": "retry_safety",
+                    "status": "PASS",
+                    "code": "PASS_REPLAY_REJECTED",
+                    "blocking": true,
+                    "summary": "Example: replaying the identical signed payment was rejected with status 402.",
+                    "evidence": ["evd_EXAMPLE_REPLAY"]
+                  }
+                ],
+                "warnings": [],
+                "inconclusiveReason": null,
+                "money": {
+                  "seloInboundTxId": "EXAMPLE_INBOUND_TXID",
+                  "downstreamSpendUsdc": "0.01",
+                  "downstreamTxIds": ["EXAMPLE_DOWNSTREAM_TXID"]
+                },
+                "reportUrl": "https://selo.example/v1/reports/EXAMPLE_REPORT_TOKEN"
+              }
+            }
+          },
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "http"
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": ["POST"]
+                  },
+                  "bodyType": {
+                    "type": "string",
+                    "enum": ["json", "form-data", "text"]
+                  },
+                  "body": {
+                    "type": "object",
+                    "properties": {
+                      "preflightId": {
+                        "type": "string",
+                        "description": "Id returned by POST /v1/preflight"
+                      },
+                      "profile": {
+                        "type": "string",
+                        "enum": "[depth limit]"
+                      },
+                      "expected": {
+                        "type": "object",
+                        "properties": "[depth limit]",
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": ["preflightId", "profile"],
+                    "additionalProperties": false
+                  }
+                },
+                "required": ["type", "method", "bodyType", "body"],
+                "additionalProperties": false
+              },
+              "output": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "example": {
+                    "type": "object"
+                  }
+                },
+                "required": ["type"]
+              }
+            },
+            "required": ["input"]
+          }
+        },
+        "x402-merchant": {
+          "info": {
+            "name": "Selo",
+            "website": "https://useselo.xyz",
+            "logo": "https://useselo.xyz/brand/selo-logo-512.png",
+            "categories": [
+              "x402",
+              "algorand",
+              "developer-tools",
+              "testing",
+              "x402-global-challenge"
+            ]
+          },
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "website": {
+                "type": "string"
+              },
+              "logo": {
+                "type": "string"
+              },
+              "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "decodeError": null
+  },
+  "checks": [
+    {
+      "id": "A01",
+      "label": "unpaid request returns 402",
+      "pass": true,
+      "detail": "HTTP 402 with a decodable PAYMENT-REQUIRED header"
+    },
+    {
+      "id": "A02",
+      "label": "402 asks for Mainnet USDC to payTo",
+      "pass": true,
+      "detail": "1.00 USDC, asset 31566704, algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=, payTo N37HMJCB4BAITC2ZU7C4XW7PUMCO4T3TUASHQEL6A4EWMLOTTHOB7IOOKY"
+    },
+    {
+      "id": "A03",
+      "label": "402 carries the challenge tag",
+      "pass": true,
+      "detail": "accepts[].extra.tag and resource.tags carry x402-global-challenge"
+    },
+    {
+      "id": "A04",
+      "label": "402 carries Bazaar discovery metadata",
+      "pass": true,
+      "detail": "extensions.bazaar declares POST input, output and schema"
+    }
+  ]
+}
