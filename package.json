@@ -1,0 +1,32 @@
+{
+  "name": "selo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "pnpm --recursive --parallel --filter \"./apps/*\" dev",
+    "build": "pnpm --recursive build",
+    "typecheck": "pnpm --recursive typecheck",
+    "lint": "eslint apps packages eslint-rules eslint.config.js vitest.config.ts",
+    "format": "prettier --write .github apps packages eslint-rules docs/CLAIMS.md docs/evidence README.md \"*.{js,ts,json,yaml}\"",
+    "format:check": "prettier --check .github apps packages eslint-rules docs/CLAIMS.md docs/evidence README.md \"*.{js,ts,json,yaml}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:generate": "pnpm --filter @selo/api db:generate",
+    "db:migrate": "pnpm --filter @selo/api db:migrate"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.0",
+    "eslint": "10.11.0",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "17.12.0",
+    "prettier": "3.9.9",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.1",
+    "vitest": "5.0.1"
+  }
+}
