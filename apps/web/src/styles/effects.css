@@ -1,0 +1,176 @@
+.edge {
+  position: relative;
+}
+
+.edge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  background: var(
+    --edge,
+    linear-gradient(135deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0), rgb(255 255 255 / 0.1))
+  );
+  pointer-events: none;
+}
+
+.edge-bright {
+  --edge: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.2),
+    rgb(255 255 255 / 0),
+    rgb(255 255 255 / 0.2)
+  );
+}
+
+.edge-pill {
+  --edge: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.2),
+    rgb(255 255 255 / 0),
+    rgb(255 255 255 / 0.1)
+  );
+}
+
+.edge-soft {
+  --edge: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.1),
+    rgb(255 255 255 / 0),
+    rgb(255 255 255 / 0.1)
+  );
+}
+
+.edge-faint {
+  --edge: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.1),
+    rgb(255 255 255 / 0),
+    rgb(255 255 255 / 0.05)
+  );
+}
+
+.edge-dim {
+  --edge: linear-gradient(135deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0));
+}
+
+.top-blur {
+  position: fixed;
+  z-index: 5;
+  inset: 0 0 auto 0;
+  height: 12%;
+  pointer-events: none;
+}
+
+.top-blur > div,
+.top-blur::before,
+.top-blur::after {
+  position: absolute;
+  inset: 0;
+}
+
+.top-blur::before {
+  content: "";
+  z-index: 1;
+  backdrop-filter: blur(0.5px);
+  mask: linear-gradient(to top, transparent 0%, #000 12.5%, #000 25%, transparent 37.5%);
+}
+
+.top-blur > div:nth-of-type(1) {
+  z-index: 2;
+  backdrop-filter: blur(1px);
+  mask: linear-gradient(to top, transparent 12.5%, #000 25%, #000 37.5%, transparent 50%);
+}
+
+.top-blur > div:nth-of-type(2) {
+  z-index: 3;
+  backdrop-filter: blur(2px);
+  mask: linear-gradient(to top, transparent 25%, #000 37.5%, #000 50%, transparent 62.5%);
+}
+
+.top-blur > div:nth-of-type(3) {
+  z-index: 4;
+  backdrop-filter: blur(4px);
+  mask: linear-gradient(to top, transparent 37.5%, #000 50%, #000 62.5%, transparent 75%);
+}
+
+.top-blur > div:nth-of-type(4) {
+  z-index: 5;
+  backdrop-filter: blur(8px);
+  mask: linear-gradient(to top, transparent 50%, #000 62.5%, #000 75%, transparent 87.5%);
+}
+
+.top-blur > div:nth-of-type(5) {
+  z-index: 6;
+  backdrop-filter: blur(16px);
+  mask: linear-gradient(to top, transparent 62.5%, #000 75%, #000 87.5%, transparent 100%);
+}
+
+.top-blur > div:nth-of-type(6) {
+  z-index: 7;
+  backdrop-filter: blur(32px);
+  mask: linear-gradient(to top, transparent 75%, #000 87.5%, #000 100%);
+}
+
+.top-blur::after {
+  content: "";
+  z-index: 8;
+  backdrop-filter: blur(64px);
+  mask: linear-gradient(to top, transparent 87.5%, #000 100%);
+}
+
+.dot-grid {
+  background-image: radial-gradient(rgb(255 255 255 / 0.2) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.fade-bottom-90 {
+  mask-image: linear-gradient(180deg, transparent, #000 0%, #000 90%, transparent);
+}
+
+.fade-bottom-85 {
+  mask-image: linear-gradient(180deg, transparent, #000 0%, #000 85%, transparent);
+}
+
+.fade-bottom-95 {
+  mask-image: linear-gradient(180deg, transparent, #000 0%, #000 95%, transparent);
+}
+
+.fade-sides {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 128px,
+    #000 calc(100% - 128px),
+    transparent 100%
+  );
+}
+
+.phone-shadow {
+  box-shadow:
+    0 5.7px 8.6px rgb(0 0 0 / 0.07),
+    0 13.7px 10.9px rgb(0 0 0 / 0.099),
+    0 25.7px 20.5px rgb(0 0 0 / 0.123),
+    0 45.8px 36.6px rgb(0 0 0 / 0.147),
+    0 85.8px 68.5px rgb(0 0 0 / 0.176),
+    0 205px 163.4px rgb(0 0 0 / 0.246);
+}
+
+.dot-field {
+  mask-image: linear-gradient(to bottom, transparent, #000 0%, #000 80%, transparent);
+}
+
+.dot-field-canvas {
+  mask-image: radial-gradient(circle at center, #000 0.9px, transparent 1.3px);
+  mask-size: 4px 4px;
+}
+
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
