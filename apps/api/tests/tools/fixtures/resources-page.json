@@ -1,0 +1,263 @@
+{
+  "x402Version": 2,
+  "items": [
+    {
+      "id": "UE9TVDpodHRwczovL2Npdml0YXMtYXBpLmNpdml0YXN2LndvcmtlcnMuZGV2L3YxL3JlcG9ydC9yaXNrLXNjb3Jl",
+      "resourceUrl": "https://civitas-api.civitasv.workers.dev/v1/report/risk-score",
+      "method": "POST",
+      "description": "Premium trust score (0–100, grade A–F) for an Algorand address from public Civitas chain facts: whitelist, identities, consent outcomes, attestations. Factors and flags included.",
+      "mimeType": "",
+      "merchantId": "Rjc2VFZIQVRHMkxKT01VT0VGTlNESk1F",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
+          "amount": "1500000",
+          "asset": "31566704",
+          "payTo": "F76TVHATG2LJOMUOEFNSDJME2NRK77D2NXRM4IUE6MN7CMMGBZXUFJ3YWQ",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "name": "USDC",
+            "decimals": 6,
+            "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA",
+            "tag": "x402-global-challenge"
+          }
+        }
+      ],
+      "discoveryInfo": {
+        "input": {
+          "type": "http",
+          "bodyType": "json",
+          "body": {
+            "address": "ALGORAND_ADDRESS"
+          },
+          "method": "POST"
+        },
+        "output": {
+          "type": "json",
+          "example": {
+            "kind": "risk-score",
+            "address": "<addr>",
+            "score": 76,
+            "grade": "B",
+            "flags": [],
+            "reportHash": "<hex>"
+          }
+        }
+      },
+      "settleCount": 24,
+      "firstSeen": "2026-09-24T14:16:52.977Z",
+      "lastSeen": "2026-09-27T00:46:03.850Z"
+    },
+    {
+      "id": "UE9TVDpodHRwczovL2Npdml0YXMtYXBpLmNpdml0YXN2LndvcmtlcnMuZGV2L3YxL2lkZW50aXR5L3Byb29m",
+      "resourceUrl": "https://civitas-api.civitasv.workers.dev/v1/identity/proof",
+      "method": "POST",
+      "description": "Proof that an Algorand address holds a Civitas identity of a given document type (Aadhaar, PAN, Voter ID), pinned to a round. Reveals existence only, never document contents.",
+      "mimeType": "",
+      "merchantId": "Rjc2VFZIQVRHMkxKT01VT0VGTlNESk1F",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
+          "amount": "20000",
+          "asset": "31566704",
+          "payTo": "F76TVHATG2LJOMUOEFNSDJME2NRK77D2NXRM4IUE6MN7CMMGBZXUFJ3YWQ",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "name": "USDC",
+            "decimals": 6,
+            "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA",
+            "tag": "x402-global-challenge"
+          }
+        }
+      ],
+      "discoveryInfo": {
+        "input": {
+          "type": "http",
+          "bodyType": "json",
+          "body": {
+            "address": "USER_ALGORAND_ADDRESS",
+            "docType": 0
+          },
+          "method": "POST"
+        },
+        "output": {
+          "type": "json",
+          "example": {
+            "proof": {
+              "registered": true,
+              "holds": true,
+              "round": 1
+            },
+            "proofHash": "<hex>"
+          }
+        }
+      },
+      "settleCount": 129,
+      "firstSeen": "2026-09-23T14:35:51.032Z",
+      "lastSeen": "2026-09-27T00:44:19.471Z"
+    },
+    {
+      "id": "UE9TVDpodHRwczovL2hhc2hsb2NrLnByb25vZGVhbGdvLnh5ei9hcGkvdGltZXN0YW1w",
+      "resourceUrl": "https://hashlock.pronodealgo.xyz/api/timestamp",
+      "method": "POST",
+      "description": "Proof of existence timestamp — Algorand blockchain",
+      "mimeType": "",
+      "merchantId": "NFlFM1BTQ1lWNFdORVg3T1ZKTUJPSlhF",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+          "amount": "5000",
+          "asset": "10458941",
+          "payTo": "4YE3PSCYV4WNEX7OVJMBOJXEU256NMWR5K5GPC6AUVIWP7UJP7CJZ6KVX4",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "decimals": 6,
+            "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA"
+          }
+        }
+      ],
+      "discoveryInfo": {
+        "input": {
+          "type": "http",
+          "method": "POST",
+          "bodyType": "json",
+          "body": {
+            "hash": "<sha256-hex-64-chars>",
+            "filename": "document.pdf",
+            "source": "agent"
+          }
+        },
+        "output": {
+          "type": "json",
+          "example": {
+            "txId": "<algorand-txid>",
+            "block": 12345678,
+            "createdAt": "2026-08-26T19:00:00.000Z",
+            "explorerUrl": "https://lora.algokit.io/mainnet/transaction/<txid>",
+            "certificate": "<base64 PDF certificate>"
+          }
+        }
+      },
+      "settleCount": 148,
+      "firstSeen": "2026-08-26T19:53:49.830Z",
+      "lastSeen": "2026-09-27T00:43:13.078Z"
+    },
+    {
+      "id": "UE9TVDpodHRwczovL2Npdml0YXMtYXBpLmNpdml0YXN2LndvcmtlcnMuZGV2L3YxL2F0dGVzdA",
+      "resourceUrl": "https://civitas-api.civitasv.workers.dev/v1/attest",
+      "method": "POST",
+      "description": "Notarize a document on Algorand: send its SHA-256 (the document never leaves you) and get back the unsigned 0-ALGO anchor transaction to sign. Verify later for free at GET /v1/attest/{txId}.",
+      "mimeType": "",
+      "merchantId": "Rjc2VFZIQVRHMkxKT01VT0VGTlNESk1F",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
+          "amount": "650000",
+          "asset": "31566704",
+          "payTo": "F76TVHATG2LJOMUOEFNSDJME2NRK77D2NXRM4IUE6MN7CMMGBZXUFJ3YWQ",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "name": "USDC",
+            "decimals": 6,
+            "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA",
+            "tag": "x402-global-challenge"
+          }
+        }
+      ],
+      "discoveryInfo": {
+        "input": {
+          "type": "http",
+          "bodyType": "json",
+          "body": {
+            "from": "SIGNER_ALGORAND_ADDRESS",
+            "sha256": "<64-hex-sha256>",
+            "label": "contract-v2.pdf"
+          },
+          "method": "POST"
+        },
+        "output": {
+          "type": "json",
+          "example": {
+            "transactions": ["<base64-unsigned-txn>"],
+            "txId": "<algorand-tx-id>",
+            "sha256": "<hex>"
+          }
+        }
+      },
+      "settleCount": 224,
+      "firstSeen": "2026-09-23T14:35:31.717Z",
+      "lastSeen": "2026-09-27T00:43:10.738Z"
+    },
+    {
+      "id": "UE9TVDpodHRwczovL2Npdml0YXMtYXBpLmNpdml0YXN2LndvcmtlcnMuZGV2L3YxL21lc3NhZ2Uvc2VuZA",
+      "resourceUrl": "https://civitas-api.civitasv.workers.dev/v1/message/send",
+      "method": "POST",
+      "description": "Send an end-to-end encrypted message on Algorand: returns the unsigned 0-ALGO payment transaction whose note carries the sealed ciphertext, for the sender to sign and submit.",
+      "mimeType": "",
+      "merchantId": "Rjc2VFZIQVRHMkxKT01VT0VGTlNESk1F",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+          "amount": "100000",
+          "asset": "10458941",
+          "payTo": "F76TVHATG2LJOMUOEFNSDJME2NRK77D2NXRM4IUE6MN7CMMGBZXUFJ3YWQ",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "name": "USDC",
+            "decimals": 6,
+            "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA",
+            "tag": "x402-global-challenge"
+          }
+        },
+        {
+          "scheme": "exact",
+          "network": "algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
+          "amount": "100000",
+          "asset": "31566704",
+          "payTo": "F76TVHATG2LJOMUOEFNSDJME2NRK77D2NXRM4IUE6MN7CMMGBZXUFJ3YWQ",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "name": "USDC",
+            "decimals": 6,
+            "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA",
+            "tag": "x402-global-challenge"
+          }
+        }
+      ],
+      "discoveryInfo": {
+        "input": {
+          "type": "http",
+          "bodyType": "json",
+          "body": {
+            "from": "SENDER_ALGORAND_ADDRESS",
+            "to": "RECIPIENT_ALGORAND_ADDRESS",
+            "mode": "sealed",
+            "note": "<base64-sealed-note-bytes>"
+          },
+          "method": "POST"
+        },
+        "output": {
+          "type": "json",
+          "example": {
+            "transactions": ["<base64-unsigned-txn>"],
+            "txId": "<algorand-tx-id>",
+            "network": "testnet"
+          }
+        }
+      },
+      "settleCount": 244,
+      "firstSeen": "2026-08-01T22:25:13.210Z",
+      "lastSeen": "2026-09-27T00:41:56.360Z"
+    }
+  ],
+  "pagination": {
+    "limit": 5,
+    "offset": 0,
+    "total": 2329
+  }
+}

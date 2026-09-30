@@ -1,0 +1,65 @@
+{
+  "x402Version": 2,
+  "items": [
+    {
+      "id": "Mk5CQ1BPVE1GUEUySUhBNFJEQU5RREdJ",
+      "addresses": {
+        "avm": "2NBCPOTMFPE2IHA4RDANQDGIRPC2CQ3YVVB5F5W3EYSHTYRUN4EKT4NMLE"
+      },
+      "resourceCount": 11,
+      "totalSettlements": 119844,
+      "networks": ["algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8="],
+      "firstSeen": "2026-08-08T18:28:07.114Z",
+      "lastSeen": "2026-08-31T08:17:42.698Z"
+    },
+    {
+      "id": "MHg5ZEJBNDE0NjM3YzYxMWExNkJFYTZm",
+      "addresses": {
+        "evm": "0x9dBA414637c611a16BEa6f0796BFcbcBdc410df8"
+      },
+      "resourceCount": 28,
+      "totalSettlements": 137057,
+      "networks": ["eip155:8453"],
+      "firstSeen": "2026-08-03T06:49:29.530Z",
+      "lastSeen": "2026-09-27T00:00:03.182Z"
+    },
+    {
+      "id": "SlROMkcyM1dQM0dCSUs3Q1pZQUJJNE5X",
+      "addresses": {
+        "avm": "JTN2G23WP3GBIK7CZYABI4NWMKCN2YVSXDYHY4IMIQB7TPXPELRFGMYP64"
+      },
+      "resourceCount": 1,
+      "totalSettlements": 525147,
+      "networks": ["algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8="],
+      "firstSeen": "2026-08-16T10:10:27.600Z",
+      "lastSeen": "2026-09-09T09:16:46.958Z"
+    },
+    {
+      "id": "UVNOTFBQWE82NE9OQkQ3NkUyRExaVzZY",
+      "addresses": {
+        "avm": "QSNLPPXO64ONBD76E2DLZW6XER5GUV4YPQYHDFJUO2N3IO4RYBL5HRU6EY"
+      },
+      "resourceCount": 1,
+      "totalSettlements": 42144,
+      "networks": ["algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8="],
+      "firstSeen": "2026-07-20T22:18:55.125Z",
+      "lastSeen": "2026-09-21T23:05:07.317Z"
+    },
+    {
+      "id": "MHgwN2NGNTM1OUVkYjdkOERlNDI5NzM1",
+      "addresses": {
+        "evm": "0x07cF5359Edb7d8De42973562C54e4c8d583C2396"
+      },
+      "resourceCount": 12,
+      "totalSettlements": 65775,
+      "networks": ["eip155:8453"],
+      "firstSeen": "2026-07-29T20:04:31.914Z",
+      "lastSeen": "2026-09-13T03:29:33.393Z"
+    }
+  ],
+  "pagination": {
+    "limit": 5,
+    "offset": 0,
+    "total": 174
+  }
+}
