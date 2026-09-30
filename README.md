@@ -9,10 +9,12 @@ Algorand Mainnet as a genuine client, checks the payment and the delivery agains
 contract, and returns a deterministic **PASS**, **FAIL** or **INCONCLUSIVE** verdict backed by the
 transactions on both sides.
 
+https://github.com/user-attachments/assets/5802f7bb-216f-4f4b-847f-d922918382b7
+
 - **Live site:** https://useselo.xyz
 - **Live API:** https://api.useselo.xyz (paid route `POST /v1/release-test`, 1.00 USDC)
 - **Launch thread:** https://x.com/useselo_/status/2105303461697090026
-- **Demo video:** https://youtu.be/lMjvPGgDj8g
+- **Demo (YouTube):** https://youtu.be/lMjvPGgDj8g
 - **Proof on chain:** Selo was paid in round
   [65454635](https://allo.info/tx/JXU2INATXUJHE7WZGGWN25BPM6L2YEL6Q7LU5W3HICI4B5CX4JAQ), then paid
   the target in round [65454637](https://allo.info/tx/ATF5HLYBBY4G5GYPNLCUMC5FXH22WIXI2QG3YP7M4WYPA5EHQTYQ)
