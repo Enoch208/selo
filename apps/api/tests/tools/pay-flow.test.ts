@@ -11,6 +11,7 @@ const input: PayFlowInput = {
   api: "https://selo.test",
   preflightId: "pfl_1",
   expected: { status: 200 },
+  deploymentId: null,
   expectedNetwork: null,
   maxPriceMicros: priceCeilingMicros,
   approvedMainnet: false,

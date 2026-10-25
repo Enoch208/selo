@@ -173,12 +173,17 @@ describe("selo test payment safety", () => {
     expect(h.selo.seen).toHaveLength(0);
   });
 
-  it("sends the contract with a stable Idempotency-Key", async () => {
+  it("sends the contract and the release id with a stable Idempotency-Key", async () => {
     const h = cliHarness();
     await h.run();
     const [paid] = h.selo.paidRequests();
     expect(paid?.headers.get("Idempotency-Key")).toMatch(/^selo-cli-[0-9a-f]{48}$/);
-    expect(paid?.body).toEqual({ preflightId: "pfl_TEST1", profile: "quick", expected: contract });
+    expect(paid?.body).toEqual({
+      preflightId: "pfl_TEST1",
+      profile: "quick",
+      expected: contract,
+      deploymentId: "abc123",
+    });
   });
 
   it("holds an unresolved settlement and never pays again without --resume", async () => {

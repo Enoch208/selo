@@ -1,6 +1,7 @@
 import { appendFile, mkdir, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import type {
+  ReleaseAttestation,
   CheckStatus,
   HttpMethod,
   InconclusiveReason,
@@ -123,4 +124,18 @@ export async function writeSummaryFile(path: string, summary: GateSummary): Prom
 
 export async function appendStepSummary(path: string, summary: GateSummary): Promise<void> {
   await appendFile(path, summaryMarkdown(summary));
+}
+
+export async function saveAttestation(
+  out: { readonly line: (text: string) => void },
+  path: string,
+  attestation: ReleaseAttestation | undefined,
+): Promise<void> {
+  if (attestation === undefined) {
+    out.line("attestation none: Selo issued no signed attestation for this run");
+    return;
+  }
+  await mkdir(dirname(path), { recursive: true });
+  await writeFile(path, `${JSON.stringify(attestation, null, 2)}\n`);
+  out.line(`attestation ${path} (signed by ${attestation.signature.keyId})`);
 }

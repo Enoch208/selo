@@ -16,7 +16,8 @@ import {
   UsageError,
   usdcMicros,
 } from "../options";
-import { runReleaseGate, type ReleaseGateOptions } from "../release-gate";
+import { runReleaseGate } from "../release-gate";
+import type { ReleaseGateOptions } from "../release-plan";
 import type { CommandContext } from "./auth";
 import { parseOptions } from "./parse";
 
@@ -47,10 +48,12 @@ async function readOptions(args: readonly string[]): Promise<ReleaseGateOptions>
     "pay-to": { type: "string" },
     "approve-mainnet": { type: "boolean", default: false },
     summary: { type: "string" },
+    attestation: { type: "string" },
     resume: { type: "boolean", default: false },
   });
   const bodyFile = optionalText(values, "body");
   const summaryFile = optionalText(values, "summary");
+  const attestationFile = optionalText(values, "attestation");
   const options: ReleaseGateOptions = {
     api: apiOrigin(values),
     authorizationId: id(values, "authorization"),
@@ -65,6 +68,7 @@ async function readOptions(args: readonly string[]): Promise<ReleaseGateOptions>
     approveMainnet: flag(values, "approve-mainnet"),
     resume: flag(values, "resume"),
     summaryFile: summaryFile === null ? null : fromInvocationDir(summaryFile),
+    attestationFile: attestationFile === null ? null : fromInvocationDir(attestationFile),
   };
   if (
     options.network === "algorand-mainnet" &&

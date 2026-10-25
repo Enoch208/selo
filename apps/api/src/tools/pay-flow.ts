@@ -28,6 +28,7 @@ export interface PayFlowInput {
   readonly api: string;
   readonly preflightId: string;
   readonly expected: ExpectedContract | null;
+  readonly deploymentId: string | null;
   readonly expectedNetwork: SeloNetworkName | null;
   readonly maxPriceMicros: number;
   readonly approvedMainnet: boolean;
@@ -87,7 +88,13 @@ const mayHaveSettled = (pending: string | null): string =>
 
 function requestBody(input: PayFlowInput): string {
   const expected = input.expected === null ? {} : { expected: input.expected };
-  return JSON.stringify({ preflightId: input.preflightId, profile: "quick", ...expected });
+  const deployment = input.deploymentId === null ? {} : { deploymentId: input.deploymentId };
+  return JSON.stringify({
+    preflightId: input.preflightId,
+    profile: "quick",
+    ...expected,
+    ...deployment,
+  });
 }
 
 function announce(deps: PayFlowDeps, probed: ProbedChallenge): void {

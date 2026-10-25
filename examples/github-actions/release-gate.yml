@@ -67,12 +67,14 @@ jobs:
           pay-to: ${{ vars.SELO_PAY_TO }}
           approve-mainnet: "true"
           summary: selo-gate.json
-      - name: Keep the sanitized gate summary
+      - name: Keep the sanitized summary and the signed attestation
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: selo-gate-${{ github.sha }}
-          path: selo-gate.json
+          path: |
+            selo-gate.json
+            selo-attestation.json
           if-no-files-found: ignore
           retention-days: 30
 
@@ -85,5 +87,18 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Fetch the signed attestation
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: selo-gate-${{ github.sha }}
+      - name: Verify Selo signed a PASS for this exact commit and target
+        uses: Enoch208/selo/.github/actions/release-gate@main
+        with:
+          mode: verify
+          attestation: selo-attestation.json
+          keys: selo/attestation-keys.json
+          release: ${{ github.sha }}
+          url: ${{ env.TARGET_URL }}
+          method: POST
       - name: Promote the commit Selo passed
         run: ./scripts/deploy.sh production "$GITHUB_SHA"

@@ -99,6 +99,42 @@ exits 0.
 Use a dedicated payer wallet that holds only what a few release tests cost, and opt it in to USDC
 (ASA 31566704 on Mainnet, 10458941 on Testnet).
 
+## Signed attestations
+
+When Selo is configured with an attestation key, every release test answer carries a signed
+attestation. Pass `--attestation selo-attestation.json` to `selo test` to save it. It holds no
+secret and is safe to publish.
+
+The attestation is an envelope `{ payload, signature }`. The payload records:
+
+- the job, the tested URL and method, and the release you asserted (`deployment.id`, marked
+  `asserted_by_client`);
+- the verdict, every check with its status, code and evidence ids;
+- both payment legs with their transaction ids;
+- a SHA-256 of the release contract and of the target's 402;
+- a manifest of the evidence rows with their hashes.
+
+The signature is Ed25519 over the payload's canonical JSON (keys sorted, no whitespace,
+RFC 8785 style), so it never covers itself. Selo publishes its keys at
+`/.well-known/selo-attestation-keys.json`.
+
+```bash
+pnpm selo verify --attestation selo-attestation.json --keys selo/attestation-keys.json \
+  --release "$GIT_SHA" --url $URL --method POST
+```
+
+`selo verify` exits with the attested verdict (`0` PASS, `1` FAIL, `2` INCONCLUSIVE). It exits 2
+in any of these cases:
+
+- the signature does not verify;
+- the key is not in your trusted set;
+- the file is not an attestation;
+- the attestation names another release, URL or method. A PASS for one commit cannot unlock
+  another.
+
+Pin the keys. Download them once, review them, and commit them, instead of trusting a URL taken
+from the attestation itself.
+
 ## What `--release` means
 
 `--release` names the build you are testing, for example a Git SHA. Selo does not verify it. The

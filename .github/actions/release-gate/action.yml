@@ -5,14 +5,14 @@ description: >-
 
 inputs:
   mode:
-    description: "preflight (free, no wallet needed) or test (pays Selo once; needs SELO_PAYER_MNEMONIC in env)"
+    description: "preflight (free, no wallet), test (pays Selo once; needs SELO_PAYER_MNEMONIC in env) or verify (checks a signed attestation offline)"
     required: true
   api:
     description: Selo API base URL
     default: https://api.useselo.xyz
   authorization:
-    description: Verified authorization id (auth_...) that covers the target route and method
-    required: true
+    description: Verified authorization id (auth_...) that covers the target route and method (preflight and test modes)
+    default: ""
   url:
     description: HTTPS URL of the paid x402 endpoint
     required: true
@@ -43,6 +43,12 @@ inputs:
   summary:
     description: Where to write the sanitized selo.gate.v1 summary (test mode)
     default: selo-gate.json
+  attestation:
+    description: Where test mode saves Selo's signed attestation, and where verify mode reads it
+    default: selo-attestation.json
+  keys:
+    description: Trusted attestation keys for verify mode, an https URL or a committed JSON file
+    default: ""
 
 outputs:
   exit-code:
@@ -86,6 +92,8 @@ runs:
         SELO_PAY_TO: ${{ inputs.pay-to }}
         SELO_APPROVE_MAINNET: ${{ inputs.approve-mainnet }}
         SELO_SUMMARY: ${{ inputs.summary }}
+        SELO_ATTESTATION: ${{ inputs.attestation }}
+        SELO_KEYS: ${{ inputs.keys }}
       run: |
         set -uo pipefail
         finish() {
@@ -94,6 +102,16 @@ runs:
           echo "verdict=$3" >> "$GITHUB_OUTPUT"
           exit "$1"
         }
+        if [ "$SELO_MODE" = "verify" ]; then
+          node "$SELO_ROOT/packages/cli/bin/selo.js" verify --attestation "$SELO_ATTESTATION" --keys "$SELO_KEYS" \
+            --release "$SELO_RELEASE" --url "$SELO_URL" --method "$SELO_METHOD"
+          code=$?
+          case "$code" in
+            0) finish 0 ALLOW PASS ;;
+            1) finish 1 BLOCK FAIL ;;
+            *) finish "$code" BLOCK none ;;
+          esac
+        fi
         args=(--api "$SELO_API" --authorization "$SELO_AUTHORIZATION" --url "$SELO_URL" --method "$SELO_METHOD")
         if [ -n "$SELO_BODY" ]; then args+=(--body "$SELO_BODY"); fi
         case "$SELO_MODE" in
@@ -104,9 +122,9 @@ runs:
             finish "$code" BLOCK none
             ;;
           test)
-            rm -f "$SELO_SUMMARY"
+            rm -f "$SELO_SUMMARY" "$SELO_ATTESTATION"
             args+=(--contract "$SELO_CONTRACT" --release "$SELO_RELEASE" --network "$SELO_NETWORK")
-            args+=(--max-usdc "$SELO_MAX_USDC" --summary "$SELO_SUMMARY")
+            args+=(--max-usdc "$SELO_MAX_USDC" --summary "$SELO_SUMMARY" --attestation "$SELO_ATTESTATION")
             if [ -n "$SELO_PAY_TO" ]; then args+=(--pay-to "$SELO_PAY_TO"); fi
             if [ "$SELO_APPROVE_MAINNET" = "true" ]; then args+=(--approve-mainnet); fi
             node "$SELO_ROOT/packages/cli/bin/selo.js" test "${args[@]}"
@@ -130,7 +148,7 @@ runs:
             finish "$code" "$gate" "$verdict"
             ;;
           *)
-            echo "::error::mode must be preflight or test" >&2
+            echo "::error::mode must be preflight, test or verify" >&2
             finish 3 BLOCK none
             ;;
         esac

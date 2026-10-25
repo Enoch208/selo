@@ -1,6 +1,7 @@
 import { authCommand } from "./commands/auth";
 import { preflightCommand } from "./commands/preflight";
 import { testCommand, type TestContext } from "./commands/test";
+import { verifyCommand } from "./commands/verify";
 import { exitCodes, type ExitCode } from "./exit";
 import { UsageError } from "./options";
 
@@ -15,11 +16,18 @@ Usage:
   selo test         --api <url> --authorization <auth_id> --url <target> --method GET|POST
                     [--body <file.json>] --contract <file.json> --release <id>
                     --network testnet|mainnet --max-usdc <amount>
-                    [--pay-to <Selo payTo>] [--approve-mainnet] [--summary <file.json>] [--resume]
+                    [--pay-to <Selo payTo>] [--approve-mainnet] [--summary <file.json>]
+                    [--attestation <file.json>] [--resume]
+  selo verify       --attestation <file.json> --keys <https url|file.json> --release <id>
+                    --url <target> --method GET|POST
 
 selo test runs a free preflight, shows every price, then pays Selo once with the wallet in
 SELO_PAYER_MNEMONIC. It never retries a payment on its own. If an outcome is unconfirmed it
 records the attempt in .selo/runs/<release>.json and refuses to pay again until you resume it.
+
+selo verify checks a signed release attestation offline against keys you trust, and that it
+attests the release and target you expect. It exits with the attested verdict, or 2 when the
+attestation cannot be verified.
 
 Environment:
   SELO_PAYER_MNEMONIC   the dedicated, capped payer wallet (selo test only; never printed)
@@ -49,6 +57,9 @@ async function dispatch(ctx: TestContext, args: readonly string[]): Promise<Exit
   }
   if (command === "test") {
     return testCommand(ctx, rest);
+  }
+  if (command === "verify") {
+    return verifyCommand(ctx, rest);
   }
   throw new UsageError(`unknown command ${command}`);
 }

@@ -8,8 +8,9 @@ authorization or a missing report fails the paid job, and the promote job never 
 ```text
 push to main ──► stage ─────────────► paid-gate ──────────────────► promote
                  build, deploy        environment: selo-paid-release  runs only if the gate
-                 staging, free        (required reviewers) pays Selo  output is ALLOW
-                 preflight            once; exit 0 only on PASS
+                 staging, free        (required reviewers) pays Selo  output is ALLOW, then
+                 preflight            once; exit 0 only on PASS;      verifies the signed
+                                      saves the signed attestation    attestation offline
 ```
 
 The workflow uses the composite action in
@@ -34,7 +35,11 @@ The workflow uses the composite action in
 4. **Commit your contract** as `selo/contract.json` and, for POST, the request body as
    `selo/order.json`. The demo merchant ships an example of each in
    [`examples/merchant`](../merchant).
-5. **Pin the action.** Replace `@main` with a commit SHA of this repository that you have reviewed.
+5. **Pin Selo's attestation key.** Download
+   `https://api.useselo.xyz/.well-known/selo-attestation-keys.json` once, review it, and commit it
+   as `selo/attestation-keys.json`. The promote job verifies the signed attestation against this
+   file, so it promotes only a PASS that Selo signed for this exact commit, URL and method.
+6. **Pin the action.** Replace `@main` with a commit SHA of this repository that you have reviewed.
 
 ## What keeps the payment wallet safe
 

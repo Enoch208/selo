@@ -117,6 +117,7 @@ async function pay(secrets: z.infer<typeof mnemonicSchema>, request: PayRequest)
         api,
         preflightId,
         expected: expectedStatus === null ? null : { status: expectedStatus },
+        deploymentId: null,
         expectedNetwork: null,
         maxPriceMicros: priceCeilingMicros,
         approvedMainnet,
