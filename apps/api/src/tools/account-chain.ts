@@ -3,7 +3,7 @@ import algosdk from "algosdk";
 import type { SeloNetworkName } from "../payments/networks";
 import type { AccountHoldings } from "../payments/wallet-balance";
 
-export const accountRoles = ["client", "operator", "testnet-target"] as const;
+export const accountRoles = ["client", "operator", "testnet-target", "demo-merchant"] as const;
 export type AccountRole = (typeof accountRoles)[number];
 
 export const isAccountRole = (value: string | undefined): value is AccountRole =>
@@ -13,6 +13,7 @@ const envKeys = {
   client: "SELO_CLIENT_MNEMONIC",
   operator: "SELO_OPERATOR_MNEMONIC",
   "testnet-target": "SELO_TESTNET_TARGET_MNEMONIC",
+  "demo-merchant": "SELO_DEMO_MERCHANT_MNEMONIC",
 } as const satisfies Record<AccountRole, string>;
 
 export function envKeyFor(role: AccountRole): (typeof envKeys)[AccountRole] {

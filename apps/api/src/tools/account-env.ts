@@ -8,6 +8,7 @@ const toolEnvSchema = z.object({
   SELO_CLIENT_MNEMONIC: z.string().trim().min(1).optional(),
   SELO_OPERATOR_MNEMONIC: z.string().trim().min(1).optional(),
   SELO_TESTNET_TARGET_MNEMONIC: z.string().trim().min(1).optional(),
+  SELO_DEMO_MERCHANT_MNEMONIC: z.string().trim().min(1).optional(),
 });
 
 export interface ToolNetwork {

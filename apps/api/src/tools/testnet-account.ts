@@ -5,7 +5,7 @@ import { envKeyFor, isAccountRole, type AccountRole } from "./account-chain";
 import { addEnvKeyIfAbsent } from "./env-file";
 import { fail, parseCli, say } from "./cli";
 
-const usage = "Usage: account:new -- --role client|operator|testnet-target";
+const usage = "Usage: account:new -- --role client|operator|testnet-target|demo-merchant";
 const envPath = fileURLToPath(new URL("../../.env", import.meta.url));
 
 async function create(role: AccountRole): Promise<void> {
@@ -31,7 +31,7 @@ async function create(role: AccountRole): Promise<void> {
 
 const values = parseCli({ role: { type: "string" } });
 if (values === null || !isAccountRole(values.role)) {
-  fail("--role must be client, operator or testnet-target", usage);
+  fail("--role must be client, operator, testnet-target or demo-merchant", usage);
 } else {
   await create(values.role);
 }

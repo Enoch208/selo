@@ -12,7 +12,7 @@ import { toolEnv } from "./account-env";
 import { fail, parseCli, say } from "./cli";
 
 const usage =
-  "Usage: account:optin -- --role client|operator|testnet-target [--mainnet-i-have-approval]";
+  "Usage: account:optin -- --role client|operator|testnet-target|demo-merchant [--mainnet-i-have-approval]";
 
 async function optIn(role: AccountRole, approvedMainnet: boolean): Promise<void> {
   const { network, mnemonicFor } = toolEnv(process.env);
@@ -59,7 +59,7 @@ const values = parseCli({
   "mainnet-i-have-approval": { type: "boolean", default: false },
 });
 if (values === null || !isAccountRole(values.role)) {
-  fail("--role must be client, operator or testnet-target", usage);
+  fail("--role must be client, operator, testnet-target or demo-merchant", usage);
 } else {
   await optIn(values.role, values["mainnet-i-have-approval"]);
 }

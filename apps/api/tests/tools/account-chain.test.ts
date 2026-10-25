@@ -1,7 +1,13 @@
 import { ALGORAND_TESTNET_GENESIS_HASH } from "@x402/avm";
 import algosdk from "algosdk";
 import { describe, expect, it } from "vitest";
-import { buildOptInTxn, envKeyFor, holdingSummary, optInGate } from "../../src/tools/account-chain";
+import {
+  buildOptInTxn,
+  envKeyFor,
+  holdingSummary,
+  optInGate,
+  roleNetworkGate,
+} from "../../src/tools/account-chain";
 
 const params: algosdk.SuggestedParams = {
   flatFee: false,
@@ -17,6 +23,14 @@ describe("envKeyFor", () => {
   it("maps each role to its own mnemonic key", () => {
     expect(envKeyFor("client")).toBe("SELO_CLIENT_MNEMONIC");
     expect(envKeyFor("operator")).toBe("SELO_OPERATOR_MNEMONIC");
+    expect(envKeyFor("demo-merchant")).toBe("SELO_DEMO_MERCHANT_MNEMONIC");
+  });
+});
+
+describe("roleNetworkGate", () => {
+  it("lets the demo merchant wallet work on Mainnet and Testnet", () => {
+    expect(roleNetworkGate("demo-merchant", "algorand-mainnet").ok).toBe(true);
+    expect(roleNetworkGate("demo-merchant", "algorand-testnet").ok).toBe(true);
   });
 });
 
