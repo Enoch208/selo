@@ -15,6 +15,7 @@ export interface JobClaim {
   readonly maxSpendMicros: number;
   readonly expected: ExpectedContract | null;
   readonly gitSha: string | null;
+  readonly deploymentId: string | null;
 }
 
 export type ClaimOutcome =
@@ -50,6 +51,7 @@ export async function claimJob(db: Db, claim: JobClaim): Promise<ClaimOutcome> {
       maxSpendMicros: claim.maxSpendMicros,
       expectedJson: claim.expected,
       gitSha: claim.gitSha,
+      deploymentId: claim.deploymentId,
     })
     .onConflictDoNothing({ target: releaseJobs.idempotencyKey })
     .returning({ id: releaseJobs.id });

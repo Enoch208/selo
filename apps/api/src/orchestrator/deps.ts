@@ -5,6 +5,7 @@ import type { SafeFetchOptions } from "../net/safe-fetch";
 import type { SeloNetwork } from "../payments/networks";
 import type { FetchLike } from "../payments/transport";
 import type { WalletBalance } from "../payments/wallet-balance";
+import type { AttestationSigner } from "../reports/attestation";
 
 export interface ReportConfig {
   readonly dir: string;
@@ -22,6 +23,7 @@ export interface RunnerDeps {
   readonly absoluteCapMicros: number;
   readonly wallClockMs: number;
   readonly reports: ReportConfig;
+  readonly attestation: AttestationSigner | null;
 }
 
 export const handshakeTimeoutMs = 10_000;

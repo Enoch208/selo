@@ -118,6 +118,7 @@ export const releaseJobs = pgTable(
     expectedJson: jsonb("expected_json"),
     reportTokenHash: text("report_token_hash"),
     gitSha: text("git_sha"),
+    deploymentId: text("deployment_id"),
     startedAt: at("started_at"),
     completedAt: at("completed_at"),
     createdAt: createdAt(),

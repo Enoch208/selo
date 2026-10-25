@@ -1,3 +1,4 @@
+import { createPrivateKey, type KeyObject } from "node:crypto";
 import { classifyHostname, parseMicros } from "@selo/core";
 import algosdk from "algosdk";
 import { z } from "zod";
@@ -109,12 +110,46 @@ function operatingAddressOf(mnemonic: string): string | null {
   }
 }
 
+function ed25519KeyOf(base64Der: string): KeyObject | null {
+  try {
+    const key = createPrivateKey({
+      key: Buffer.from(base64Der, "base64"),
+      format: "der",
+      type: "pkcs8",
+    });
+    return key.asymmetricKeyType === "ed25519" ? key : null;
+  } catch {
+    return null;
+  }
+}
+
+const attestationKey = z
+  .string()
+  .trim()
+  .default("")
+  .transform((value, ctx) => {
+    if (value === "") {
+      return null;
+    }
+    const key = ed25519KeyOf(value);
+    if (key === null) {
+      ctx.issues.push({
+        code: "custom",
+        input: "[redacted]",
+        message: "SELO_ATTESTATION_KEY must be a base64 PKCS#8 DER Ed25519 private key",
+      });
+      return z.NEVER;
+    }
+    return key;
+  });
+
 const operatorEnvSchema = z
   .object({
     SELO_OPERATOR_MNEMONIC: z.string({ error: "SELO_OPERATOR_MNEMONIC is required" }),
     REPORT_TOKEN_SECRET: z.string().min(32),
     REPORTS_DIR: z.string().min(1).default("reports"),
     JOB_WALL_CLOCK_MS: z.coerce.number().int().positive().default(60_000),
+    SELO_ATTESTATION_KEY: attestationKey,
   })
   .transform((env, ctx) => {
     const words = env.SELO_OPERATOR_MNEMONIC.trim().split(/\s+/);

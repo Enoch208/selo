@@ -10,10 +10,19 @@ const expectedSchema = z.strictObject({
   jsonSchema: z.record(z.string(), z.unknown()).optional(),
 });
 
+export const deploymentIdPattern = /^[A-Za-z0-9._-]{1,128}$/;
+
 const releaseTestSchema = z.strictObject({
   preflightId: z.string().min(1).max(64),
   profile: z.enum(profiles),
   expected: expectedSchema.optional(),
+  deploymentId: z
+    .string()
+    .regex(
+      deploymentIdPattern,
+      "deploymentId must be 1-128 characters of A-Z, a-z, 0-9, '.', '_' or '-'",
+    )
+    .optional(),
 });
 
 export const idempotencyKeyPattern = /^[A-Za-z0-9_-]{8,128}$/;
@@ -41,6 +50,7 @@ export async function readReleaseRequest(c: Context): Promise<ReleaseRequest> {
     preflightId: parsed.preflightId,
     profile: parsed.profile,
     ...(parsed.expected === undefined ? {} : { expected: withoutUndefined(parsed.expected) }),
+    ...(parsed.deploymentId === undefined ? {} : { deploymentId: parsed.deploymentId }),
   };
   if (body.expected !== undefined) {
     const compiled = compileContract(body.expected);

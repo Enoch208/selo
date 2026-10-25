@@ -1,4 +1,5 @@
 export * from "./contract";
+export * from "./canonical";
 export * from "./money";
 export * from "./transitions";
 export * from "./verdict";

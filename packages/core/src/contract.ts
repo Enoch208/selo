@@ -190,6 +190,7 @@ export interface ReleaseTestBody {
   readonly preflightId: string;
   readonly profile: Profile;
   readonly expected?: ExpectedContract;
+  readonly deploymentId?: string;
 }
 
 export interface ReleaseTestResponse {
@@ -205,6 +206,75 @@ export interface ReleaseTestResponse {
     readonly downstreamTxIds: readonly string[];
   };
   readonly reportUrl: string;
+  readonly attestation?: ReleaseAttestation;
+}
+
+export const attestationSchemaVersion = "selo.release.v1";
+
+export interface AttestedCheck {
+  readonly id: CheckId;
+  readonly status: CheckStatus;
+  readonly code: string;
+  readonly blocking: boolean;
+  readonly evidence: readonly string[];
+}
+
+export interface AttestedEvidence {
+  readonly id: string;
+  readonly kind: string;
+  readonly sha256: string;
+}
+
+export interface AttestedPayment {
+  readonly status: PaymentStatus;
+  readonly amountUsdc: DecimalAmount;
+  readonly txId: string | null;
+}
+
+export interface ReleaseAttestationPayload {
+  readonly schemaVersion: typeof attestationSchemaVersion;
+  readonly issuer: string;
+  readonly jobId: string;
+  readonly testedTarget: { readonly url: string; readonly method: HttpMethod };
+  readonly deployment: { readonly id: string; readonly verification: "asserted_by_client" } | null;
+  readonly testedAt: string | null;
+  readonly completedAt: string;
+  readonly seloVersion: string;
+  readonly verdict: Verdict;
+  readonly inconclusiveReason: InconclusiveReason | null;
+  readonly checks: readonly AttestedCheck[];
+  readonly expectedContractSha256: string | null;
+  readonly targetChallengeSha256: string | null;
+  readonly payments: {
+    readonly network: string;
+    readonly asset: string;
+    readonly inboundTxId: string | null;
+    readonly inboundAmountUsdc: DecimalAmount | null;
+    readonly downstream: readonly AttestedPayment[];
+  };
+  readonly evidenceSha256: string;
+  readonly evidence: readonly AttestedEvidence[];
+}
+
+export interface AttestationSignature {
+  readonly algorithm: "Ed25519";
+  readonly keyId: string;
+  readonly value: string;
+}
+
+export interface ReleaseAttestation {
+  readonly payload: ReleaseAttestationPayload;
+  readonly signature: AttestationSignature;
+}
+
+export interface AttestationKey {
+  readonly keyId: string;
+  readonly algorithm: "Ed25519";
+  readonly publicKey: string;
+}
+
+export interface AttestationKeySet {
+  readonly keys: readonly AttestationKey[];
 }
 
 export interface ReportScenario {

@@ -49,6 +49,7 @@ export function runnerDeps(overrides: Partial<RunnerDeps> = {}): RunnerDeps {
     absoluteCapMicros: 5_000_000,
     wallClockMs: 10_000,
     reports: { dir: reportsDir, tokenSecret: reportTokenSecret, publicBaseUrl },
+    attestation: null,
     ...overrides,
   };
 }

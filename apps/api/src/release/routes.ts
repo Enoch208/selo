@@ -57,6 +57,7 @@ export function releaseRoutes(db: Db, deps: ReleaseDeps) {
       maxSpendMicros: deps.jobMaxSpendMicros,
       expected: body.expected ?? null,
       gitSha: deps.gitSha,
+      deploymentId: body.deploymentId ?? null,
     });
     if (claim.kind === "duplicate") {
       return replyForExisting(deps.runner, claim.job);

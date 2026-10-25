@@ -1,0 +1,1 @@
+ALTER TABLE "release_jobs" ADD COLUMN "deployment_id" text;

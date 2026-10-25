@@ -11,6 +11,7 @@ import { createApp } from "../../src/app";
 import { createInboundGate } from "../../src/payments/inbound";
 import { seloNetworks } from "../../src/payments/networks";
 import { createJobRunner } from "../../src/orchestrator/run-job";
+import type { AttestationSigner } from "../../src/reports/attestation";
 import { db } from "../support";
 import { FakeFacilitator } from "../support/fake-facilitator";
 import { jobMaxSpendMicros, runnerDeps } from "../orchestrator/harness";
@@ -20,7 +21,10 @@ import { demoUrl, type DemoDeployment } from "./demo-deployment";
 export const seloInbound = new FakeFacilitator();
 const testnet = seloNetworks["algorand-testnet"];
 
-export async function seloFor(deployment: DemoDeployment) {
+export async function seloFor(
+  deployment: DemoDeployment,
+  attestation: AttestationSigner | null = null,
+) {
   const gate = await createInboundGate({
     facilitator: seloInbound,
     facilitatorUrl: "https://facilitator.test",
@@ -31,6 +35,7 @@ export async function seloFor(deployment: DemoDeployment) {
     resourceUrl: "https://selo.example/v1/release-test",
   });
   return createApp(db, {
+    attestationKeys: attestation === null ? [] : [attestation.key],
     authorizations: { ttlHours: 24, verificationFetch: deployment.verificationFetch },
     preflight: {
       probeFetch: (allowedOrigin) => deployment.fetchFor({ allowedOrigin, timeoutMs: 10_000 }),
@@ -43,7 +48,7 @@ export async function seloFor(deployment: DemoDeployment) {
     release: {
       gate,
       runner: createJobRunner(
-        runnerDeps({ targetFetch: deployment.fetchFor, catalog: deployment }),
+        runnerDeps({ targetFetch: deployment.fetchFor, catalog: deployment, attestation }),
       ),
       jobMaxSpendMicros,
       gitSha: "demosha",
@@ -88,6 +93,7 @@ export interface ReleaseRun {
   readonly preflight: PreflightResponse;
   readonly status: number;
   readonly report: ReleaseTestResponse;
+  readonly repeat: () => Promise<ReleaseTestResponse>;
 }
 
 export async function payForReleaseTest(
@@ -95,6 +101,7 @@ export async function payForReleaseTest(
   authorizationId: string,
   expected: ExpectedContract,
   paymentVariant: string,
+  deploymentId: string | null = null,
 ): Promise<ReleaseRun> {
   const answered = await post(app, "/v1/preflight", {
     authorizationId,
@@ -106,9 +113,18 @@ export async function payForReleaseTest(
   if (!preflight.eligible) {
     throw new Error(`preflight was not eligible: ${JSON.stringify(preflight)}`);
   }
-  const body = { preflightId: preflight.preflightId, profile: "quick", expected };
+  const body = {
+    preflightId: preflight.preflightId,
+    profile: "quick",
+    expected,
+    ...(deploymentId === null ? {} : { deploymentId }),
+  };
   const unpaid = await post(app, "/v1/release-test", body);
   const signature = paymentHeaderFor(decodeChallenge(unpaid), paymentVariant);
-  const paid = await post(app, "/v1/release-test", body, { "PAYMENT-SIGNATURE": signature });
-  return { preflight, status: paid.status, report: (await paid.json()) as ReleaseTestResponse };
+  const headers = { "PAYMENT-SIGNATURE": signature };
+  const paid = await post(app, "/v1/release-test", body, headers);
+  const repeat = async () =>
+    (await (await post(app, "/v1/release-test", body, headers)).json()) as ReleaseTestResponse;
+  const report = (await paid.json()) as ReleaseTestResponse;
+  return { preflight, status: paid.status, report, repeat };
 }

@@ -14,6 +14,7 @@ import { seloNetworks } from "./payments/networks";
 import { createAvmPaymentScheme } from "./payments/wallet";
 import { createAlgodWalletBalance } from "./payments/wallet-balance";
 import { liveProbeFetch } from "./preflight/deps";
+import { createAttestationSigner } from "./reports/attestation";
 import { ensureReportsDir } from "./reports/packet";
 
 const env = loadEnv(process.env);
@@ -38,6 +39,11 @@ const reports = {
   publicBaseUrl: env.PUBLIC_BASE_URL,
 };
 
+const attestation =
+  operator.SELO_ATTESTATION_KEY === null
+    ? null
+    : createAttestationSigner(operator.SELO_ATTESTATION_KEY);
+
 const runner = createJobRunner({
   db,
   network,
@@ -48,6 +54,7 @@ const runner = createJobRunner({
   absoluteCapMicros: env.SELO_ABSOLUTE_MAX_SPEND_MICROS,
   wallClockMs: operator.JOB_WALL_CLOCK_MS,
   reports,
+  attestation,
 });
 
 const sweepDeps = { db, reports, wallClockMs: operator.JOB_WALL_CLOCK_MS };
@@ -56,6 +63,7 @@ void scheduleResweep(sweepDeps);
 
 const app = createApp(db, {
   identity: { publicBaseUrl: env.PUBLIC_BASE_URL },
+  attestationKeys: attestation === null ? [] : [attestation.key],
   authorizations: {
     ttlHours: env.AUTHORIZATION_TTL_HOURS,
     verificationFetch: liveVerificationFetch,

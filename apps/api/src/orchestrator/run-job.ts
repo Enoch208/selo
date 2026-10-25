@@ -5,7 +5,9 @@ import type { ReleaseJobRow } from "../db/client";
 import { parseTarget } from "../net/target";
 import { findPreflight } from "../preflight/store";
 import type { ReleaseRunner } from "../release/deps";
-import { buildReport } from "../reports/build";
+import { attestationPayload } from "../reports/attestation";
+import { reportFrom } from "../reports/build";
+import { loadJobRecords } from "../reports/records";
 import { toReleaseTestResponse } from "../reports/response";
 import { reportToken, reportUrlFor } from "../reports/token";
 import type { JobContext } from "./context";
@@ -105,11 +107,19 @@ async function execute(deps: RunnerDeps, job: ReleaseJobRow): Promise<string> {
 }
 
 export function createJobRunner(deps: RunnerDeps): ReleaseRunner {
-  const respond = async (jobId: string, token: string): Promise<ReleaseTestResponse> =>
-    toReleaseTestResponse(
-      await buildReport(deps.db, jobId),
-      reportUrlFor(deps.reports.publicBaseUrl, token),
-    );
+  const issuer = new URL(deps.reports.publicBaseUrl).origin;
+  const respond = async (jobId: string, token: string): Promise<ReleaseTestResponse> => {
+    const records = await loadJobRecords(deps.db, jobId);
+    const report = reportFrom(records);
+    const response = toReleaseTestResponse(report, reportUrlFor(deps.reports.publicBaseUrl, token));
+    const payload =
+      deps.attestation === null
+        ? null
+        : attestationPayload(records, report, { issuer, network: deps.network });
+    return payload === null || deps.attestation === null
+      ? response
+      : { ...response, attestation: deps.attestation.sign(payload) };
+  };
 
   return {
     async run(jobId) {

@@ -1,4 +1,4 @@
-import type { ApiError } from "@selo/core";
+import type { ApiError, AttestationKey } from "@selo/core";
 import { sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { bodyLimit } from "hono/body-limit";
@@ -12,6 +12,7 @@ import type { PreflightDeps } from "./preflight/deps";
 import { preflightRoutes } from "./preflight/routes";
 import type { ReleaseDeps } from "./release/deps";
 import { releaseRoutes } from "./release/routes";
+import { attestationKeyRoutes } from "./reports/keys-route";
 import { reportRoutes } from "./reports/routes";
 
 export interface AppDeps {
@@ -19,6 +20,7 @@ export interface AppDeps {
   readonly release?: ReleaseDeps;
   readonly preflight?: PreflightDeps;
   readonly identity?: IdentityConfig;
+  readonly attestationKeys?: readonly AttestationKey[];
 }
 
 export const maxJsonBodyBytes = 64 * 1024;
@@ -52,6 +54,9 @@ export function createApp(db: Db, deps: AppDeps) {
   }
   if (deps.identity !== undefined) {
     app.route("/", identityRoutes(deps.identity));
+  }
+  if (deps.attestationKeys !== undefined) {
+    app.route("/", attestationKeyRoutes(deps.attestationKeys));
   }
   return app
     .notFound((c) =>
