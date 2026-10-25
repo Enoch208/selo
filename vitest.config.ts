@@ -13,6 +13,14 @@ export default defineConfig({
       },
       {
         test: {
+          name: "cli",
+          root: "packages/cli",
+          include: ["tests/**/*.test.ts"],
+          environment: "node",
+        },
+      },
+      {
+        test: {
           name: "merchant",
           root: "examples/merchant",
           include: ["tests/**/*.test.ts"],

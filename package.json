@@ -16,7 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:generate": "pnpm --filter @selo/api db:generate",
-    "db:migrate": "pnpm --filter @selo/api db:migrate"
+    "db:migrate": "pnpm --filter @selo/api db:migrate",
+    "selo": "node packages/cli/bin/selo.js"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

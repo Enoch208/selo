@@ -1,0 +1,22 @@
+{
+  "name": "@selo/cli",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "selo": "./bin/selo.js"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@selo/api": "workspace:*",
+    "@selo/core": "workspace:*",
+    "algosdk": "3.8.0",
+    "tsx": "4.23.15",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@x402/avm": "2.27.0",
+    "@x402/core": "2.27.0"
+  }
+}

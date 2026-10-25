@@ -2,6 +2,11 @@
   "name": "@selo/api",
   "private": true,
   "type": "module",
+  "exports": {
+    "./pay-flow": "./src/tools/pay-flow.ts",
+    "./wallet": "./src/payments/wallet.ts",
+    "./networks": "./src/payments/networks.ts"
+  },
   "scripts": {
     "dev": "tsx watch --env-file-if-exists=.env src/server.ts",
     "start": "tsx --env-file-if-exists=.env src/server.ts",
