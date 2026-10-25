@@ -1,0 +1,13 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "jsonSchema": {
+    "type": "object",
+    "required": ["orderId", "receiptId", "fulfilled"],
+    "properties": {
+      "orderId": { "type": "string", "pattern": "^ord_[0-9a-f]{24}$" },
+      "receiptId": { "type": "string", "pattern": "^rcpt_[0-9a-f]{24}$" },
+      "fulfilled": { "const": true }
+    }
+  }
+}

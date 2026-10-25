@@ -17,6 +17,7 @@
     "testnet:target": "tsx --env-file-if-exists=.env src/tools/testnet-target/server.ts"
   },
   "devDependencies": {
+    "@selo/example-merchant": "workspace:*",
     "drizzle-kit": "0.31.11",
     "tsx": "4.23.15"
   },

@@ -75,6 +75,9 @@ importers:
         specifier: 4.6.5
         version: 4.6.5
     devDependencies:
+      '@selo/example-merchant':
+        specifier: workspace:*
+        version: link:../../examples/merchant
       drizzle-kit:
         specifier: 0.31.11
         version: 0.31.11
@@ -139,6 +142,40 @@ importers:
       vite:
         specifier: 8.3.1
         version: 8.3.1(@types/node@24.19.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)
+
+  examples/merchant:
+    dependencies:
+      '@hono/node-server':
+        specifier: 2.1.1
+        version: 2.1.1(hono@4.13.8)
+      '@x402/avm':
+        specifier: 2.27.0
+        version: 2.27.0
+      '@x402/core':
+        specifier: 2.27.0
+        version: 2.27.0
+      '@x402/extensions':
+        specifier: 2.27.0
+        version: 2.27.0(typescript@5.9.3)
+      '@x402/hono':
+        specifier: 2.27.0
+        version: 2.27.0(hono@4.13.8)(typescript@5.9.3)
+      algosdk:
+        specifier: 3.8.0
+        version: 3.8.0
+      hono:
+        specifier: 4.13.8
+        version: 4.13.8
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+    devDependencies:
+      '@selo/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      tsx:
+        specifier: 4.23.15
+        version: 4.23.15
 
   packages/core:
     dependencies:
@@ -2512,7 +2549,7 @@ snapshots:
     dependencies:
       '@signinwithethereum/siwe-parser': 4.2.1
     optionalDependencies:
-      viem: 2.56.9(typescript@5.9.3)(zod@3.25.76)
+      viem: 2.56.9(typescript@5.9.3)(zod@4.6.5)
 
   '@tailwindcss/node@4.3.3':
     dependencies:
@@ -2732,7 +2769,7 @@ snapshots:
       ajv: 8.20.0
       jose: 5.10.0
       tweetnacl: 1.0.3
-      viem: 2.56.9(typescript@5.9.3)(zod@3.25.76)
+      viem: 2.56.9(typescript@5.9.3)(zod@4.6.5)
       zod: 3.25.76
     transitivePeerDependencies:
       - bufferutil
@@ -3431,7 +3468,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  viem@2.56.9(typescript@5.9.3)(zod@3.25.76):
+  viem@2.56.9(typescript@5.9.3)(zod@4.6.5):
     dependencies:
       '@noble/curves': 1.9.1
       '@noble/hashes': 1.8.0

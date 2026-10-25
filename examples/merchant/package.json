@@ -1,0 +1,30 @@
+{
+  "name": "@selo/example-merchant",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/app.ts",
+    "./networks": "./src/networks.ts",
+    "./orders": "./src/orders.ts",
+    "./contract.json": "./contract.json",
+    "./order.json": "./order.json"
+  },
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.1",
+    "@x402/avm": "2.27.0",
+    "@x402/core": "2.27.0",
+    "@x402/extensions": "2.27.0",
+    "@x402/hono": "2.27.0",
+    "algosdk": "3.8.0",
+    "hono": "4.13.8",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@selo/core": "workspace:*",
+    "tsx": "4.23.15"
+  }
+}
