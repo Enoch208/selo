@@ -1,0 +1,136 @@
+name: Selo release gate
+description: >-
+  Run a free Selo preflight, or pay once for a Selo release test of an authorized x402 endpoint
+  and fail unless every release check passed with evidence.
+
+inputs:
+  mode:
+    description: "preflight (free, no wallet needed) or test (pays Selo once; needs SELO_PAYER_MNEMONIC in env)"
+    required: true
+  api:
+    description: Selo API base URL
+    default: https://api.useselo.xyz
+  authorization:
+    description: Verified authorization id (auth_...) that covers the target route and method
+    required: true
+  url:
+    description: HTTPS URL of the paid x402 endpoint
+    required: true
+  method:
+    description: GET or POST
+    required: true
+  body:
+    description: Path to a JSON request body file, POST only
+    default: ""
+  contract:
+    description: Path to the release contract JSON (test mode)
+    default: ""
+  release:
+    description: Release identifier recorded as asserted by the caller (test mode)
+    default: ${{ github.sha }}
+  network:
+    description: testnet or mainnet (test mode)
+    default: ""
+  max-usdc:
+    description: Most this run may pay Selo, in USDC (test mode)
+    default: ""
+  pay-to:
+    description: Selo's expected payTo address; required on Mainnet (test mode)
+    default: ""
+  approve-mainnet:
+    description: Set to true to allow a Mainnet payment (test mode)
+    default: "false"
+  summary:
+    description: Where to write the sanitized selo.gate.v1 summary (test mode)
+    default: selo-gate.json
+
+outputs:
+  exit-code:
+    description: 0 PASS, 1 FAIL, 2 INCONCLUSIVE or unconfirmed, 3 refused before paying
+    value: ${{ steps.gate.outputs.exit-code }}
+  gate:
+    description: "test mode: ALLOW only for a fully evidenced PASS, otherwise BLOCK; preflight mode: ELIGIBLE or BLOCK"
+    value: ${{ steps.gate.outputs.gate }}
+  verdict:
+    description: PASS, FAIL, INCONCLUSIVE, or none when no report was returned
+    value: ${{ steps.gate.outputs.verdict }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node 24
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+      with:
+        node-version: "24"
+
+    - name: Install the selo CLI
+      shell: bash
+      working-directory: ${{ github.action_path }}/../../..
+      run: npx --yes pnpm@10.33.0 install --frozen-lockfile --filter "@selo/cli..."
+
+    - name: Run the Selo gate
+      id: gate
+      shell: bash
+      env:
+        SELO_ROOT: ${{ github.action_path }}/../../..
+        SELO_MODE: ${{ inputs.mode }}
+        SELO_API: ${{ inputs.api }}
+        SELO_AUTHORIZATION: ${{ inputs.authorization }}
+        SELO_URL: ${{ inputs.url }}
+        SELO_METHOD: ${{ inputs.method }}
+        SELO_BODY: ${{ inputs.body }}
+        SELO_CONTRACT: ${{ inputs.contract }}
+        SELO_RELEASE: ${{ inputs.release }}
+        SELO_NETWORK: ${{ inputs.network }}
+        SELO_MAX_USDC: ${{ inputs.max-usdc }}
+        SELO_PAY_TO: ${{ inputs.pay-to }}
+        SELO_APPROVE_MAINNET: ${{ inputs.approve-mainnet }}
+        SELO_SUMMARY: ${{ inputs.summary }}
+      run: |
+        set -uo pipefail
+        finish() {
+          echo "exit-code=$1" >> "$GITHUB_OUTPUT"
+          echo "gate=$2" >> "$GITHUB_OUTPUT"
+          echo "verdict=$3" >> "$GITHUB_OUTPUT"
+          exit "$1"
+        }
+        args=(--api "$SELO_API" --authorization "$SELO_AUTHORIZATION" --url "$SELO_URL" --method "$SELO_METHOD")
+        if [ -n "$SELO_BODY" ]; then args+=(--body "$SELO_BODY"); fi
+        case "$SELO_MODE" in
+          preflight)
+            node "$SELO_ROOT/packages/cli/bin/selo.js" preflight "${args[@]}"
+            code=$?
+            if [ "$code" -eq 0 ]; then finish 0 ELIGIBLE none; fi
+            finish "$code" BLOCK none
+            ;;
+          test)
+            rm -f "$SELO_SUMMARY"
+            args+=(--contract "$SELO_CONTRACT" --release "$SELO_RELEASE" --network "$SELO_NETWORK")
+            args+=(--max-usdc "$SELO_MAX_USDC" --summary "$SELO_SUMMARY")
+            if [ -n "$SELO_PAY_TO" ]; then args+=(--pay-to "$SELO_PAY_TO"); fi
+            if [ "$SELO_APPROVE_MAINNET" = "true" ]; then args+=(--approve-mainnet); fi
+            node "$SELO_ROOT/packages/cli/bin/selo.js" test "${args[@]}"
+            code=$?
+            gate=BLOCK
+            verdict=none
+            if [ -f "$SELO_SUMMARY" ]; then
+              read_field() {
+                node -e 'const s = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")); process.stdout.write(String(s[process.argv[2]] ?? "none"))' "$SELO_SUMMARY" "$1"
+              }
+              gate=$(read_field gate)
+              verdict=$(read_field verdict)
+            fi
+            if [ "$code" -eq 0 ] && [ "$gate" != "ALLOW" ]; then
+              echo "::error::selo exited 0 without an ALLOW summary; blocking" >&2
+              finish 2 BLOCK "$verdict"
+            fi
+            if [ "$code" -eq 2 ]; then
+              echo "::warning::The release test is not confirmed. Do not re-run this job until you have checked the earlier payment; a re-run starts a new paid test."
+            fi
+            finish "$code" "$gate" "$verdict"
+            ;;
+          *)
+            echo "::error::mode must be preflight or test" >&2
+            finish 3 BLOCK none
+            ;;
+        esac

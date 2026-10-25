@@ -60,7 +60,12 @@ export function createFakeSelo(network: SeloNetworkName = "algorand-testnet") {
         amount: String(state.priceMicros),
         payTo: seloPayTo,
         maxTimeoutSeconds: 300,
-        extra: { name: "USDC", decimals: 6, tag: "x402-global-challenge", feePayer: "FEEPAYER" },
+        extra: {
+          name: "USDC",
+          decimals: 6,
+          tag: "x402-global-challenge",
+          feePayer: "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA",
+        },
       },
     ],
   });

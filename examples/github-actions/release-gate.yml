@@ -1,0 +1,89 @@
+name: Release behind a Selo gate
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SELO_API: https://api.useselo.xyz
+  TARGET_URL: https://staging.example.com/v1/orders
+
+jobs:
+  stage:
+    name: Build and stage (no wallet, no spend)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Build and test
+        run: ./scripts/build-and-test.sh
+      - name: Deploy this commit to staging
+        run: ./scripts/deploy.sh staging "$GITHUB_SHA"
+      - name: Free Selo preflight against staging
+        uses: Enoch208/selo/.github/actions/release-gate@main
+        with:
+          mode: preflight
+          api: ${{ env.SELO_API }}
+          authorization: ${{ vars.SELO_AUTHORIZATION_ID }}
+          url: ${{ env.TARGET_URL }}
+          method: POST
+          body: selo/order.json
+
+  paid-gate:
+    name: Paid Selo release test
+    needs: stage
+    runs-on: ubuntu-latest
+    environment: selo-paid-release
+    outputs:
+      gate: ${{ steps.selo.outputs.gate }}
+      verdict: ${{ steps.selo.outputs.verdict }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Pay Selo once and gate on the verdict
+        id: selo
+        uses: Enoch208/selo/.github/actions/release-gate@main
+        env:
+          SELO_PAYER_MNEMONIC: ${{ secrets.SELO_PAYER_MNEMONIC }}
+        with:
+          mode: test
+          api: ${{ env.SELO_API }}
+          authorization: ${{ vars.SELO_AUTHORIZATION_ID }}
+          url: ${{ env.TARGET_URL }}
+          method: POST
+          body: selo/order.json
+          contract: selo/contract.json
+          release: ${{ github.sha }}
+          network: mainnet
+          max-usdc: "1.00"
+          pay-to: ${{ vars.SELO_PAY_TO }}
+          approve-mainnet: "true"
+          summary: selo-gate.json
+      - name: Keep the sanitized gate summary
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: selo-gate-${{ github.sha }}
+          path: selo-gate.json
+          if-no-files-found: ignore
+          retention-days: 30
+
+  promote:
+    name: Promote to production
+    needs: paid-gate
+    if: needs.paid-gate.result == 'success' && needs.paid-gate.outputs.gate == 'ALLOW'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Promote the commit Selo passed
+        run: ./scripts/deploy.sh production "$GITHUB_SHA"

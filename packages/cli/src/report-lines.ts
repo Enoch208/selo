@@ -13,7 +13,7 @@ interface Terms {
   readonly maxPriceMicros: number;
 }
 
-const pad = (label: string): string => label.padEnd(10);
+const pad = (label: string): string => label.padEnd(12);
 
 export function announceTerms(
   out: Output,
