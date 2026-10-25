@@ -1,14 +1,17 @@
+import { formatMicros } from "@selo/core";
 import { seloNetworks, type SeloNetworkName } from "../payments/networks";
 
 export const priceCeilingMicros = 5_000_000;
 
 export type RefusalReason =
   | "unknown_network"
+  | "network_mismatch"
   | "self_payment"
   | "mainnet_not_approved"
   | "pay_to_unconfirmed"
   | "pay_to_mismatch"
-  | "price_out_of_bounds";
+  | "price_out_of_bounds"
+  | "over_budget";
 
 export type PaymentDecision =
   | { readonly kind: "allow"; readonly network: SeloNetworkName }
@@ -16,10 +19,12 @@ export type PaymentDecision =
 
 export interface PaymentDecisionInput {
   readonly network: string;
+  readonly expectedNetwork: SeloNetworkName | null;
   readonly payer: string;
   readonly payTo: string;
   readonly approvedMainnet: boolean;
   readonly amountMicros: number;
+  readonly maxPriceMicros: number;
   readonly expectedPayTo: string | null;
   readonly seloWallets?: readonly string[];
 }
@@ -42,6 +47,12 @@ export function paymentDecision(input: PaymentDecisionInput): PaymentDecision {
     return refuse(
       "unknown_network",
       `refusing: ${input.network} is not Algorand Mainnet or Testnet`,
+    );
+  }
+  if (input.expectedNetwork !== null && input.expectedNetwork !== network) {
+    return refuse(
+      "network_mismatch",
+      `refusing: the 402 asks for payment on ${network}, not the expected ${input.expectedNetwork}`,
     );
   }
   if (input.payer === input.payTo) {
@@ -71,6 +82,12 @@ export function paymentDecision(input: PaymentDecisionInput): PaymentDecision {
   const amount = input.amountMicros;
   if (!Number.isSafeInteger(amount) || amount <= 0 || amount > priceCeilingMicros) {
     return refuse("price_out_of_bounds", "refusing: the price is not between 0 and 5.00 USDC");
+  }
+  if (amount > input.maxPriceMicros) {
+    return refuse(
+      "over_budget",
+      `refusing: the price ${formatMicros(amount)} USDC is above the approved budget of ${formatMicros(input.maxPriceMicros)} USDC`,
+    );
   }
   return { kind: "allow", network };
 }

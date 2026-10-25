@@ -8,6 +8,7 @@ import { writeEvidence } from "./evidence-file";
 import { g2EvidenceResponse } from "./g2-evidence";
 import { runPayment, type PayFlowOutcome } from "./pay-flow";
 import { payIdempotencyKey } from "./pay-idempotency";
+import { priceCeilingMicros } from "./payment-decision";
 
 const usage =
   "Usage: pay:selo -- --api <https base url> --preflight <id> [--pay-to <address>] [--expected-status 200] [--idempotency-key <key>] [--out <dir>] [--mainnet-i-have-approval --pay-to <address>]";
@@ -50,6 +51,9 @@ async function finish(outcome: PayFlowOutcome, out: string | undefined): Promise
   if (outcome.kind === "refused") {
     fail(outcome.message);
     return;
+  }
+  if (outcome.record !== null) {
+    say(JSON.stringify(outcome.record.response, null, 2));
   }
   if (out !== undefined && outcome.record !== null) {
     try {
@@ -109,7 +113,16 @@ async function pay(secrets: z.infer<typeof mnemonicSchema>, request: PayRequest)
         now: () => new Date(),
         write: say,
       },
-      { api, preflightId, expectedStatus, approvedMainnet, expectedPayTo, idempotencyKey },
+      {
+        api,
+        preflightId,
+        expected: expectedStatus === null ? null : { status: expectedStatus },
+        expectedNetwork: null,
+        maxPriceMicros: priceCeilingMicros,
+        approvedMainnet,
+        expectedPayTo,
+        idempotencyKey,
+      },
     );
   } catch (error: unknown) {
     fail(`${messageChain(error)}; nothing was sent`);

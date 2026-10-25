@@ -2,6 +2,7 @@ import algosdk from "algosdk";
 import { describe, expect, it } from "vitest";
 import type { SeloNetworkName } from "../../src/payments/networks";
 import { runPayment, type PayFlowDeps, type PayFlowInput } from "../../src/tools/pay-flow";
+import { priceCeilingMicros } from "../../src/tools/payment-decision";
 import { createFakeScheme, type FakeScheme } from "../payments/fake-scheme";
 import { createFakeSelo, inboundTx, seloAccept, seloPayTo } from "./fake-selo";
 
@@ -9,7 +10,9 @@ const payer = algosdk.generateAccount().addr.toString();
 const input: PayFlowInput = {
   api: "https://selo.test",
   preflightId: "pfl_1",
-  expectedStatus: 200,
+  expected: { status: 200 },
+  expectedNetwork: null,
+  maxPriceMicros: priceCeilingMicros,
   approvedMainnet: false,
   expectedPayTo: null,
   idempotencyKey: "pay-selo-stable-key-1",
@@ -167,7 +170,11 @@ describe("runPayment", () => {
     const { selo, scheme, deps } = harness("algorand-testnet");
     scheme.failWith = new Error("signer exploded");
     const outcome = await runPayment(deps, input);
-    expect(outcome).toEqual({ kind: "refused", message: "signer exploded; nothing was sent" });
+    expect(outcome).toEqual({
+      kind: "refused",
+      cause: "unreachable",
+      message: "signer exploded; nothing was sent",
+    });
     expect(selo.seen).toHaveLength(1);
   });
 
@@ -194,7 +201,65 @@ describe("runPayment", () => {
     selo.behaviour.unpaidStatus = 400;
     const outcome = await runPayment(deps, input);
     expect(outcome.kind === "refused" && outcome.message).toMatch(/400/);
+    expect(outcome).toMatchObject({ kind: "refused", cause: "rejected" });
     expect(selo.seen).toHaveLength(1);
+  });
+
+  it("classifies a 5xx or a redirect on the unpaid request as unreachable", async () => {
+    for (const unpaidStatus of [503, 307]) {
+      const { deps, selo } = harness("algorand-testnet");
+      selo.behaviour.unpaidStatus = unpaidStatus;
+      expect(await runPayment(deps, input)).toMatchObject({
+        kind: "refused",
+        cause: "unreachable",
+      });
+    }
+  });
+
+  it("classifies a payment-policy refusal as policy", async () => {
+    const { deps } = harness("algorand-mainnet");
+    expect(await runPayment(deps, input)).toMatchObject({ kind: "refused", cause: "policy" });
+  });
+
+  it("refuses a 402 on a network other than the expected one before building a signer", async () => {
+    const { selo, scheme, schemesBuilt, deps } = harness("algorand-mainnet");
+    const outcome = await runPayment(deps, {
+      ...approved,
+      expectedNetwork: "algorand-testnet",
+    });
+    expect(outcome.kind === "refused" && outcome.message).toMatch(
+      /not the expected algorand-testnet/,
+    );
+    expect(selo.seen).toHaveLength(1);
+    expect(schemesBuilt).toEqual([]);
+    expect(scheme.calls).toHaveLength(0);
+  });
+
+  it("refuses a price above the approved budget before building a signer", async () => {
+    const { selo, scheme, schemesBuilt, deps } = harness("algorand-testnet");
+    const outcome = await runPayment(deps, { ...input, maxPriceMicros: 999_999 });
+    expect(outcome.kind === "refused" && outcome.message).toMatch(
+      /1\.00 USDC is above the approved budget of 0\.999999 USDC/,
+    );
+    expect(selo.seen).toHaveLength(1);
+    expect(schemesBuilt).toEqual([]);
+    expect(scheme.calls).toHaveLength(0);
+  });
+
+  it("sends the whole expected contract on the paid request", async () => {
+    const { selo, deps } = harness("algorand-testnet");
+    const expected = {
+      status: 200,
+      contentType: "application/json",
+      jsonSchema: { type: "object", required: ["receiptId"] },
+    };
+    await runPayment(deps, { ...input, expected });
+    const paid = selo.seen.find((request) => request.headers.has("PAYMENT-SIGNATURE"));
+    expect(JSON.parse(paid?.body ?? "")).toEqual({
+      preflightId: "pfl_1",
+      profile: "quick",
+      expected,
+    });
   });
 
   it("refuses a 402 that offers more than one Algorand USDC requirement", async () => {

@@ -23,11 +23,24 @@ export interface ProbedChallenge {
   readonly tag: string | null;
 }
 
+export type RefusalCause = "policy" | "rejected" | "unreachable";
+
 export type ProbeOutcome =
   | { readonly ok: true; readonly challenge: ProbedChallenge }
-  | { readonly ok: false; readonly message: string };
+  | { readonly ok: false; readonly cause: RefusalCause; readonly message: string };
 
-const refused = (message: string): ProbeOutcome => ({ ok: false, message });
+const refused = (cause: RefusalCause, message: string): ProbeOutcome => ({
+  ok: false,
+  cause,
+  message,
+});
+
+function causeOfStatus(status: number): RefusalCause {
+  if (status >= 500) {
+    return "unreachable";
+  }
+  return status >= 400 && status !== 402 ? "rejected" : "policy";
+}
 
 function algorandUsdcAccepts(decoded: unknown): X402Accept[] | string {
   const parsed = parseChallenge(decoded);
@@ -62,28 +75,30 @@ export async function probeChallenge(
   try {
     unpaid = await fetch(url, { method: "POST", headers: jsonHeaders, body, redirect: "manual" });
   } catch (error: unknown) {
-    return refused(`unpaid request failed: ${messageChain(error)}`);
+    return refused("unreachable", `unpaid request failed: ${messageChain(error)}`);
   }
   const redirected = redirectOf(unpaid);
   if (redirected !== null) {
     await unpaid.body?.cancel();
-    return refused(redirected);
+    return refused("unreachable", redirected);
   }
   const challenge = readChallenge(unpaid);
   const unpaidText = (await unpaid.text()).slice(0, 500);
   if (unpaid.status !== 402 || challenge.decoded === null) {
     const why = challenge.decodeError ?? unpaidText;
     return refused(
+      causeOfStatus(unpaid.status),
       `expected a 402 with PAYMENT-REQUIRED, got HTTP ${String(unpaid.status)}: ${why}`,
     );
   }
   const accepts = algorandUsdcAccepts(challenge.decoded);
   if (typeof accepts === "string") {
-    return refused(accepts);
+    return refused("policy", accepts);
   }
   const [accept, ...others] = accepts;
   if (accept === undefined || others.length > 0) {
     return refused(
+      "policy",
       `expected exactly one Algorand USDC requirement, found ${String(accepts.length)}`,
     );
   }

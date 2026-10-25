@@ -1,3 +1,4 @@
+import type { ExpectedContract } from "@selo/core";
 import type { SchemeNetworkClient } from "@x402/core/types";
 import { selectGuardedAccept } from "../payments/accept-match";
 import { readSettlementTxId } from "../payments/challenge-io";
@@ -5,7 +6,13 @@ import { seloNetworks, type SeloNetworkName } from "../payments/networks";
 import { httpClientCappedAt, sign, type Signed } from "../payments/sign";
 import { messageChain } from "../payments/transport";
 import type { ToolFetch } from "./facilitator-client";
-import { jsonHeaders, probeChallenge, redirectOf, type ProbedChallenge } from "./pay-probe";
+import {
+  jsonHeaders,
+  probeChallenge,
+  redirectOf,
+  type ProbedChallenge,
+  type RefusalCause,
+} from "./pay-probe";
 import { paymentDecision } from "./payment-decision";
 
 export interface PayFlowDeps {
@@ -20,7 +27,9 @@ export interface PayFlowDeps {
 export interface PayFlowInput {
   readonly api: string;
   readonly preflightId: string;
-  readonly expectedStatus: number | null;
+  readonly expected: ExpectedContract | null;
+  readonly expectedNetwork: SeloNetworkName | null;
+  readonly maxPriceMicros: number;
   readonly approvedMainnet: boolean;
   readonly expectedPayTo: string | null;
   readonly idempotencyKey: string;
@@ -45,7 +54,7 @@ export interface RoundTripRecord {
 }
 
 export type PayFlowOutcome =
-  | { readonly kind: "refused"; readonly message: string }
+  | { readonly kind: "refused"; readonly cause: RefusalCause; readonly message: string }
   | {
       readonly kind: "unknown";
       readonly message: string;
@@ -77,8 +86,7 @@ const mayHaveSettled = (pending: string | null): string =>
   `it may have settled. Check the payer account on chain for ${pending ?? "the transfer"}; do not pay again blindly.`;
 
 function requestBody(input: PayFlowInput): string {
-  const expected =
-    input.expectedStatus === null ? {} : { expected: { status: input.expectedStatus } };
+  const expected = input.expected === null ? {} : { expected: input.expected };
   return JSON.stringify({ preflightId: input.preflightId, profile: "quick", ...expected });
 }
 
@@ -118,21 +126,23 @@ async function attempt(
   const unpaidRequestedAt = deps.now().toISOString();
   const probe = await probeChallenge(deps.fetch, url, body);
   if (!probe.ok) {
-    return { kind: "refused", message: probe.message };
+    return { kind: "refused", cause: probe.cause, message: probe.message };
   }
   const probed = probe.challenge;
   announce(deps, probed);
   const decision = paymentDecision({
     network: probed.accept.network,
+    expectedNetwork: input.expectedNetwork,
     payer: deps.payer,
     payTo: probed.accept.payTo,
     approvedMainnet: input.approvedMainnet,
     amountMicros: probed.amountMicros,
+    maxPriceMicros: input.maxPriceMicros,
     expectedPayTo: input.expectedPayTo,
     seloWallets: deps.seloWallets,
   });
   if (decision.kind === "refuse") {
-    return { kind: "refused", message: decision.message };
+    return { kind: "refused", cause: "policy", message: decision.message };
   }
   const signed = await signOnce(deps, decision.network, probed, body, input.idempotencyKey);
   const pending = signed.expected.expectedTxId;
@@ -180,7 +190,6 @@ async function attempt(
   const response = await readResponse(paid);
   deps.write(`status   ${String(paid.status)}`);
   deps.write(`inbound  ${settlement.txId ?? "(no settlement tx id in PAYMENT-RESPONSE)"}`);
-  deps.write(JSON.stringify(response, null, 2));
   const record: RoundTripRecord = {
     ...base,
     respondedAt: deps.now().toISOString(),
@@ -204,6 +213,6 @@ export async function runPayment(deps: PayFlowDeps, input: PayFlowInput): Promis
           message: `${reason} after the paid request was sent; ${mayHaveSettled(null)}`,
           record: null,
         }
-      : { kind: "refused", message: `${reason}; nothing was sent` };
+      : { kind: "refused", cause: "unreachable", message: `${reason}; nothing was sent` };
   }
 }

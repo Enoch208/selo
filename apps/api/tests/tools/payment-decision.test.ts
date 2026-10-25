@@ -1,13 +1,21 @@
 import algosdk from "algosdk";
 import { describe, expect, it } from "vitest";
 import { seloNetworks } from "../../src/payments/networks";
-import { paymentDecision } from "../../src/tools/payment-decision";
+import { paymentDecision, priceCeilingMicros } from "../../src/tools/payment-decision";
 
 const mainnet = seloNetworks["algorand-mainnet"].caip2;
 const testnet = seloNetworks["algorand-testnet"].caip2;
 const payer = algosdk.generateAccount().addr.toString();
 const payTo = algosdk.generateAccount().addr.toString();
-const base = { payer, payTo, approvedMainnet: false, amountMicros: 1_000_000, expectedPayTo: null };
+const base = {
+  payer,
+  payTo,
+  approvedMainnet: false,
+  amountMicros: 1_000_000,
+  maxPriceMicros: priceCeilingMicros,
+  expectedPayTo: null,
+  expectedNetwork: null,
+};
 
 describe("paymentDecision", () => {
   it("allows a Testnet payment to a different address", () => {
@@ -86,5 +94,20 @@ describe("paymentDecision", () => {
     expect(paymentDecision({ ...base, network: testnet, amountMicros: 5_000_000 }).kind).toBe(
       "allow",
     );
+  });
+  it("refuses a 402 on a network other than the expected one", () => {
+    const decision = paymentDecision({
+      ...base,
+      network: mainnet,
+      expectedNetwork: "algorand-testnet",
+    });
+    expect(decision).toMatchObject({ kind: "refuse", reason: "network_mismatch" });
+  });
+
+  it("allows a price exactly at the approved budget and refuses one micro above it", () => {
+    const atBudget = { ...base, network: testnet, maxPriceMicros: 1_000_000 };
+    expect(paymentDecision(atBudget).kind).toBe("allow");
+    const decision = paymentDecision({ ...atBudget, maxPriceMicros: 999_999 });
+    expect(decision).toMatchObject({ kind: "refuse", reason: "over_budget" });
   });
 });
