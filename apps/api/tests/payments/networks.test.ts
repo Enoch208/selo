@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { seloNetworks } from "../../src/payments/networks";
+import { networkNameOf, seloNetworks } from "../../src/payments/networks";
 
 describe("seloNetworks", () => {
   it("uses the long genesis-hash CAIP-2 form the facilitator accepts", () => {
@@ -11,14 +11,23 @@ describe("seloNetworks", () => {
     );
   });
 
-  it("names the USDC asset and algod endpoint for each network", () => {
+  it("names the USDC asset, algod and indexer endpoints for each network", () => {
     expect(seloNetworks["algorand-mainnet"]).toMatchObject({
       usdcAssetId: "31566704",
       algodUrl: "https://mainnet-api.algonode.cloud",
+      indexerUrl: "https://mainnet-idx.algonode.cloud",
     });
     expect(seloNetworks["algorand-testnet"]).toMatchObject({
       usdcAssetId: "10458941",
       algodUrl: "https://testnet-api.algonode.cloud",
+      indexerUrl: "https://testnet-idx.algonode.cloud",
     });
+  });
+
+  it("maps a CAIP-2 id back to its network name and refuses anything else", () => {
+    expect(networkNameOf(seloNetworks["algorand-mainnet"].caip2)).toBe("algorand-mainnet");
+    expect(networkNameOf(seloNetworks["algorand-testnet"].caip2)).toBe("algorand-testnet");
+    expect(networkNameOf("algorand-testnet")).toBeNull();
+    expect(networkNameOf("eip155:8453")).toBeNull();
   });
 });
