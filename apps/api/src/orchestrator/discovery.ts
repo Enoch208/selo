@@ -62,7 +62,10 @@ export async function runDiscovery(
   await scenario.advance("POLICY_CHECKED");
   await scenario.advance("REQUESTING");
   await scenario.attempt();
-  const lookup = await lookupBefore(ctx.deps.catalog.find(ctx.target.href, ctx.method), ctx.signal);
+  const lookup = await lookupBefore(
+    ctx.deps.catalog.find(ctx.target.href, ctx.method, requirement.payTo),
+    ctx.signal,
+  );
   const { info, resource } = live(handshake.decoded);
   const result = evaluateDiscovery({
     target: { url: ctx.target.href, method: ctx.method },

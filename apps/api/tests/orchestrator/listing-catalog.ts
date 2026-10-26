@@ -11,7 +11,11 @@ import {
 export type CatalogMode = "listed_after_settle" | "unavailable" | "throws";
 
 export class ListingCatalog implements CatalogClient {
-  readonly lookups: { readonly resourceUrl: string; readonly method: HttpMethod }[] = [];
+  readonly lookups: {
+    readonly resourceUrl: string;
+    readonly method: HttpMethod;
+    readonly payTo: string;
+  }[] = [];
   mode: CatalogMode = "listed_after_settle";
 
   private readonly seller: StockSeller;
@@ -46,8 +50,8 @@ export class ListingCatalog implements CatalogClient {
     };
   }
 
-  find(resourceUrl: string, method: HttpMethod): Promise<CatalogLookup> {
-    this.lookups.push({ resourceUrl, method });
+  find(resourceUrl: string, method: HttpMethod, payTo: string): Promise<CatalogLookup> {
+    this.lookups.push({ resourceUrl, method, payTo });
     if (this.mode === "throws") {
       return Promise.reject(new Error("catalog client broke its contract"));
     }
@@ -55,7 +59,10 @@ export class ListingCatalog implements CatalogClient {
       return Promise.resolve({ kind: "unavailable", message: "discovery answered HTTP 503" });
     }
     const listed =
-      this.seller.facilitator.settled.length > 0 && resourceUrl === targetUrl && method === "GET";
+      this.seller.facilitator.settled.length > 0 &&
+      resourceUrl === targetUrl &&
+      method === "GET" &&
+      payTo === targetPayTo;
     return Promise.resolve(
       listed ? { kind: "found", record: this.record() } : { kind: "not_found" },
     );

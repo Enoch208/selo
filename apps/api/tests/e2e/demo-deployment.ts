@@ -72,8 +72,9 @@ export class DemoDeployment implements CatalogClient {
     };
   };
 
-  async find(resourceUrl: string, method: HttpMethod): Promise<CatalogLookup> {
-    if (this.facilitator.settled.length === 0 || resourceUrl !== demoUrl || method !== "POST") {
+  async find(resourceUrl: string, method: HttpMethod, payTo: string): Promise<CatalogLookup> {
+    const listed = this.facilitator.settled.length > 0 && payTo === demoPayTo;
+    if (!listed || resourceUrl !== demoUrl || method !== "POST") {
       return { kind: "not_found" };
     }
     const unpaid = await this.live.request(demoUrl, { method: "POST" });

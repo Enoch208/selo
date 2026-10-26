@@ -86,9 +86,10 @@ async function catalogSnapshot(
   deps: PreflightDeps,
   target: Target,
   input: PreflightInput,
+  payTo: string,
 ): Promise<RecordedJson | null> {
   for (const resourceUrl of new Set([input.targetUrl, target.href])) {
-    const lookup = await deps.catalog.find(resourceUrl, input.method);
+    const lookup = await deps.catalog.find(resourceUrl, input.method, payTo);
     if (lookup.kind === "found") {
       return recorded(lookup.record);
     }
@@ -134,6 +135,6 @@ export async function runPreflight(
   if (!assessment.eligible) {
     return store({ reason: assessment.reason, requirement, challenge, discovery: null });
   }
-  const discovery = await catalogSnapshot(deps, target, input);
+  const discovery = await catalogSnapshot(deps, target, input, assessment.requirement.payTo);
   return store({ reason: null, requirement, challenge, discovery });
 }

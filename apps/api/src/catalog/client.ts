@@ -7,7 +7,7 @@ export type CatalogLookup =
   | { readonly kind: "unavailable"; readonly message: string };
 
 export interface CatalogClient {
-  find(resourceUrl: string, method: HttpMethod): Promise<CatalogLookup>;
+  find(resourceUrl: string, method: HttpMethod, payTo: string): Promise<CatalogLookup>;
 }
 
 export interface CatalogClientOptions {
@@ -17,7 +17,7 @@ export interface CatalogClientOptions {
   readonly now?: () => number;
 }
 
-const pageLimit = 1000;
+const pageLimit = 100;
 const pageTimeoutMs = 10_000;
 const loadTimeoutMs = 20_000;
 const maxPages = 20;
@@ -69,13 +69,20 @@ function raced<T>(pending: Promise<T>, signal: AbortSignal): Promise<T> {
   });
 }
 
+interface PageQuery {
+  readonly fetchPage: typeof fetch;
+  readonly baseUrl: string;
+  readonly payTo: string;
+}
+
 async function readPage(
-  fetchPage: typeof fetch,
-  baseUrl: string,
+  query: PageQuery,
   offset: number,
   load: AbortSignal,
 ): Promise<z.output<typeof envelopeSchema>> {
+  const { fetchPage, baseUrl } = query;
   const url = new URL("/discovery/resources", baseUrl);
+  url.searchParams.set("payTo", query.payTo);
   url.searchParams.set("limit", String(pageLimit));
   url.searchParams.set("offset", String(offset));
   const signal = AbortSignal.any([AbortSignal.timeout(pageTimeoutMs), load]);
@@ -96,15 +103,11 @@ async function readPage(
   return envelope.data;
 }
 
-async function readPages(
-  fetchPage: typeof fetch,
-  baseUrl: string,
-  load: AbortSignal,
-): Promise<readonly unknown[]> {
+async function readPages(query: PageQuery, load: AbortSignal): Promise<readonly unknown[]> {
   const items: unknown[] = [];
   let offset = 0;
   for (let pages = 0; pages < maxPages; pages += 1) {
-    const page = await raced(readPage(fetchPage, baseUrl, offset, load), load);
+    const page = await raced(readPage(query, offset, load), load);
     items.push(...page.items);
     offset += page.items.length;
     if (page.items.length === 0 || offset >= page.pagination.total) {
@@ -114,10 +117,10 @@ async function readPages(
   throw new CatalogUnavailable(`discovery list exceeded ${String(maxPages)} pages`);
 }
 
-async function readAll(fetchPage: typeof fetch, baseUrl: string): Promise<readonly unknown[]> {
+async function readAll(query: PageQuery): Promise<readonly unknown[]> {
   const deadline = deadlineAfter(loadTimeoutMs);
   try {
-    return await readPages(fetchPage, baseUrl, deadline.signal);
+    return await readPages(query, deadline.signal);
   } finally {
     deadline.clear();
   }
@@ -132,28 +135,32 @@ export function createCatalogClient(options: CatalogClientOptions): CatalogClien
   const fetchPage = options.fetch ?? fetch;
   const ttlMs = options.ttlMs ?? 60_000;
   const now = options.now ?? Date.now;
-  let cached: { readonly at: number; readonly items: Promise<readonly unknown[]> } | null = null;
+  const cached = new Map<
+    string,
+    { readonly at: number; readonly items: Promise<readonly unknown[]> }
+  >();
 
-  function items(): Promise<readonly unknown[]> {
+  function items(payTo: string): Promise<readonly unknown[]> {
     const at = now();
-    if (cached !== null && at - cached.at < ttlMs) {
-      return cached.items;
+    const hit = cached.get(payTo);
+    if (hit !== undefined && at - hit.at < ttlMs) {
+      return hit.items;
     }
-    const loading = readAll(fetchPage, options.baseUrl);
+    const loading = readAll({ fetchPage, baseUrl: options.baseUrl, payTo });
     const entry = { at, items: loading };
-    cached = entry;
+    cached.set(payTo, entry);
     loading.catch(() => {
-      if (cached === entry) {
-        cached = null;
+      if (cached.get(payTo) === entry) {
+        cached.delete(payTo);
       }
     });
     return loading;
   }
 
   return {
-    async find(resourceUrl, method) {
+    async find(resourceUrl, method, payTo) {
       try {
-        const record = (await items()).find((item) => matches(item, resourceUrl, method));
+        const record = (await items(payTo)).find((item) => matches(item, resourceUrl, method));
         return record === undefined ? { kind: "not_found" } : { kind: "found", record };
       } catch (error: unknown) {
         return { kind: "unavailable", message: messageOf(error) };

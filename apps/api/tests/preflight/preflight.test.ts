@@ -120,7 +120,9 @@ describe("POST /v1/preflight catalog snapshot", () => {
     catalog.answer = { kind: "found", record };
     const authorizationId = await seedAuthorization();
     await preflight({ authorizationId, targetUrl, method: "GET" });
-    expect(catalog.lookups).toEqual([{ resourceUrl: targetUrl, method: "GET" }]);
+    expect(catalog.lookups).toEqual([
+      { resourceUrl: targetUrl, method: "GET", payTo: targetPayTo },
+    ]);
     expect(await onlyRow()).toMatchObject({
       discoveryJson: record,
       discoveryHash: sha256(canonicalJson(record)),
@@ -143,7 +145,9 @@ describe("POST /v1/preflight catalog snapshot", () => {
     const authorizationId = await seedAuthorization({ routePath: "/" });
     const reply = await preflight({ authorizationId, targetUrl: bareOrigin, method: "GET" });
     expect(reply.status).toBe(201);
-    expect(catalog.lookups).toEqual([{ resourceUrl: bareOrigin, method: "GET" }]);
+    expect(catalog.lookups).toEqual([
+      { resourceUrl: bareOrigin, method: "GET", payTo: targetPayTo },
+    ]);
     expect(await onlyRow()).toMatchObject({ targetUrl: `${bareOrigin}/`, discoveryJson: record });
   });
 

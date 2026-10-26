@@ -109,12 +109,16 @@ export class FakeTarget {
 }
 
 export class FakeCatalog implements CatalogClient {
-  readonly lookups: { readonly resourceUrl: string; readonly method: HttpMethod }[] = [];
+  readonly lookups: {
+    readonly resourceUrl: string;
+    readonly method: HttpMethod;
+    readonly payTo: string;
+  }[] = [];
   answer: CatalogLookup = { kind: "not_found" };
   listedUrl: string | null = null;
 
-  find(resourceUrl: string, method: HttpMethod): Promise<CatalogLookup> {
-    this.lookups.push({ resourceUrl, method });
+  find(resourceUrl: string, method: HttpMethod, payTo: string): Promise<CatalogLookup> {
+    this.lookups.push({ resourceUrl, method, payTo });
     const listed = this.listedUrl === null || this.listedUrl === resourceUrl;
     return Promise.resolve(listed ? this.answer : { kind: "not_found" });
   }
