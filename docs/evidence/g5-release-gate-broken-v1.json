@@ -1,0 +1,58 @@
+{
+  "schema": "selo.gate.v1",
+  "release": {
+    "id": "broken-v1",
+    "verification": "asserted_by_client"
+  },
+  "target": {
+    "url": "https://demo.useselo.xyz/v1/orders",
+    "method": "POST"
+  },
+  "network": "algorand-mainnet",
+  "gate": "BLOCK",
+  "exitCode": 1,
+  "reason": "FAIL: response_contract",
+  "verdict": "FAIL",
+  "inconclusiveReason": null,
+  "checks": [
+    {
+      "id": "handshake",
+      "status": "PASS",
+      "code": "HANDSHAKE_VALID",
+      "summary": "Target issued a valid x402 v2 challenge with a supported requirement for network algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8= and asset 31566704."
+    },
+    {
+      "id": "paid_delivery",
+      "status": "PASS",
+      "code": "PAID_AND_DELIVERED",
+      "summary": "Downstream payment settled and target returned 200 with transaction RZR6XUIA3GTHW6ABAHUIXRDCNYYXIHQVQYGN2T5PAMDO37DDDOLQ."
+    },
+    {
+      "id": "response_contract",
+      "status": "FAIL",
+      "code": "SCHEMA_MISMATCH",
+      "summary": "Response body did not match the expected schema: must have required property 'receiptId'"
+    },
+    {
+      "id": "discovery_contract",
+      "status": "INCONCLUSIVE",
+      "code": "CATALOG_UNAVAILABLE",
+      "summary": "The Bazaar catalog could not be reached to cross-check this resource."
+    },
+    {
+      "id": "retry_safety",
+      "status": "PASS",
+      "code": "PASS_REPLAY_REJECTED",
+      "summary": "Replaying the identical signed payment header was rejected with status 402."
+    }
+  ],
+  "warnings": [],
+  "money": {
+    "seloInboundTxId": "SVGTX3U6XQLSGJP7L7X7KNPSDLWFBSA3JK7AFNHPWENIWP4YVIEQ",
+    "downstreamTxIds": ["RZR6XUIA3GTHW6ABAHUIXRDCNYYXIHQVQYGN2T5PAMDO37DDDOLQ"],
+    "downstreamSpendUsdc": "0.01"
+  },
+  "jobId": "job_189NZ481HFH77CRGF60AEF22RG",
+  "report": "https://api.useselo.xyz/v1/reports/<private>",
+  "decidedAt": "2026-10-26T09:43:11.344Z"
+}

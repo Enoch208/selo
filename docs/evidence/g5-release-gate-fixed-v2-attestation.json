@@ -1,0 +1,120 @@
+{
+  "payload": {
+    "schemaVersion": "selo.release.v1",
+    "issuer": "https://api.useselo.xyz",
+    "jobId": "job_51AZ2WJZ78RF1WZC316Q1K38GG",
+    "testedTarget": {
+      "url": "https://demo.useselo.xyz/v1/orders",
+      "method": "POST"
+    },
+    "deployment": {
+      "id": "fixed-v2",
+      "verification": "asserted_by_client"
+    },
+    "testedAt": "2026-10-26T10:24:02.883Z",
+    "completedAt": "2026-10-26T10:24:12.218Z",
+    "seloVersion": "71080ad",
+    "verdict": "PASS",
+    "inconclusiveReason": null,
+    "checks": [
+      {
+        "id": "handshake",
+        "status": "PASS",
+        "code": "HANDSHAKE_VALID",
+        "blocking": true,
+        "evidence": ["evd_B23GQN052SFAET2QME89MVYX5G"]
+      },
+      {
+        "id": "paid_delivery",
+        "status": "PASS",
+        "code": "PAID_AND_DELIVERED",
+        "blocking": true,
+        "evidence": ["evd_6K2ASNC2G3JG43Q0XE0MSXJATM", "evd_PYNAQNMTD7KQJSJ0ZM6D618AK4"]
+      },
+      {
+        "id": "response_contract",
+        "status": "PASS",
+        "code": "CONTRACT_MATCHED",
+        "blocking": true,
+        "evidence": ["evd_6K2ASNC2G3JG43Q0XE0MSXJATM", "evd_EKR9NXGB5HRGPQ4ZBN3WM914FW"]
+      },
+      {
+        "id": "discovery_contract",
+        "status": "PASS",
+        "code": "DISCOVERY_CONSISTENT",
+        "blocking": true,
+        "evidence": ["evd_TE2XZJB33D4CXHV2EMW84SS6BG"]
+      },
+      {
+        "id": "retry_safety",
+        "status": "PASS",
+        "code": "PASS_REPLAY_REJECTED",
+        "blocking": true,
+        "evidence": ["evd_7ZVACZFH5PNMZAQ5T82YZN7Z9R"]
+      }
+    ],
+    "expectedContractSha256": "6e5b149b1088d214be6a1c097e2e06bf1127fe529c544731023abea7b03e7170",
+    "targetChallengeSha256": "39793a689d67cb18a7a59fca4a2d6211575e577bc2496accee3c93bd0ca2e7cc",
+    "payments": {
+      "network": "algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
+      "asset": "31566704",
+      "inboundTxId": "EPBEZR22SZ5LYKFM7UJYCSFG5IWNA6QYZ6XHUA6KGTTDDQQ5UIJA",
+      "inboundAmountUsdc": "1.00",
+      "downstream": [
+        {
+          "status": "SETTLED",
+          "amountUsdc": "0.01",
+          "txId": "QEUF5D33T4YHYP3KKIY2PGCYF55XXSUYKS5GXFBAVAZ4IEZOE3ZQ"
+        }
+      ]
+    },
+    "evidenceSha256": "49d787f15e7001a408f495aa59f4b16214dca58838e9e99ddd4790f6d6565a96",
+    "evidence": [
+      {
+        "id": "evd_6K2ASNC2G3JG43Q0XE0MSXJATM",
+        "kind": "paid_response",
+        "sha256": "7815cd18d10df182be8f325d6d7a3b67800060da3efeff5c9c01fd409794398b"
+      },
+      {
+        "id": "evd_7ZVACZFH5PNMZAQ5T82YZN7Z9R",
+        "kind": "replay_response",
+        "sha256": "a72223caf72ed2bd2d24114062b7cb15655f0d0e9c8cd4442a3bac9e791cae85"
+      },
+      {
+        "id": "evd_B23GQN052SFAET2QME89MVYX5G",
+        "kind": "target_challenge",
+        "sha256": "39793a689d67cb18a7a59fca4a2d6211575e577bc2496accee3c93bd0ca2e7cc"
+      },
+      {
+        "id": "evd_EKR9NXGB5HRGPQ4ZBN3WM914FW",
+        "kind": "response_contract",
+        "sha256": "f3f8cef64a663df7d7c192ff542878b6653df048b227305e50457bab0fab4bd0"
+      },
+      {
+        "id": "evd_MVWEZKMTNT45MWX6RDA8G6HRQ0",
+        "kind": "authorization_snapshot",
+        "sha256": "207c2d476ea56e68e5bb88fa34ac5a943912be83251088a30f93f99c515626da"
+      },
+      {
+        "id": "evd_PYNAQNMTD7KQJSJ0ZM6D618AK4",
+        "kind": "downstream_payment",
+        "sha256": "cca974ffefb3a23f9528745f1c205e58fc5687e8ef18a0bab527f110fedf609e"
+      },
+      {
+        "id": "evd_SXXV98XNSNVMPPPF7R7YR2RSC8",
+        "kind": "authorization_snapshot",
+        "sha256": "208afc651b36a13f9b93c2decb89cc70558559c709d67ca83606ae65bb2f54e1"
+      },
+      {
+        "id": "evd_TE2XZJB33D4CXHV2EMW84SS6BG",
+        "kind": "catalog_record",
+        "sha256": "4503636c21768df0807c0dfd88ba1813a9f2fdf9629bdf59fce723ed21e25712"
+      }
+    ]
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "keyId": "selo-ed25519-728fcf85650b128f",
+    "value": "E3lC29kTmj4Ts8SVoEDFabdAGGAO7ZZs4n9p2P7HUWGePMfi4aO75xQ-v7cynT1T4nT6mB2iQZYAzXe2YIbeBg"
+  }
+}

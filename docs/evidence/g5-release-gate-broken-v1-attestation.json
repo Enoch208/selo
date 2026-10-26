@@ -1,0 +1,120 @@
+{
+  "payload": {
+    "schemaVersion": "selo.release.v1",
+    "issuer": "https://api.useselo.xyz",
+    "jobId": "job_189NZ481HFH77CRGF60AEF22RG",
+    "testedTarget": {
+      "url": "https://demo.useselo.xyz/v1/orders",
+      "method": "POST"
+    },
+    "deployment": {
+      "id": "broken-v1",
+      "verification": "asserted_by_client"
+    },
+    "testedAt": "2026-10-26T09:43:01.922Z",
+    "completedAt": "2026-10-26T09:43:09.258Z",
+    "seloVersion": "b769634",
+    "verdict": "FAIL",
+    "inconclusiveReason": null,
+    "checks": [
+      {
+        "id": "handshake",
+        "status": "PASS",
+        "code": "HANDSHAKE_VALID",
+        "blocking": true,
+        "evidence": ["evd_Z9C3SD9CX9WNS38JFYYGT9K60R"]
+      },
+      {
+        "id": "paid_delivery",
+        "status": "PASS",
+        "code": "PAID_AND_DELIVERED",
+        "blocking": true,
+        "evidence": ["evd_C3YHMHPAX7S53BNXWHAG5H2MA4", "evd_4J9CPWEE2MZGT9CFWNYY6WR4VR"]
+      },
+      {
+        "id": "response_contract",
+        "status": "FAIL",
+        "code": "SCHEMA_MISMATCH",
+        "blocking": true,
+        "evidence": ["evd_C3YHMHPAX7S53BNXWHAG5H2MA4", "evd_SM1RPAAJH2ZZNMTA11SJK431ZW"]
+      },
+      {
+        "id": "discovery_contract",
+        "status": "INCONCLUSIVE",
+        "code": "CATALOG_UNAVAILABLE",
+        "blocking": true,
+        "evidence": ["evd_EJ2B9QAS9RHK6T58EW5ZZKNDMM"]
+      },
+      {
+        "id": "retry_safety",
+        "status": "PASS",
+        "code": "PASS_REPLAY_REJECTED",
+        "blocking": true,
+        "evidence": ["evd_WVP86FB9SGXNYYK5FGVMD6V1RG"]
+      }
+    ],
+    "expectedContractSha256": "6e5b149b1088d214be6a1c097e2e06bf1127fe529c544731023abea7b03e7170",
+    "targetChallengeSha256": "5efad9f413c7fd81a8b533887b9f28788322628ea7876796a6bd2b6a16c7fdcc",
+    "payments": {
+      "network": "algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
+      "asset": "31566704",
+      "inboundTxId": "SVGTX3U6XQLSGJP7L7X7KNPSDLWFBSA3JK7AFNHPWENIWP4YVIEQ",
+      "inboundAmountUsdc": "1.00",
+      "downstream": [
+        {
+          "status": "SETTLED",
+          "amountUsdc": "0.01",
+          "txId": "RZR6XUIA3GTHW6ABAHUIXRDCNYYXIHQVQYGN2T5PAMDO37DDDOLQ"
+        }
+      ]
+    },
+    "evidenceSha256": "c2a9b8746f89dd557865ad4bd6bc79e9fafdf891c3763eef246aa51fb8a52c83",
+    "evidence": [
+      {
+        "id": "evd_4J9CPWEE2MZGT9CFWNYY6WR4VR",
+        "kind": "downstream_payment",
+        "sha256": "cc6e48537139f26d0e3d2d4cadf666ce89ffc07a0c4830c116e38afb2945f458"
+      },
+      {
+        "id": "evd_8HCAE38TGE111B2BXFEY0QMKRW",
+        "kind": "authorization_snapshot",
+        "sha256": "02baba31af9c657ac17906f6c6aee56f2a7c25905b42a7cf34f5463d0b08c95d"
+      },
+      {
+        "id": "evd_C3YHMHPAX7S53BNXWHAG5H2MA4",
+        "kind": "paid_response",
+        "sha256": "e67b250cbb92954c1e098307b6709dbe474e25d9743344233414950f6187a6f7"
+      },
+      {
+        "id": "evd_EJ2B9QAS9RHK6T58EW5ZZKNDMM",
+        "kind": "catalog_record",
+        "sha256": "77ae5d181bdd2002b067f10f2aae0fc5b0562b39ed1036770fc9c982b37d4b2f"
+      },
+      {
+        "id": "evd_MC9R0VM5PTZDZJ62NQNFDBE8CW",
+        "kind": "authorization_snapshot",
+        "sha256": "f277c070af27ed5c8642b95d9c354e70613ad12fbb9f4426656c66f4fb36bcb7"
+      },
+      {
+        "id": "evd_SM1RPAAJH2ZZNMTA11SJK431ZW",
+        "kind": "response_contract",
+        "sha256": "5df97c8b2371600b267d2cc3600ea49964a64e0145f9a3bda4ffb36b5750b89c"
+      },
+      {
+        "id": "evd_WVP86FB9SGXNYYK5FGVMD6V1RG",
+        "kind": "replay_response",
+        "sha256": "f1ff2bceb92be880f056ca6225fecd177ceee10560d8a74762615defeb00ff22"
+      },
+      {
+        "id": "evd_Z9C3SD9CX9WNS38JFYYGT9K60R",
+        "kind": "target_challenge",
+        "sha256": "5efad9f413c7fd81a8b533887b9f28788322628ea7876796a6bd2b6a16c7fdcc"
+      }
+    ]
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "keyId": "selo-ed25519-728fcf85650b128f",
+    "value": "R78F8R3mz7TntBJwiKb7M6Lq4BmBmOYJEWKFRrOqjDqwFCOTrr-11n2d4VHrGqTYMq-HcXd2X0skuR4uyaDpBg"
+  }
+}

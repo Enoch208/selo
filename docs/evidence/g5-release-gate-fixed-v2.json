@@ -1,0 +1,58 @@
+{
+  "schema": "selo.gate.v1",
+  "release": {
+    "id": "fixed-v2",
+    "verification": "asserted_by_client"
+  },
+  "target": {
+    "url": "https://demo.useselo.xyz/v1/orders",
+    "method": "POST"
+  },
+  "network": "algorand-mainnet",
+  "gate": "ALLOW",
+  "exitCode": 0,
+  "reason": "PASS on every release check",
+  "verdict": "PASS",
+  "inconclusiveReason": null,
+  "checks": [
+    {
+      "id": "handshake",
+      "status": "PASS",
+      "code": "HANDSHAKE_VALID",
+      "summary": "Target issued a valid x402 v2 challenge with a supported requirement for network algorand:wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8= and asset 31566704."
+    },
+    {
+      "id": "paid_delivery",
+      "status": "PASS",
+      "code": "PAID_AND_DELIVERED",
+      "summary": "Downstream payment settled and target returned 200 with transaction QEUF5D33T4YHYP3KKIY2PGCYF55XXSUYKS5GXFBAVAZ4IEZOE3ZQ."
+    },
+    {
+      "id": "response_contract",
+      "status": "PASS",
+      "code": "CONTRACT_MATCHED",
+      "summary": "Observed response matched the expected status 200 and content type application/json."
+    },
+    {
+      "id": "discovery_contract",
+      "status": "PASS",
+      "code": "DISCOVERY_CONSISTENT",
+      "summary": "Live challenge and catalog record agree on method, URL, payment terms and carry usable metadata."
+    },
+    {
+      "id": "retry_safety",
+      "status": "PASS",
+      "code": "PASS_REPLAY_REJECTED",
+      "summary": "Replaying the identical signed payment header was rejected with status 402."
+    }
+  ],
+  "warnings": [],
+  "money": {
+    "seloInboundTxId": "EPBEZR22SZ5LYKFM7UJYCSFG5IWNA6QYZ6XHUA6KGTTDDQQ5UIJA",
+    "downstreamTxIds": ["QEUF5D33T4YHYP3KKIY2PGCYF55XXSUYKS5GXFBAVAZ4IEZOE3ZQ"],
+    "downstreamSpendUsdc": "0.01"
+  },
+  "jobId": "job_51AZ2WJZ78RF1WZC316Q1K38GG",
+  "report": "https://api.useselo.xyz/v1/reports/<private>",
+  "decidedAt": "2026-10-26T10:24:14.275Z"
+}
