@@ -16,3 +16,4 @@ apps/api/reports/
 .env
 .env.*
 !.env.example
+.selo/
