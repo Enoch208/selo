@@ -19,6 +19,9 @@ https://github.com/user-attachments/assets/5802f7bb-216f-4f4b-847f-d922918382b7
   [65454635](https://allo.info/tx/JXU2INATXUJHE7WZGGWN25BPM6L2YEL6Q7LU5W3HICI4B5CX4JAQ), then paid
   the target in round [65454637](https://allo.info/tx/ATF5HLYBBY4G5GYPNLCUMC5FXH22WIXI2QG3YP7M4WYPA5EHQTYQ)
 - **Claims ledger:** [`docs/CLAIMS.md`](docs/CLAIMS.md), every public claim with its evidence
+- **Release gate:** [`selo` CLI](packages/cli/README.md) · [GitHub Action](examples/github-actions/README.md) ·
+  [demo merchant](examples/merchant/README.md) · [pilot guide](docs/PILOT_GUIDE.md) ·
+  [technical summary](docs/FINAL_TECHNICAL_SUMMARY.md)
 - **Machine-readable:** [`/llms.txt`](https://api.useselo.xyz/llms.txt) ·
   [`/.well-known/agent-card.json`](https://api.useselo.xyz/.well-known/agent-card.json)
 
@@ -29,6 +32,7 @@ https://github.com/user-attachments/assets/5802f7bb-216f-4f4b-847f-d922918382b7
 - [The problem](#the-problem)
 - [What Selo does](#what-selo-does)
 - [How it works](#how-it-works)
+- [Gate a release](#gate-a-release)
 - [The paid route](#the-paid-route)
 - [The five checks](#the-five-checks)
 - [The verdict](#the-verdict)
@@ -98,6 +102,44 @@ flowchart LR
 5. **Report.** Selo runs the five checks and returns a verdict with both transaction ids, a private
    report link and a sanitized evidence packet.
 
+## Gate a release
+
+A verdict is only useful if it can stop a deploy. The [`selo` CLI](packages/cli/README.md) runs
+authorization, preflight and the paid test from a terminal or a CI job, and exits with a code a
+pipeline can trust:
+
+```bash
+SELO_PAYER_MNEMONIC="…" pnpm selo test --api https://api.useselo.xyz \
+  --authorization auth_… --url https://staging.example.com/v1/orders --method POST \
+  --body order.json --contract contract.json --release "$GIT_SHA" \
+  --network mainnet --max-usdc 1.00 --approve-mainnet --pay-to <Selo payTo> \
+  --attestation selo-attestation.json
+```
+
+| Exit | Meaning                                                                                            |
+| ---- | -------------------------------------------------------------------------------------------------- |
+| `0`  | PASS on all five checks, each with evidence, with both payment legs in the report                  |
+| `1`  | A release check proved a FAIL                                                                      |
+| `2`  | INCONCLUSIVE, an unconfirmed payment, or a missing or inconsistent report                          |
+| `3`  | Refused before paying: invalid input, no authorization, ineligible preflight, payment not approved |
+
+- **Trusts the checks, not the label.** The CLI recomputes the verdict from the report's own checks
+  with the same pure reducer Selo uses, so a report that merely says PASS cannot open the gate.
+- **Never pays twice on its own.** An unconfirmed attempt is recorded, and further runs refuse to
+  pay until `--resume` re-sends the same preflight and `Idempotency-Key`.
+- **Proof that travels.** Every answer carries an Ed25519 attestation of the verdict, the checks,
+  both transactions and a manifest of the evidence. The keys are published at
+  [`/.well-known/selo-attestation-keys.json`](https://api.useselo.xyz/.well-known/selo-attestation-keys.json).
+  `selo verify` checks an attestation offline and refuses a PASS for any other release, URL or
+  method.
+- **CI integration.** The [GitHub Action](examples/github-actions/README.md) runs the free preflight
+  on every build and the paid test in a protected environment. It promotes only a verified signed
+  PASS for the exact commit.
+
+The [demo merchant](examples/merchant/README.md) shows why this matters. Its broken release is
+healthy and settles its payments, yet its paid receipt breaks the contract. Selo fails it, then
+passes the fix.
+
 ## The paid route
 
 The stock x402 middleware for Hono settles _after_ the handler runs. That order cannot support an
@@ -141,7 +183,7 @@ twice for one logical request.
 | **C1 Handshake**          | The unpaid request returns a valid x402 v2 402 with an Algorand USDC requirement, a valid payTo and a parseable price   | Not 402, a missing or malformed challenge, no supported requirement, an invalid payTo |
 | **C2 Paid delivery**      | Selo's payment settled, the target's settlement id matches the transaction Selo signed, and the paid resource came back | Paid but not delivered; a valid payment rejected by the target                        |
 | **C4 Response contract**  | The expected status, content type and optional JSON Schema all match                                                    | Any mismatch, or a non-JSON body when a schema is expected                            |
-| **C5 Discovery contract** | The live 402 and the Bazaar listing agree on method, URL, payment terms and price                                       | The listing points at the wrong method, URL, payee or price                           |
+| **C5 Discovery contract** | The live 402 and the payee's Bazaar listing agree on method, URL, payment terms and price                               | The payee's listing names another price, asset or network                             |
 | **C3 Retry / replay**     | Replaying the identical signed payment is rejected, or returns the target's stored result without a second settlement   | A replay produces a second paid side effect                                           |
 
 The retry check re-sends the byte-identical payment and body. It records what the target actually
@@ -198,6 +240,19 @@ release job against the same endpoint returned **PASS** on all five checks, incl
 65538170), then paid ORA Gate
 [`S2NOVVRD…`](https://allo.info/tx/S2NOVVRDZUPTY7AA3BZ3NDISYPNXNDMXEKX442SVNR7RXQCP3W7Q). These payments into Selo came from the Selo team's own wallet; they prove the product works end
 to end, not outside demand.
+
+**Release gate, 26 October.** The [demo merchant](examples/merchant/README.md) at
+`https://demo.useselo.xyz/v1/orders` was tested twice through the [`selo` CLI](packages/cli/README.md).
+Its health check answered 200 both times.
+
+| Release     | Verdict and gate                                                     | Selo was paid                                                                                            | Selo paid the merchant                                                                                   |
+| ----------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `broken-v1` | **FAIL** on `response_contract` (`SCHEMA_MISMATCH`); exit 1, blocked | [`SVGTX3U6…`](https://allo.info/tx/SVGTX3U6XQLSGJP7L7X7KNPSDLWFBSA3JK7AFNHPWENIWP4YVIEQ), round 66348324 | [`RZR6XUIA…`](https://allo.info/tx/RZR6XUIA3GTHW6ABAHUIXRDCNYYXIHQVQYGN2T5PAMDO37DDDOLQ), round 66348326 |
+| `fixed-v2`  | **PASS** on all five checks; exit 0, allowed                         | [`EPBEZR22…`](https://allo.info/tx/EPBEZR22SZ5LYKFM7UJYCSFG5IWNA6QYZ6XHUA6KGTTDDQQ5UIJA), round 66349222 | [`QEUF5D33…`](https://allo.info/tx/QEUF5D33T4YHYP3KKIY2PGCYF55XXSUYKS5GXFBAVAZ4IEZOE3ZQ), round 66349225 |
+
+Both verdicts are signed: `pnpm selo verify` checks them offline against
+[`docs/evidence/selo-attestation-keys.json`](docs/evidence/selo-attestation-keys.json). The full
+walkthrough is in the [demo runbook](docs/FINAL_DEMO_RUNBOOK.md).
 
 The two payments sit two rounds apart, in order, on a public explorer. Selo is listed in the
 Bazaar catalog and has a row on the `x402-global-challenge` leaderboard. Evidence for every step is
@@ -299,6 +354,7 @@ Money is integer micro-USDC everywhere. The full schema is in
 | `POST /v1/preflight`                                 | no            | Check a target is testable and within budget before paying |
 | `POST /v1/release-test`                              | **1.00 USDC** | Run the release test                                       |
 | `GET /v1/reports/:token`                             | no            | Private report                                             |
+| `GET /.well-known/selo-attestation-keys.json`        | no            | Public keys that verify Selo's signed attestations         |
 | `GET /llms.txt` · `GET /.well-known/agent-card.json` | no            | Machine-readable description                               |
 
 ## Tech stack
@@ -360,19 +416,22 @@ Acceptance tests carry their ID in the title, so `pnpm test -t A16` runs one.
 
 ## Project layout
 
-| Path                                  | What lives there                                                                                     |
-| ------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `packages/core/src/`                  | The pure engine: contract, money, state machines, verdict, spend policy, SSRF rules, the five checks |
-| `apps/api/src/release/`               | The paid route: validate, 402, verify, claim, settle, record, run                                    |
-| `apps/api/src/payments/`              | The inbound gate and the downstream x402 client                                                      |
-| `apps/api/src/orchestrator/`          | The release runner, its recovery paths and the restart sweep                                         |
-| `apps/api/src/ledger/`                | Conditional reservations and payment transitions                                                     |
-| `apps/api/src/net/`                   | The SSRF-safe fetch                                                                                  |
-| `apps/api/src/evidence/` · `reports/` | Sanitized evidence, the report and the private report route                                          |
-| `apps/api/src/tools/`                 | Operator commands                                                                                    |
-| `apps/web/`                           | The site: landing, the test flow and report pages                                                    |
-| `docs/`                               | The claims ledger and the evidence artifacts                                                         |
-| `eslint-rules/`                       | A local lint rule that keeps the codebase free of comments                                           |
+| Path                                                         | What lives there                                                                                     |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `packages/core/src/`                                         | The pure engine: contract, money, state machines, verdict, spend policy, SSRF rules, the five checks |
+| `apps/api/src/release/`                                      | The paid route: validate, 402, verify, claim, settle, record, run                                    |
+| `apps/api/src/payments/`                                     | The inbound gate and the downstream x402 client                                                      |
+| `apps/api/src/orchestrator/`                                 | The release runner, its recovery paths and the restart sweep                                         |
+| `apps/api/src/ledger/`                                       | Conditional reservations and payment transitions                                                     |
+| `apps/api/src/net/`                                          | The SSRF-safe fetch                                                                                  |
+| `apps/api/src/evidence/` · `reports/`                        | Sanitized evidence, the report and the private report route                                          |
+| `apps/api/src/tools/`                                        | Operator commands                                                                                    |
+| `apps/web/`                                                  | The site: landing, the test flow and report pages                                                    |
+| `packages/cli/`                                              | The `selo` CLI: authorization, preflight, the paid gate and offline attestation checks               |
+| `examples/merchant/`                                         | The demo merchant with a broken and a fixed release                                                  |
+| `examples/github-actions/` · `.github/actions/release-gate/` | The release gate for GitHub Actions and a complete example workflow                                  |
+| `docs/`                                                      | The claims ledger and the evidence artifacts                                                         |
+| `eslint-rules/`                                              | A local lint rule that keeps the codebase free of comments                                           |
 
 ## Known limitations
 
@@ -386,5 +445,9 @@ Acceptance tests carry their ID in the title, so `pnpm test -t A16` runs one.
   team has paid for a test yet: every payment into Selo so far came from wallets controlled by the
   Selo team.
 - **One profile.** `quick`, GET and POST targets, Algorand USDC only.
+- **Discovery is checked per payee.** Selo looks a target up among the Bazaar listings of the payee
+  in its live 402. A listing that names a different payee for the same URL reads as not catalogued.
+- **The release id is the caller's word.** An attestation records it as `asserted_by_client`; Selo
+  does not verify which build is deployed.
 - **A release test is a single request.** It waits for settlement and the downstream call, so
   clients and proxies need generous timeouts.
