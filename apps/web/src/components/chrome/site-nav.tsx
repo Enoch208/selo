@@ -4,6 +4,7 @@ import { SpinBorderLink } from "../ui/spin-border-link";
 import { Wordmark } from "./wordmark";
 
 const sections = [
+  { label: "Release gate", href: "/#release-gate" },
   { label: "How it works", href: "/#how-it-works" },
   { label: "Checks", href: "/#checks" },
   { label: "Proof", href: "/#proof" },

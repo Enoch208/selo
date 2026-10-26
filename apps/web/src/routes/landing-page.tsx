@@ -3,6 +3,7 @@ import { TestCta } from "../components/landing/cta/test-cta";
 import { Hero } from "../components/landing/hero/hero";
 import { HowItWorks } from "../components/landing/how-it-works/how-it-works";
 import { Proof } from "../components/landing/proof/proof";
+import { ReleaseGate } from "../components/landing/release-gate/release-gate";
 import { useDocumentTitle } from "../lib/use-document-title";
 import { useLandingMotion } from "../lib/use-landing-motion";
 
@@ -12,6 +13,7 @@ export function LandingPage() {
   return (
     <>
       <Hero />
+      <ReleaseGate />
       <HowItWorks />
       <Checks />
       <Proof />

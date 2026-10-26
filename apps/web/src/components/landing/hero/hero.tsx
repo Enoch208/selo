@@ -12,12 +12,19 @@ export function Hero() {
     >
       <HeroCurtain />
       <div className="relative z-10 mx-auto my-24 max-w-5xl px-6 text-center">
-        <div className="enter edge edge-pill group mb-10 inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-white/10 to-white/0 px-3 py-1.5 backdrop-blur-xs transition-transform [animation-delay:0.8s] hover:scale-105">
+        <a
+          href="#release-gate"
+          className="enter edge edge-pill group mb-10 inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-white/10 to-white/0 px-3 py-1.5 backdrop-blur-xs transition-transform [animation-delay:0.8s] hover:scale-105"
+        >
           <span className="flex size-1.5 rounded-full bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:animate-pulse" />
           <span className="font-sans text-xs font-medium tracking-wide text-orange-100/80 transition-colors group-hover:text-white">
-            Live on Algorand Mainnet
+            New: the release gate · Live on Algorand Mainnet
           </span>
-        </div>
+          <ArrowRight
+            aria-hidden="true"
+            className="size-3 text-orange-200/70 transition-transform group-hover:translate-x-0.5"
+          />
+        </a>
         <HeroHeadline />
         <p className="enter mx-auto mb-12 max-w-3xl font-manrope text-xl font-medium leading-relaxed tracking-normal text-gray-400 [animation-delay:1.2s] md:text-2xl">
           Selo makes a controlled real payment against your authorized x402 endpoint and returns an
