@@ -79,7 +79,9 @@ pnpm selo verify --attestation fixed-v2-attestation.json --keys docs/evidence/se
 **7. Gate the deployment in GitHub Actions.** Run **Actions → Release gate demo → Run workflow**
 twice, once with `broken-v1` and once with `fixed-v2`. The workflow verifies the committed signed
 attestation against the pinned key: `broken-v1` fails the gate and skips promotion, and
-`fixed-v2` passes and promotes.
+`fixed-v2` passes and promotes. Recorded on 26 October 2026:
+[broken-v1, gate failed and promotion skipped](https://github.com/Enoch208/selo/actions/runs/40308497965) ·
+[fixed-v2, gate passed and promotion ran](https://github.com/Enoch208/selo/actions/runs/40308508699).
 
 ## The recorded Mainnet run (26 October 2026)
 
