@@ -5,6 +5,7 @@ import { z } from "zod";
 export interface ExpectedTxId {
   readonly expectedTxId: string | null;
   readonly expectedTxIdUnavailable: boolean;
+  readonly lastValidRound: number | null;
 }
 
 const avmPaymentGroup = z.object({
@@ -12,14 +13,29 @@ const avmPaymentGroup = z.object({
   paymentIndex: z.number().int().nonnegative(),
 });
 
-const unavailable: ExpectedTxId = { expectedTxId: null, expectedTxIdUnavailable: true };
+const unavailable: ExpectedTxId = {
+  expectedTxId: null,
+  expectedTxIdUnavailable: true,
+  lastValidRound: null,
+};
 
-function signedTxIdOf(entry: string): string | null {
+interface SignedTransfer {
+  readonly txId: string;
+  readonly lastValid: bigint;
+}
+
+function signedTransferOf(entry: string): SignedTransfer | null {
   try {
-    return algosdk.decodeSignedTransaction(Buffer.from(entry, "base64")).txn.txID();
+    const { txn } = algosdk.decodeSignedTransaction(Buffer.from(entry, "base64"));
+    return { txId: txn.txID(), lastValid: txn.lastValid };
   } catch {
     return null;
   }
+}
+
+function roundOf(round: bigint): number | null {
+  const value = Number(round);
+  return Number.isSafeInteger(value) && value > 0 ? value : null;
 }
 
 export function expectedTxIdOf(payload: PaymentPayload): ExpectedTxId {
@@ -28,6 +44,13 @@ export function expectedTxIdOf(payload: PaymentPayload): ExpectedTxId {
     return unavailable;
   }
   const entry = group.data.paymentGroup[group.data.paymentIndex];
-  const txId = entry === undefined ? null : signedTxIdOf(entry);
-  return txId === null ? unavailable : { expectedTxId: txId, expectedTxIdUnavailable: false };
+  const transfer = entry === undefined ? null : signedTransferOf(entry);
+  if (transfer === null) {
+    return unavailable;
+  }
+  return {
+    expectedTxId: transfer.txId,
+    expectedTxIdUnavailable: false,
+    lastValidRound: roundOf(transfer.lastValid),
+  };
 }

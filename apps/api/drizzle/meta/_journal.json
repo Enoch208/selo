@@ -15,6 +15,13 @@
       "when": 1792941705915,
       "tag": "0001_numerous_ted_forrester",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793009546134,
+      "tag": "0002_mean_mac_gargan",
+      "breakpoints": true
     }
   ]
 }

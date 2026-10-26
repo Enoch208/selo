@@ -39,7 +39,7 @@ export async function persistExpectedTxId(
   }
   await ctx.db
     .update(downstreamPayments)
-    .set({ expectedTxId: expected.expectedTxId })
+    .set({ expectedTxId: expected.expectedTxId, lastValidRound: expected.lastValidRound })
     .where(eq(downstreamPayments.id, open.paymentId));
 }
 

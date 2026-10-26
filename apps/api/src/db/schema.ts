@@ -178,6 +178,7 @@ export const downstreamPayments = pgTable(
     payTo: text("pay_to").notNull(),
     txId: text("tx_id"),
     expectedTxId: text("expected_tx_id"),
+    lastValidRound: bigint("last_valid_round", { mode: "number" }),
     paymentRequirementsHash: text("payment_requirements_hash").notNull(),
     status: paymentStatus("status").notNull().default("RESERVED"),
     resolutionReason: text("resolution_reason"),

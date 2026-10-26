@@ -1,0 +1,1 @@
+ALTER TABLE "downstream_payments" ADD COLUMN "last_valid_round" bigint;
