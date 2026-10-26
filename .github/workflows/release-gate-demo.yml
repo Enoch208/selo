@@ -1,0 +1,54 @@
+name: Release gate demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: Demo merchant release to promote
+        required: true
+        type: choice
+        options:
+          - broken-v1
+          - fixed-v2
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-gate-demo-${{ inputs.release }}
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    name: Verify Selo's signed Mainnet verdict
+    runs-on: ubuntu-latest
+    outputs:
+      gate: ${{ steps.selo.outputs.gate }}
+      verdict: ${{ steps.selo.outputs.verdict }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Verify the attestation for this release against Selo's pinned key
+        id: selo
+        uses: ./.github/actions/release-gate
+        with:
+          mode: verify
+          attestation: docs/evidence/g5-release-gate-${{ inputs.release }}-attestation.json
+          keys: docs/evidence/selo-attestation-keys.json
+          release: ${{ inputs.release }}
+          url: https://demo.useselo.xyz/v1/orders
+          method: POST
+
+  promote:
+    name: Promote to production
+    needs: gate
+    if: needs.gate.result == 'success' && needs.gate.outputs.gate == 'ALLOW'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Record the promotion of the release Selo passed
+        env:
+          RELEASE: ${{ inputs.release }}
+          VERDICT: ${{ needs.gate.outputs.verdict }}
+        run: |
+          echo "Selo verdict ${VERDICT} verified for ${RELEASE}; promoting." >> "$GITHUB_STEP_SUMMARY"
+          echo "Promoting ${RELEASE}"
