@@ -143,31 +143,52 @@ const attestationKey = z
     return key;
   });
 
+const operatorMnemonic = z
+  .string({ error: "SELO_OPERATOR_MNEMONIC is required" })
+  .transform((value, ctx) => {
+    const words = value.trim().split(/\s+/);
+    const mnemonic = words.join(" ");
+    const address = words.length === mnemonicWords ? operatingAddressOf(mnemonic) : null;
+    if (address === null || !algosdk.isValidAddress(address)) {
+      ctx.issues.push({
+        code: "custom",
+        input: "[redacted]",
+        message: "SELO_OPERATOR_MNEMONIC must be a 25-word Algorand mnemonic of a valid account",
+      });
+      return z.NEVER;
+    }
+    return { mnemonic, address };
+  });
+
 const operatorEnvSchema = z
   .object({
-    SELO_OPERATOR_MNEMONIC: z.string({ error: "SELO_OPERATOR_MNEMONIC is required" }),
+    SELO_OPERATOR_MNEMONIC: operatorMnemonic,
     REPORT_TOKEN_SECRET: z.string().min(32),
     REPORTS_DIR: z.string().min(1).default("reports"),
     JOB_WALL_CLOCK_MS: z.coerce.number().int().positive().default(60_000),
     SELO_ATTESTATION_KEY: attestationKey,
   })
-  .transform((env, ctx) => {
-    const words = env.SELO_OPERATOR_MNEMONIC.trim().split(/\s+/);
-    const address = words.length === mnemonicWords ? operatingAddressOf(words.join(" ")) : null;
-    if (address === null || !algosdk.isValidAddress(address)) {
-      ctx.issues.push({
-        code: "custom",
-        input: "[redacted]",
-        path: ["SELO_OPERATOR_MNEMONIC"],
-        message: "SELO_OPERATOR_MNEMONIC must be a 25-word Algorand mnemonic of a valid account",
-      });
-      return z.NEVER;
-    }
-    return { ...env, SELO_OPERATOR_MNEMONIC: words.join(" "), operatingAddress: address };
-  });
+  .transform(({ SELO_OPERATOR_MNEMONIC: operator, ...env }) => ({
+    ...env,
+    SELO_OPERATOR_MNEMONIC: operator.mnemonic,
+    operatingAddress: operator.address,
+  }));
 
 export type OperatorEnv = z.infer<typeof operatorEnvSchema>;
 
 export function loadOperatorEnv(source: NodeJS.ProcessEnv): OperatorEnv {
   return operatorEnvSchema.parse(source);
+}
+
+const reconcileEnvSchema = z
+  .object({ DATABASE_URL: databaseUrl, SELO_OPERATOR_MNEMONIC: operatorMnemonic })
+  .transform((env) => ({
+    DATABASE_URL: env.DATABASE_URL,
+    operatingAddress: env.SELO_OPERATOR_MNEMONIC.address,
+  }));
+
+export type ReconcileEnv = z.infer<typeof reconcileEnvSchema>;
+
+export function loadReconcileEnv(source: NodeJS.ProcessEnv): ReconcileEnv {
+  return reconcileEnvSchema.parse(source);
 }

@@ -19,6 +19,7 @@
     "account:new": "tsx src/tools/testnet-account.ts",
     "account:optin": "tsx --env-file-if-exists=.env src/tools/account-optin.ts",
     "account:status": "tsx --env-file-if-exists=.env src/tools/account-status.ts",
+    "reconcile": "tsx --env-file-if-exists=.env src/tools/reconcile.ts",
     "testnet:target": "tsx --env-file-if-exists=.env src/tools/testnet-target/server.ts"
   },
   "devDependencies": {

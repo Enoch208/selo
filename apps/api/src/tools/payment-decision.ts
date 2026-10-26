@@ -1,5 +1,5 @@
 import { formatMicros } from "@selo/core";
-import { seloNetworks, type SeloNetworkName } from "../payments/networks";
+import { networkNameOf, type SeloNetworkName } from "../payments/networks";
 
 export const priceCeilingMicros = 5_000_000;
 
@@ -27,12 +27,6 @@ export interface PaymentDecisionInput {
   readonly maxPriceMicros: number;
   readonly expectedPayTo: string | null;
   readonly seloWallets?: readonly string[];
-}
-
-const names: readonly SeloNetworkName[] = ["algorand-mainnet", "algorand-testnet"];
-
-export function networkNameOf(caip2: string): SeloNetworkName | null {
-  return names.find((name) => seloNetworks[name].caip2 === caip2) ?? null;
 }
 
 const refuse = (reason: RefusalReason, message: string): PaymentDecision => ({

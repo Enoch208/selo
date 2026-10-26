@@ -1,9 +1,8 @@
 import { formatMicros, parseAtomicUnits, parseChallenge, type X402Accept } from "@selo/core";
 import { readChallenge } from "../payments/challenge-io";
-import { seloNetworks } from "../payments/networks";
+import { networkNameOf, seloNetworks } from "../payments/networks";
 import { messageChain } from "../payments/transport";
 import type { ToolFetch } from "./facilitator-client";
-import { networkNameOf } from "./payment-decision";
 
 export const jsonHeaders = { "content-type": "application/json", accept: "application/json" };
 

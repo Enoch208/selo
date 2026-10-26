@@ -12,6 +12,7 @@ export interface SeloNetwork {
   readonly caip2: Network;
   readonly usdcAssetId: string;
   readonly algodUrl: string;
+  readonly indexerUrl: string;
 }
 
 export const seloNetworks: Readonly<Record<SeloNetworkName, SeloNetwork>> = {
@@ -19,10 +20,18 @@ export const seloNetworks: Readonly<Record<SeloNetworkName, SeloNetwork>> = {
     caip2: `algorand:${ALGORAND_MAINNET_GENESIS_HASH}`,
     usdcAssetId: USDC_MAINNET_ASA_ID,
     algodUrl: "https://mainnet-api.algonode.cloud",
+    indexerUrl: "https://mainnet-idx.algonode.cloud",
   },
   "algorand-testnet": {
     caip2: `algorand:${ALGORAND_TESTNET_GENESIS_HASH}`,
     usdcAssetId: USDC_TESTNET_ASA_ID,
     algodUrl: "https://testnet-api.algonode.cloud",
+    indexerUrl: "https://testnet-idx.algonode.cloud",
   },
 };
+
+const names: readonly SeloNetworkName[] = ["algorand-mainnet", "algorand-testnet"];
+
+export function networkNameOf(caip2: string): SeloNetworkName | null {
+  return names.find((name) => seloNetworks[name].caip2 === caip2) ?? null;
+}

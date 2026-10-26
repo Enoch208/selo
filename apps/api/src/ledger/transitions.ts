@@ -129,3 +129,34 @@ export function markDownstreamUnresolved(
     requestedAt: input.requestedAt,
   });
 }
+
+const keepingHeldReason = (reason: string) =>
+  sql`${reason}::text || coalesce('; held because: ' || ${downstreamPayments.resolutionReason}, '')`;
+
+export interface ReconcileSettledInput {
+  readonly txId: string;
+  readonly settledAt: Date;
+  readonly reason: string;
+}
+
+export function reconcileSettledDownstream(
+  db: Db,
+  paymentId: string,
+  input: ReconcileSettledInput,
+): Promise<TransitionResult> {
+  return transitionPayment(db, paymentId, paymentTransitions.reconcileSettled, {
+    txId: input.txId,
+    settledAt: input.settledAt,
+    resolutionReason: keepingHeldReason(input.reason),
+  });
+}
+
+export function reconcileReleasedDownstream(
+  db: Db,
+  paymentId: string,
+  reason: string,
+): Promise<TransitionResult> {
+  return transitionPayment(db, paymentId, paymentTransitions.reconcileReleased, {
+    resolutionReason: keepingHeldReason(reason),
+  });
+}
