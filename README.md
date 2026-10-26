@@ -389,28 +389,32 @@ for the downstream call.
 
 Operator commands:
 
-| Command                                                                  | What it does                                                                                                                  |
-| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm --filter @selo/api consent:grant`                                  | Record an owner's explicit consent for a route                                                                                |
-| `pnpm --filter @selo/api verify:g1`                                      | Read-only check of the live 402, the Bazaar listing, the merchant record and the leaderboard row                              |
-| `pnpm --filter @selo/api pay:selo`                                       | Pay Selo once as a customer; prints price and payee first, refuses self-payment and refuses Mainnet without explicit approval |
-| `pnpm --filter @selo/api account:new \| account:optin \| account:status` | Create, opt in and inspect wallets                                                                                            |
+| Command                                                                  | What it does                                                                                                                                                                   |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm --filter @selo/api consent:grant`                                  | Record an owner's explicit consent for a route                                                                                                                                 |
+| `pnpm --filter @selo/api verify:g1`                                      | Read-only check of the live 402, the Bazaar listing, the merchant record and the leaderboard row                                                                               |
+| `pnpm --filter @selo/api pay:selo`                                       | Pay Selo once as a customer; prints price and payee first, refuses self-payment and refuses Mainnet without explicit approval                                                  |
+| `pnpm --filter @selo/api account:new \| account:optin \| account:status` | Create, opt in and inspect wallets                                                                                                                                             |
+| `pnpm --filter @selo/api reconcile`                                      | Resolves held downstream payments from Algorand indexer evidence: settles a confirmed matching transfer, releases one that provably expired, holds everything else; never pays |
 
 ## Testing
 
-**85 test files and 855 tests**, run on every push in GitHub Actions against a real Postgres.
+**101 test files and 1,010 tests**, run on every push in GitHub Actions against a real Postgres.
 The captured run is in [`docs/evidence/g3-test-suite.txt`](docs/evidence/g3-test-suite.txt).
 
-| Folder                         | What it covers                                                                                                                            |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `packages/core/tests/`         | Money, the three state machines, the verdict reducer, the spend policy with a seeded simulation of thousands of steps, SSRF address rules |
-| `packages/core/tests/checks/`  | Every decision row of the five checks, including byte-real 402s captured from the SDK and a live Mainnet merchant                         |
-| `apps/api/tests/release/`      | The paid route: the exact 402, rejections before payment, settle-before-run (A12), duplicate requests (A21), held settlements             |
-| `apps/api/tests/ledger/`       | Reservations under true parallelism on separate connections, randomised interleavings, counters equal to sums                             |
-| `apps/api/tests/orchestrator/` | The runner: every payment outcome, authorization lapses, wall-clock limits, restarts                                                      |
-| `apps/api/tests/e2e/`          | The whole flow through the real app, gate, runner and ledger, with fakes only at the facilitator, the signer and the target               |
-| `apps/api/tests/net/`          | Pinned DNS, redirect policy, header stripping and failure typing against a local HTTPS server                                             |
-| `apps/api/tests/payments/`     | Signing exactly the reserved requirement, the payment identifier, replays and secret handling                                             |
+| Folder                                                          | What it covers                                                                                                                                         |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `packages/core/tests/`                                          | Money, the three state machines, the verdict reducer, the spend policy with a seeded simulation of thousands of steps, SSRF address rules              |
+| `packages/core/tests/checks/`                                   | Every decision row of the five checks, including byte-real 402s captured from the SDK and a live Mainnet merchant                                      |
+| `apps/api/tests/release/`                                       | The paid route: the exact 402, rejections before payment, settle-before-run (A12), duplicate requests (A21), held settlements                          |
+| `apps/api/tests/ledger/`                                        | Reservations under true parallelism on separate connections, randomised interleavings, counters equal to sums                                          |
+| `apps/api/tests/orchestrator/`                                  | The runner: every payment outcome, authorization lapses, wall-clock limits, restarts                                                                   |
+| `apps/api/tests/e2e/`                                           | The whole flow through the real app, gate, runner and ledger, with fakes only at the facilitator, the signer and the target                            |
+| `apps/api/tests/net/`                                           | Pinned DNS, redirect policy, header stripping and failure typing against a local HTTPS server                                                          |
+| `apps/api/tests/payments/`                                      | Signing exactly the reserved requirement, the payment identifier, replays and secret handling                                                          |
+| `apps/api/tests/reconcile/`                                     | Settle, release and hold against real Postgres, two reconcilers in parallel, interrupted and repeated runs, indexer outages and malformed answers      |
+| `apps/api/tests/e2e/demo-merchant.test.ts` · `cli-gate.test.ts` | The demo merchant through the real gate and runner, and the CLI through the real API: broken-v1 exits 1, fixed-v2 exits 0, and the attestations verify |
+| `packages/cli/tests/`                                           | Every exit code, network and budget refusals, Mainnet approval, held settlements, `--resume`, attestation verification and secret scans                |
 
 Acceptance tests carry their ID in the title, so `pnpm test -t A16` runs one.
 
@@ -438,9 +442,10 @@ Acceptance tests carry their ID in the title, so `pnpm test -t A16` runs one.
 - **Paying Selo needs an x402 client today.** The site walks through authorization and preflight,
   then gives the exact commands to pay with any x402 client; paying from a browser wallet is not
   built yet.
-- **Unresolved payments are reconciled by hand.** A payment whose outcome is unclear is held, stops
-  spending and stores its expected transaction id, but no job yet checks the chain and settles it
-  automatically.
+- **Reconciliation is an operator command.** `pnpm --filter @selo/api reconcile` resolves a held
+  downstream payment only on chain proof, and payments signed before 26 October carry no
+  last-valid round, so they can be settled but never released by it. A held inbound settlement is
+  still resolved by hand.
 - **One external team so far.** ORA Gate is the only third-party endpoint tested on Mainnet. No outside
   team has paid for a test yet: every payment into Selo so far came from wallets controlled by the
   Selo team.
